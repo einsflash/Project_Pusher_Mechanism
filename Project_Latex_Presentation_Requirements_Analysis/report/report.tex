@@ -1,0 +1,109 @@
+\documentclass{book}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsxtra}
+\usepackage{graphicx}
+\usepackage{listings}
+
+\newcommand{\refchapter}[1]{Chapter~\ref{#1}}
+\newcommand{\refsec}[1]{Section~\ref{#1}}
+\newcommand{\refeqn}[1]{Equation~(\ref{#1})}
+\newcommand{\reffig}[1]{Figure~\ref{#1}}
+
+\title{\bf Software Lab \\ Computational Engineering Science \\
+{\small Report (Template)}} 
+
+\author{Uwe Naumann\footnote{Informatik 12: Software and Tools for Computational Engineering, RWTH Aachen University, {\tt info@stce.rwth-aachen.de}}}
+\date{\includegraphics[width=.6\textwidth]{rwth_i12_softw-werkz_en_rgb}}
+
+\begin{document}
+
+\lstloadlanguages{[ISO]C++}
+\lstset{basicstyle=\small, numbers=left, numberstyle=\footnotesize,
+  stepnumber=1, numbersep=5pt, breaklines=true, escapeinside={/*@}{@*/}}
+
+\pagestyle{headings}
+
+\maketitle
+
+\tableofcontents
+
+\chapter*{Preface}
+
+\begin{itemize}
+\item administrative information about the project (e.g, topic issued by which institute)
+\item fit of topic into study program (e.g, sufficient prior knowledge)
+\item acknowledgement of supervision
+\end{itemize}
+
+\chapter{Analysis} \label{ch:analysis}
+
+\section{User Requirements}
+
+user requirements explained (includes essential information and references into literature on technical background of the topic, e.g, \cite{Ries1522Rad}) based on UML Use Case diagram(s)
+
+\section{System Requirements}
+
+functional and non-functional system requirements explained
+
+\chapter{Design} \label{ch:design}
+
+\section{Principal Components and Third-Party Software}
+
+libraries that you built on explained briefly and references to further information
+
+\section{Class Models}
+
+UML Class diagram(s) and description; should link into overall design through
+reference of application programming interfaces (API) of third-party software
+
+\chapter{Implementation} \label{ch:implementation}
+
+\section{Development Infrastructure}
+
+programming language, compiler, run time libraries, target platform
+(hardware, operating system)
+
+\section{Source Code}
+
+overview of source code structure (file names, directories); build instructions; references into source code documentation e.g, doxygen\footnote{\tt https://github.com/doxygen/doxygen}; short (!) code listings
+\begin{lstlisting}
+#include<iostream>
+int main() {
+  std::cout << "Leave me alone world!" << std::endl;
+  return 42;
+}
+\end{lstlisting}
+if helpful (must come with detailed explanation)
+
+\section{Software Tests}
+
+e.g, googletest\footnote{\tt https://github.com/google/googletest}
+
+\chapter{Project Management} \label{ch:projectmanagement}
+
+who did what, when, and why; organization of collaboration, i.e. [online] meetings, software version control (e.g, git\footnote{\tt https://git.rwth-aachen.de}
+
+\bibliographystyle{plain}
+\bibliography{literature}
+
+\appendix
+
+\chapter{User Documentation} \label{ch:userdoc}
+
+\section{Building}
+
+e.g, using cmake\footnote{\tt https://cmake.org/} and make\footnote{\tt https://www.gnu.org/software/make/}
+
+
+\section{Testing}
+
+e.g, \verb!make test!
+
+\section{Running}
+
+documented sample session(s); e.g, \verb!make run!
+
+\end{document}
+

@@ -1,0 +1,173 @@
+\documentclass[ucs,10pt]{beamer}
+ 
+\include{stce-beamer-template}  
+
+\begin{document}
+\title[{\tt info@stce.rwth-aachen.de}]{\textcolor{rwth-blue}{Software Lab Computational Engineering Science} \vspace{.2cm} \\ {\small Group 12, Pusher Mechanism}}
+\author[Group 12)]{Aaron Floerke, Arseniy Kholod, Xinyang Song and Yanliang Zhu} 
+\institute[Software Lab CES]{
+{Informatik 12: Software and Tools for Computational Engineering (STCE)} \\ RWTH Aachen University \vspace{.5cm}
+}
+\date[]{24.06.2024}
+
+
+
+\begin{frame}[plain]
+\titlepage
+\end{frame}
+
+\begin{frame}
+	\frametitle{Contents}
+\tableofcontents
+\end{frame}
+
+
+
+\section{Analysis}
+
+\subsection{User Requirements}
+
+
+\begin{frame}
+\frametitle{Analysis \\
+    \small \color{rwth-blue} User Requirements}
+    \begin{itemize}
+        \item Establish the basic geometry for a planar mechanism to achieve the given path.
+        \item Provide the following data for the designed four-bar mechanism:
+        \begin{itemize}
+            \item Position of the two fixed pivot positions
+            \item Lengths of the three moving links and of the fourth base link
+            \item The position of the couple offset point relative to the coupler
+        \end{itemize}
+        \item Using Solid Edge, design and generate the 3D models of links of the mechanism:
+        \begin{itemize}
+            \item Construct the links out of sub-parts
+            \item Assemble the links
+            \item A diagram (produced from Solid Edge) of the assembled 3D mechanism
+        \end{itemize}
+        \item Simulate the motion of the mechanism using the Simply Motion option within Solid Edge.
+        \item Evaluate the KE of the mechanism as it cycles:
+        \begin{itemize}
+            \item Produce a graph of the KE against time (or against crank angle) with at least 36 points
+            \item Find the kinetic energy of the mechanism as it goes through a cycle
+        \end{itemize}
+        \item Obtain a configuration suitable for RP production.
+    \end{itemize}
+\end{frame}
+
+
+
+\section{Essential Technical Background}
+
+\begin{frame}
+\frametitle{Essential Technical Background \\
+    \small \color{rwth-blue} The Four Bar Mechanism}
+    \begin{itemize}
+        \item Online Demo: \url{https://www.geogebra.org/m/BueCG9ch}
+        \item \includegraphics[width=\linewidth]{./Used_Picture/Online_Demo_1.png}
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Essential Technical Background \\
+	\small \color{rwth-blue} The Example}
+	\begin{itemize}
+        \item \includegraphics[width=\linewidth]{./Used_Picture/Example_1.jpg}
+	\end{itemize}
+\end{frame}
+
+
+\subsection{System Requirements}
+
+\begin{frame}
+\frametitle{Analysis \\
+    \small \color{rwth-blue} System Requirements}
+    Functional:
+    \begin{itemize}
+        \item Use the "mechanism selector" in the constraint modeller to find a four-bar mechanism that fits the given path.
+        \item Use the CAD (Solid Edge) to generate parts as 3D models:
+        \begin{itemize}
+            \item Construct the links out of sub-parts (to minimize the eventual cost of RP).
+            \item Assemble the links in Solid Edge to ensure that they fit together.
+            \item Additional requirements for RP:
+            \begin{itemize}
+                \item Moving parts should be designed with a clearance between holes and shafts of approximately 0.25mm.
+            \end{itemize}
+        \end{itemize}
+        \item Simulate the motion of the mechanism using the Simply Motion option within Solid Edge.
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Analysis \\
+    \small \color{rwth-blue} System Requirements}
+    Functional:
+    \begin{itemize}
+        \item Evaluate the KE of the mechanism as it cycles:
+        \begin{itemize}
+            \item Use the constraint modeller or other appropriate methods:
+            \begin{itemize}
+                \item Firstly adapt a macro for a four-bar chain to represent and simulate the motion of the particular mechanism.
+                \item Then enhance the macro to find velocities and kinetic energies of the links.
+            \end{itemize}
+            \item Results to be achieved:
+            \begin{itemize}
+                \item Produce a graph of the KE against time (or against crank angle) with at least 36 points.
+                \item Find the kinetic energy of the mechanism as it goes through a cycle.
+            \end{itemize}
+        \end{itemize}
+        \item Obtain a configuration suitable for RP production:
+        \begin{itemize}
+            \item In Solid Edge, save each component as a separate part file.
+            \item Lay out the various parts using Solid Edge on a plane.
+            \item These parts then need to be packed reasonably closely on a plane region of size 140mm x 220mm.
+            \item Identify the maximum height (RP build depth).
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Analysis \\
+    \small \color{rwth-blue} System Requirements}
+    Non-Functional:
+    \begin{itemize}
+        \item Use the constraint modelling software created at Bath University.
+        \item Use Solid Edge.
+        \item Provide the following data for the designed four-bar mechanism:
+        \begin{itemize}
+            \item Position of the two fixed pivot positions.
+            \item Lengths of the three moving links and of the fourth base link.
+            \item The position of the couple offset point relative to the coupler.
+        \end{itemize}
+        \item Things to be prepared:
+        \begin{itemize}
+            \item A listing of any constraint modeller macro used.
+            \item A listing of any programming language code used.
+            \item An indication of the calculation performed by any spreadsheet used.
+            \item The graph of KE and a statement of its maximum value.
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+
+
+\section{Project Management}
+
+
+
+\begin{frame}
+\frametitle{Project Management \\
+    \small \color{rwth-blue} Gantt Chart}
+\end{frame}
+
+
+
+\section{Summary and Conclusion}
+
+\begin{frame}
+\frametitle{Summary and Conclusion}
+\end{frame}
+
+\end{document}

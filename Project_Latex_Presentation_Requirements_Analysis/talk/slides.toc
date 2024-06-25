@@ -1,0 +1,6 @@
+\beamer@sectionintoc {1}{Analysis}{3}{0}{1}
+\beamer@subsectionintoc {1}{1}{User Requirements}{3}{0}{1}
+\beamer@sectionintoc {2}{Essential Technical Background}{4}{0}{2}
+\beamer@subsectionintoc {2}{1}{System Requirements}{6}{0}{2}
+\beamer@sectionintoc {3}{Project Management}{9}{0}{3}
+\beamer@sectionintoc {4}{Summary and Conclusion}{10}{0}{4}
