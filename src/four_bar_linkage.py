@@ -28,3 +28,7 @@ class FourBarLinkage:
         # self.A = ...
         # ...
         pass # delete later   
+        
+    # add some functions, if you need it to implement run function. Keep it simple, 
+    # split run() in subfunctions, that you will call from run().
+    # The important thing is that GUI needs to call only run() to update coordinates! 
