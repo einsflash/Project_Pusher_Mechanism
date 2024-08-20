@@ -7,7 +7,7 @@ class FourBarLinkage:
     a = 0. # DA
     b = 0. # BC
     g = 0. # AB
-    f = 0. # CD
+    h = 0. # CD
     # input angle in degrees
     alpha = 0.
     # angle in degrees between ground bar and horizont
@@ -28,17 +28,18 @@ class FourBarLinkage:
     T1 = 0. # g+h-a-b
     T2 = 0. # b+g-a-h
     T3 = 0. # b+h-a-g
-    # consult https://en.wikipedia.org/wiki/Four-bar_linkage
+    
+    # consult https://en.wikipedia.org/wiki/Four-bar_linkage, all values are like in wikipedia, and in four_bar_linkage.png
     
     
     # this is constructor that will be used from GUI to initialize all needed parameters,
     # lengths, angles, coordinated of fixed points and so one
-    def __init__(self, a, b, g, f, alpha, theta, coupler_position, coupler_offset): 
+    def __init__(self, a, b, g, h, alpha, theta, coupler_position, coupler_offset): 
         # initialize all parameters
         self.a = a
         self.b = b
         self.g = g
-        self.f = f
+        self.h = h
         self.theta
         self.coupler_position = coupler_position
         self.coupler_offset = coupler_offset
@@ -53,8 +54,10 @@ class FourBarLinkage:
         self.T2 = self.b + self.g - self.a - self.h
         self.T3 = self.b + self.h - self.a - self.g
         # calculate all coordinates B, C, D, P
+        self.A = (0., 0.) # is always constant
         # ...
         
     # add some functions, if you need it to implement run function. Keep it simple, 
     # split run() in subfunctions, that you will call from run().
     # The important thing is that GUI needs to call only run() to update coordinates! 
+    
