@@ -20,8 +20,8 @@ class FourBarLinkage:
     # angle in degrees between ground bar and horizont
     theta = 0.
     # convert angle from degrees to radians
-    alpha_rad = math.radians(alpha)
-    theta_rad = math.radians(theta)
+    alpha_rad = 0.
+    theta_rad = 0.
     # coupler positions
     coupler_position = 0. # 0% from DC midpoint towards C
     coupler_offset = 0. # 0% of DC length
@@ -55,6 +55,8 @@ class FourBarLinkage:
         self.DA = DA
         self.alpha = alpha
         self.theta = theta
+        self.alpha_rad = math.radians(alpha)
+        self.theta_rad = math.radians(theta)
         self.coupler_position = coupler_position
         self.coupler_offset = coupler_offset
         self.t = timeinterval
