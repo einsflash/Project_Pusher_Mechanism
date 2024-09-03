@@ -24,7 +24,7 @@ class ResizableCanvas(tk.Canvas):
 class GUI:
   def __init__(self):
     # default parameters
-    self.linkage = FourBarLinkage(1.41, 1.41, 3., 1., 45., 0., 0.5, 0.3)
+    self.linkage = FourBarLinkage(1.41, 1.41, 3., 1., 45., 0., 0.5, 0.3, 0.01, 10)
     self.tk = tk.Tk()
     self.width = round(0.8*self.tk.winfo_screenwidth())
     self.height = round(0.8*self.tk.winfo_screenheight())

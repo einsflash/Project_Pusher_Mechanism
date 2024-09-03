@@ -103,8 +103,8 @@ class FourBarLinkage:
         self.B = np.array([B_x, B_y])
 
         # calculate D
-        D_x = np.cos(self.alpha_rad) * self.AD
-        D_y = np.sin(self.alpha_rad) * self.AD
+        D_x = np.cos(self.alpha_rad) * self.DA
+        D_y = np.sin(self.alpha_rad) * self.DA
         self.D = np.array([D_x, D_y])
 
         # calculate C1 and C2
