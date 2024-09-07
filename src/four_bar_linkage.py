@@ -4,8 +4,8 @@ import pandas as pd
 class FourBarLinkage:
     # Record Trajectories for Animation ==== function is update_trajectory
     trajectory_df = pd.DataFrame(columns=[
-        'A_x', 'A_y', 'B_x', 'B_y', 'C1_x', 'C1_y', 'C2_x', 'C2_y',
-        'D_x', 'D_y', 'P1_x', 'P1_y', 'P2_x', 'P2_y'
+        'A_x', 'A_y', 'B_x', 'B_y', 'C_x', 'C_y',
+        'D_x', 'D_y', 'P_x', 'P_y'
     ])
 
     # all parameters you need to calculate coordinates, default initializing
@@ -28,9 +28,11 @@ class FourBarLinkage:
     # all coordinates of conection points A,B,C,D,P
     A  = np.array([0.0, 0.0]) # coordinates of A are always (0,0)
     B  = np.array([0.0, 0.0])
+    C = np.array([0.0, 0.0])  # C is chosen point for GUI
     C1 = np.array([0.0, 0.0]) # C1 is always with positive cross product
     C2 = np.array([0.0, 0.0]) # C2 is always with negative cross product
     D  = np.array([0.0, 0.0])
+    P = np.array([0.0, 0.0])  # P is chosen point for GUI
     P1  = np.array([0.0, 0.0]) # P1 is always with positive cross product
     P2 = np.array([0.0, 0.0])  # P2 is always with negative cross product
 
@@ -71,7 +73,7 @@ class FourBarLinkage:
     # this function will be called from GUI after updating some parameters to get coordinates for GUI animation
     def run(self):
         # calculate classification values
-        self.calculate_Classification_Values()
+        self.calculate_Classification_Value()
 
         # calculate all coordinates A, B, C, D, P
         self.calculate_Point_Position()
@@ -83,12 +85,20 @@ class FourBarLinkage:
     # split run() in subfunctions, that you will call from run().
     # The important thing is that GUI needs to call only run() to update coordinates! 
 
-    # calculate classification values
-    def calculate_Classification_Values(self):
+    """ calculate classification values according to given 4 edges"""
+    def calculate_Classification_Value(self):
         self.T1 = self.AB + self.CD - self.BC - self.DA
         self.T2 = self.BC + self.AB - self.CD - self.DA
         self.T3 = self.CD + self.BC - self.AB - self.DA
         self.L =  self.AB + self.BC + self.CD + self.DA
+        return
+
+    """ calculate 4 edges according to given classification values """
+    def calculate_Edge_Value(self):
+        self.AB = (self.L / 4) + (self.T1 / 4) + (self.T2 / 4) - (self.T3 / 4)
+        self.BC = (self.L / 4) - (self.T1 / 4) + (self.T2 / 4) + (self.T3 / 4)
+        self.CD = (self.L / 4) + (self.T1 / 4) - (self.T2 / 4) + (self.T3 / 4)
+        self.DA = (self.L / 4) - (self.T1 / 4) - (self.T2 / 4) - (self.T3 / 4)
         return
 
 
@@ -207,6 +217,12 @@ class FourBarLinkage:
         self.P1 = P_positive
         self.P2 = P_negative
 
+        # Add the condition to select self.P for GUI
+        if offset_distance >= 0:
+            self.P = self.P1
+        else:
+            self.P = self.P2
+
         return
 
 
@@ -216,11 +232,9 @@ class FourBarLinkage:
         new_data = {
             'A_x': self.A[0], 'A_y': self.A[1],
             'B_x': self.B[0], 'B_y': self.B[1],
-            'C1_x': self.C1[0], 'C1_y': self.C1[1],
-            'C2_x': self.C2[0], 'C2_y': self.C2[1],
+            'C_x': self.C[0], 'C_y': self.C[1],
             'D_x': self.D[0], 'D_y': self.D[1],
-            'P1_x': self.P1[0], 'P1_y': self.P1[1],
-            'P2_x': self.P2[0], 'P2_y': self.P2[1]
+            'P_x': self.P[0], 'P_y': self.P[1],
         }
         self.trajectory_df = self.trajectory_df.append(new_data, ignore_index=True)
         return
@@ -237,6 +251,25 @@ class FourBarLinkage:
         """
 
         self.alpha = self.alpha + self.alpha_velocity * self.t
+        self.run()
+
+        if trace:
+            # start tracing and record trajectory
+            self.update_trajectory()
+
+        return
+
+    def Iteration_for_Animation_Mouse(self, trace: bool, alpha):
+        """
+        Perform an iteration for the animation.
+
+        With Mouseclick! And alpha is direction of mouse, which will be input from GUI.
+
+        Parameters:
+        trace (bool): If True, enables tracking of the points' trajectory.
+        """
+
+        self.alpha = alpha
         self.run()
 
         if trace:
