@@ -22,6 +22,9 @@ class FourBarLinkage:
     # convert angle from degrees to radians
     alpha_rad = 0.
     theta_rad = 0.
+    # limits for angle alpha
+    alpha_lims = [0., 0.]
+    alpha_rad_lims = [0., 0.]
     # coupler positions
     coupler_position = 0. # 0% from DC midpoint towards C
     coupler_offset = 0. # 0% of DC length
@@ -74,6 +77,9 @@ class FourBarLinkage:
     def run(self):
         # calculate classification values
         self.calculate_Classification_Value()
+        
+        # calculate alpha limits
+        self.calculate_alpha_lims()
 
         # calculate all coordinates A, B, C, D, P
         self.calculate_Point_Position()
@@ -100,7 +106,21 @@ class FourBarLinkage:
         self.CD = (self.L / 4) + (self.T1 / 4) - (self.T2 / 4) + (self.T3 / 4)
         self.DA = (self.L / 4) - (self.T1 / 4) - (self.T2 / 4) - (self.T3 / 4)
         return
-
+    
+    
+    # calculate limits of angle alpha
+    def calculate_alpha_lims(self):
+        # using law of cosines
+        a = self.BC + self.CD
+        b = self.AB
+        c = self.DA
+        cos_alpha_lims = (b**2 + c**2 - a**2)/(2*b*c)
+        if np.abs(cos_alpha_lims) >= 1:
+            self.alpha_rad_lims = [0, 0]
+        else:
+            self.alpha_rad_lims = [-np.arccos(cos_alpha_lims) + self.theta_rad, np.arccos(cos_alpha_lims) + self.theta_rad]
+            self.alpha_lims = [math.degrees(self.alpha_rad_lims[0]), math.degrees(self.alpha_rad_lims[1])]
+    
 
 
     # calculate position with given angle
@@ -118,10 +138,10 @@ class FourBarLinkage:
         self.D = np.array([D_x, D_y])
 
         # calculate C1 and C2
-        self.calculate_C_Position
+        self.calculate_C_Position()
 
         # calculate P
-        self.calculate_P_Position
+        self.calculate_P_Position()
 
         return
 
@@ -160,21 +180,24 @@ class FourBarLinkage:
             ###
 
             # calculate vector BC1
-            BC1_vector = self.C1 - self.B
+            #BC1_vector = self.C1 - self.B
 
             # calculate cross product to choose C between C1 and C2
-            cross_product_1 = BD_vector[0] * BC1_vector[1] - BD_vector[1] * BC1_vector[0]
+            #cross_product_1 = BD_vector[0] * BC1_vector[1] - BD_vector[1] * BC1_vector[0]
 
             # choose C according to cross product result
-            if cross_product_1 > 0:
-                C_positive, C_negative = C1, C2
-            else:
-                C_positive, C_negative = C2, C1
+            #if cross_product_1 > 0:
+            #    C_positive, C_negative = C1, C2
+            #else:
+            #    C_positive, C_negative = C2, C1
 
             # store results, ensure that cross product of C1 is always positive
-            self.C1 = C_positive
-            self.C2 = C_negative
-
+            #self.C1 = C_positive
+            #self.C2 = C_negative
+            self.C1 = C1
+            self.C2 = C2
+            
+            self.C = self.C2
             return
 
 
@@ -199,29 +222,30 @@ class FourBarLinkage:
         offset_distance = self.coupler_offset * DC_length
 
         # Two possible positions for point P
-        P1 = Q + offset_distance * normal_vector_toCD
-        P2 = Q - offset_distance * normal_vector_toCD
+        #P1 = Q + offset_distance * normal_vector_toCD
+        #P2 = Q - offset_distance * normal_vector_toCD
 
         # Use cross product to choose the correct position for point P
-        DQ_vector = Q - self.D  # Calculate vector DQ
-        DP1_vector = P1 - self.D  # Calculate vector DP1
-        cross_product_1 = DQ_vector[0] * DP1_vector[1] - DQ_vector[1] * DP1_vector[0]
+        #DQ_vector = Q - self.D  # Calculate vector DQ
+        #DP1_vector = P1 - self.D  # Calculate vector DP1
+        #cross_product_1 = DQ_vector[0] * DP1_vector[1] - DQ_vector[1] * DP1_vector[0]
 
         # Choose P point based on the cross product result
-        if cross_product_1 > 0:
-            P_positive, P_negative = P1, P2
-        else:
-            P_positive, P_negative = P2, P1
+        #if cross_product_1 > 0:
+        #    P_positive, P_negative = P1, P2
+        #else:
+        #    P_positive, P_negative = P2, P1
 
         #ensure that P1 is always with positive cross product
-        self.P1 = P_positive
-        self.P2 = P_negative
+        #self.P1 = P_positive
+        #self.P2 = P_negative
 
         # Add the condition to select self.P for GUI
-        if offset_distance >= 0:
-            self.P = self.P1
-        else:
-            self.P = self.P2
+        #if offset_distance >= 0:
+        #    self.P = self.P1
+        #else:
+        #    self.P = self.P2
+        self.P = Q + offset_distance * normal_vector_toCD
 
         return
 
