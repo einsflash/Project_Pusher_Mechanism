@@ -85,7 +85,7 @@ class FourBarLinkage:
         self.calculate_Classification_Value()
         
         # check_Parameter
-        self.check_Parameter
+        self.check_Parameter()
 
         # find_Linkage_Type
         self.find_Linkage_Type()
