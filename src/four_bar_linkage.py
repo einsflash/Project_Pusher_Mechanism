@@ -116,7 +116,8 @@ class FourBarLinkage:
         c = self.DA
         cos_alpha_lims = (b**2 + c**2 - a**2)/(2*b*c)
         if np.abs(cos_alpha_lims) >= 1:
-            self.alpha_rad_lims = [0, 0]
+            self.alpha_rad_lims = [0., 2*math.pi]
+            self.alpha_lims = [0., 360.]
         else:
             self.alpha_rad_lims = [-np.arccos(cos_alpha_lims) + self.theta_rad, np.arccos(cos_alpha_lims) + self.theta_rad]
             self.alpha_lims = [math.degrees(self.alpha_rad_lims[0]), math.degrees(self.alpha_rad_lims[1])]
