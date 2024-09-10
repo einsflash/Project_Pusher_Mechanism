@@ -2,6 +2,13 @@ import math
 import numpy as np
 import pandas as pd
 class FourBarLinkage:
+    # Parameter Check
+    Linkage_Type = "Undefined"  # This will be either "Grashof" or "non-Grashof" after check_Parameter()
+    geometric_Validity = True  # Bool: True or False (possible geometry)
+    # Parameter to display in GUI
+    Input_Link_Type = "Undefined" # Type of input linkage (e.g., 'crank', 'π-rocker', '0-rocker')
+    Output_Link_Type = "Undefined" # Type of output linkage (e.g., 'rocker', 'π-rocker', 'crank', '0-rocker')
+
     # Record Trajectories for Animation ==== function is update_trajectory
     trajectory_df = pd.DataFrame(columns=[
         'A_x', 'A_y', 'B_x', 'B_y', 'C_x', 'C_y',
@@ -9,7 +16,6 @@ class FourBarLinkage:
     ])
 
     # all parameters you need to calculate coordinates, default initializing
-
     # bars lengths
     AB = 0. # AB
     BC = 0. # BC
@@ -78,6 +84,12 @@ class FourBarLinkage:
         # calculate classification values
         self.calculate_Classification_Value()
         
+        # check_Parameter
+        self.check_Parameter
+
+        # find_Linkage_Type
+        self.find_Linkage_Type()
+
         # calculate alpha limits
         self.calculate_alpha_lims()
 
@@ -89,7 +101,97 @@ class FourBarLinkage:
         
     # add some functions, if you need it to implement run function. Keep it simple, 
     # split run() in subfunctions, that you will call from run().
-    # The important thing is that GUI needs to call only run() to update coordinates! 
+    # The important thing is that GUI needs to call only run() to update coordinates!
+
+    """ 
+    check Parameter 
+    calculate two values ---- Grashof index G and Validity index V
+    Linkage_Type and geometric_Validity is for GUI
+    """
+    def check_Parameter(self):
+        # Determine the longest (l) and shortest (s) sides
+        lengths = [self.AB, self.BC, self.CD, self.DA]
+        l = max(lengths)
+        s = min(lengths)
+
+        # Find the remaining two sides (p, q)
+        lengths.remove(l)
+        lengths.remove(s)
+        p, q = lengths
+
+        # Calculate Grashof index G and Validity index V
+        G = l + s - p - q
+        V = l - s - p - q
+
+        # Determine linkage type based on Grashof index
+        if G < 0:
+            self.Linkage_Type = "non-Grashof"
+        else:
+            self.Linkage_Type = "Grashof"
+
+        # Determine geometric validity based on Validity index
+        if V < 0:
+            self.geometric_Validity = False  # impossible geometry
+        else:
+            self.geometric_Validity = True  # possible geometry
+
+        return
+
+
+    """
+    Determines the types of input and output linkages based on the values of T1, T2, and T3.
+    Sets the input linkage type in self.Input_Link_Type 
+    and the output linkage type in self.Output_Link_Type.
+    """
+    def find_Linkage_Type(self):
+        # Define a dictionary that maps (T1, T2, T3) to (Input α, Output β)
+        linkage_map = {
+            ('+', '+', '+'): ('crank', 'rocker'),
+            ('0', '+', '+'): ('crank', 'π-rocker'),
+            ('-', '+', '+'): ('π-rocker', 'π-rocker'),
+            ('+', '0', '+'): ('crank', '0-rocker'),
+            ('0', '0', '+'): ('crank', 'crank'),
+            ('-', '0', '+'): ('crank', 'crank'),
+            ('+', '-', '+'): ('π-rocker', '0-rocker'),
+            ('0', '-', '+'): ('crank', 'crank'),
+            ('-', '-', '+'): ('crank', 'crank'),
+
+            ('+', '+', '0'): ('crank', 'π-rocker'),
+            ('0', '+', '0'): ('crank', 'π-rocker'),
+            ('-', '+', '0'): ('π-rocker', 'π-rocker'),
+            ('+', '0', '0'): ('crank', 'crank'),
+            ('0', '0', '0'): ('crank', 'crank'),
+            ('-', '0', '0'): ('crank', 'crank'),
+            ('+', '-', '0'): ('π-rocker', 'crank'),
+            ('0', '-', '0'): ('crank', 'crank'),
+            ('-', '-', '0'): ('crank', 'crank'),
+
+            ('+', '+', '-'): ('0-rocker', 'π-rocker'),
+            ('0', '+', '-'): ('0-rocker', 'π-rocker'),
+            ('-', '+', '-'): ('rocker', 'rocker'),
+            ('+', '0', '-'): ('0-rocker', 'crank'),
+            ('0', '0', '-'): ('0-rocker', 'crank'),
+            ('-', '0', '-'): ('0-rocker', '0-rocker'),
+            ('+', '-', '-'): ('rocker', 'crank'),
+            ('0', '-', '-'): ('0-rocker', 'crank'),
+            ('-', '-', '-'): ('0-rocker', '0-rocker')
+        }
+
+        # Change the values of T1, T2, T3 into strings for lookup in the dictionary
+        T1_str = '+' if self.T1 > 0 else '0' if self.T1 == 0 else '-'
+        T2_str = '+' if self.T2 > 0 else '0' if self.T2 == 0 else '-'
+        T3_str = '+' if self.T3 > 0 else '0' if self.T3 == 0 else '-'
+
+        # Find the corresponding linkage types from the dictionary
+        input_alpha, output_beta = linkage_map.get((T1_str, T2_str, T3_str), ('Undefined', 'Undefined'))
+
+        # Set the linkage types as class variables
+        self.Input_Link_Type = input_alpha  # String for input α type
+        self.Output_Link_Type = output_beta  # String for output β type
+
+        return
+
+
 
     """ calculate classification values according to given 4 edges"""
     def calculate_Classification_Value(self):
