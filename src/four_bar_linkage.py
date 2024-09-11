@@ -34,6 +34,7 @@ class FourBarLinkage:
     # limits for angle alpha
     alpha_lims = [0., 0.]
     alpha_rad_lims = [0., 0.]
+    alpha_limited = True
     # limits for angle beta
     beta_lims = [0., 0.]
     beta_rad_lims = [0., 0.]
@@ -80,6 +81,7 @@ class FourBarLinkage:
         self.coupler_offset = coupler_offset
         self.t = timeinterval
         self.alpha_velocity = alpha_velocity
+        self.C_mode = 'C2'
         # initialize coordinates of connection points
         self.run()
         return
@@ -247,8 +249,9 @@ class FourBarLinkage:
 
         # Check if the calculated cosine value is valid (cosine should be between -1 and 1)
         if np.abs(cos_alpha_lims) >= 1:
-            self.alpha_rad_lims = [0., 2*math.pi]
-            self.alpha_lims = [0., 360.]
+            self.alpha_limited = False
+            self.alpha_rad_lims = [-math.pi, math.pi]
+            self.alpha_lims = [-180., 180.]
         else:
             # If cosine value is valid, calculate the angle limits in radians
             # Add or subtract arccos to get the limits based on the base angle theta_rad
@@ -354,110 +357,120 @@ class FourBarLinkage:
     # calculate position of point C (2 possible points)
     def calculate_C_Position(self):
         ### calculate C (2 possible position)
-            # calculate vector BD
-            BD_vector = self.D - self.B
-            BD_length = np.linalg.norm(BD_vector)
-            BD_unit_vector = BD_vector / BD_length
+        # calculate vector BD
+        BD_vector = self.D - self.B
+        BD_length = np.linalg.norm(BD_vector)
+        BD_unit_vector = BD_vector / BD_length
 
-            # calculate normal vector , which is orthogonal to BD
-            normal_vector_toBD = np.array([-BD_unit_vector[1], BD_unit_vector[0]])
+        # calculate normal vector , which is orthogonal to BD
+        normal_vector_toBD = np.array([-BD_unit_vector[1], BD_unit_vector[0]])
 
-            # length of the edges of triangle
-            a = self.BC
-            b = self.CD
-            c = BD_length
+        # length of the edges of triangle
+        a = self.BC
+        b = self.CD
+        c = BD_length
 
-            #Height h is calculated using Heron's formula to find the area of the triangle, and then using the area formula.
-            s = (a + b + c) / 2
-            area = np.sqrt(s * (s - a) * (s - b) * (s - c))
-            h = 2 * area / c
+        #Height h is calculated using Heron's formula to find the area of the triangle, and then using the area formula.
+        s = (a + b + c) / 2
+        area = np.sqrt(s * (s - a) * (s - b) * (s - c))
+        h = 2 * area / c
 
 
-            # Calculate the distance from point C to BD (the projection length along the direction of BD)
-            projection_length = np.sqrt(self.BC ** 2 - h ** 2)
+        # Calculate the distance from point C to BD (the projection length along the direction of BD)
+        projection_length = np.sqrt(self.BC ** 2 - h ** 2)
 
-            # Two possible positions for point C
-            C1 = self.B + projection_length * BD_unit_vector + h * normal_vector_toBD
-            C2 = self.B + projection_length * BD_unit_vector - h * normal_vector_toBD
+        # Two possible positions for point C
+        C1 = self.B + projection_length * BD_unit_vector + h * normal_vector_toBD
+        C2 = self.B + projection_length * BD_unit_vector - h * normal_vector_toBD
 
-            """ Choose between C1 and C2 according to cross product"""
-            ###
+        """ Choose between C1 and C2 according to cross product"""
+        ###
 
-            # calculate vector BC1
-            #BC1_vector = self.C1 - self.B
+        # calculate vector BC1
+        #BC1_vector = self.C1 - self.B
 
-            # calculate cross product to choose C between C1 and C2
-            #cross_product_1 = BD_vector[0] * BC1_vector[1] - BD_vector[1] * BC1_vector[0]
+        # calculate cross product to choose C between C1 and C2
+        #cross_product_1 = BD_vector[0] * BC1_vector[1] - BD_vector[1] * BC1_vector[0]
 
-            # choose C according to cross product result
-            #if cross_product_1 > 0:
-            #    C_positive, C_negative = C1, C2
-            #else:
-            #    C_positive, C_negative = C2, C1
+        # choose C according to cross product result
+        #if cross_product_1 > 0:
+        #    C_positive, C_negative = C1, C2
+        #else:
+        #    C_positive, C_negative = C2, C1
 
-            # store results, ensure that cross product of C1 is always positive
-            #self.C1 = C_positive
-            #self.C2 = C_negative
+        # store results, ensure that cross product of C1 is always positive
+        #self.C1 = C_positive
+        #self.C2 = C_negative
 
-            self.C1 = C1
-            self.C2 = C2
-
+        self.C1 = C1
+        self.C2 = C2
+        if self.C_mode=='C2':
+            C_prev = self.C
             self.C = self.C2
-            return
+            # update self.C_prev only if C was updated
+            if [C_prev[0]-self.C[0], C_prev[1]-self.C[1]] != [0, 0]:
+                self.C_prev = C_prev
+        else:
+            C_prev = self.C
+            self.C = self.C1
+            # update self.C_prev only if C was updated
+            if [C_prev[0]-self.C[0], C_prev[1]-self.C[1]] != [0, 0]:
+                self.C_prev = C_prev
+        return
 
 
 
     """ Choose between C1 and C2 for GUI"""
-    def calculate_C_Position_Animation(self):
-            """ 
-            Choose between C1 and C2 for Animation
-            """
-
-            if np.linalg.norm(self.C_prev - self.C_last) > 0:  # Ensure C_last and C_prev are not equal
-                # Calculate v_last = C_last - C_prev (the previous motion vector v_last)
-                v_last = self.C_last - self.C_prev
-                v_last_magnitude = np.linalg.norm(v_last)
-                if v_last_magnitude > 0:
-                    v_last_normalized = v_last / v_last_magnitude
-                else:
-                    v_last_normalized = v_last
+    #def calculate_C_Position_Animation(self):
+    #        """ 
+    #        Choose between C1 and C2 for Animation
+    #        """
+    #
+    #        if np.linalg.norm(self.C_prev - self.C_last) > 0:  # Ensure C_last and C_prev are not equal
+    #            # Calculate v_last = C_last - C_prev (the previous motion vector v_last)
+    #            v_last = self.C_last - self.C_prev
+    #            v_last_magnitude = np.linalg.norm(v_last)
+    #            if v_last_magnitude > 0:
+    #                v_last_normalized = v_last / v_last_magnitude
+    #            else:
+    #                v_last_normalized = v_last
 
                 # Calculate vectors from C_last to C1 and C2
-                v_C1_last = self.C1 - self.C_last
-                v_C2_last = self.C2 - self.C_last
+    #            v_C1_last = self.C1 - self.C_last
+    #            v_C2_last = self.C2 - self.C_last
 
                 # Normalize vectors
-                v_C1_last_magnitude = np.linalg.norm(v_C1_last)
-                v_C2_last_magnitude = np.linalg.norm(v_C2_last)
+    #            v_C1_last_magnitude = np.linalg.norm(v_C1_last)
+    #            v_C2_last_magnitude = np.linalg.norm(v_C2_last)
 
-                if v_C1_last_magnitude > 0:
-                    v_C1_last_normalized = v_C1_last / v_C1_last_magnitude
-                else:
-                    v_C1_last_normalized = v_C1_last
+    #            if v_C1_last_magnitude > 0:
+    #                v_C1_last_normalized = v_C1_last / v_C1_last_magnitude
+    #            else:
+    #                v_C1_last_normalized = v_C1_last
 
-                if v_C2_last_magnitude > 0:
-                    v_C2_last_normalized = v_C2_last / v_C2_last_magnitude
-                else:
-                    v_C2_last_normalized = v_C2_last
+    #            if v_C2_last_magnitude > 0:
+    #                v_C2_last_normalized = v_C2_last / v_C2_last_magnitude
+    #            else:
+    #                v_C2_last_normalized = v_C2_last
 
                 # Calculate the cosine of the angles between v_last and the vectors to C1 and C2
-                cos_theta_1 = np.dot(v_last_normalized, v_C1_last_normalized)
-                cos_theta_2 = np.dot(v_last_normalized, v_C2_last_normalized)
+    #            cos_theta_1 = np.dot(v_last_normalized, v_C1_last_normalized)
+    #            cos_theta_2 = np.dot(v_last_normalized, v_C2_last_normalized)
 
                 # Choose C1 or C2 based on the smallest angle (largest cosine)
-                if cos_theta_1 > cos_theta_2:
-                    self.C = self.C1
-                else:
-                    self.C = self.C2
-            else:
+    #            if cos_theta_1 > cos_theta_2:
+    #                self.C = self.C1
+    #            else:
+    #                self.C = self.C2
+    #        else:
                 # Default to C2 if no previous motion is detected
-                self.C = self.C2
+    #            self.C = self.C2
 
             # Update the previous C positions for the next iteration
-            self.C_prev = self.C_last
-            self.C_last = self.C
+    #        self.C_prev = self.C_last
+    #        self.C_last = self.C
 
-            return
+    #        return
 
 
 
@@ -542,23 +555,42 @@ class FourBarLinkage:
         # Update alpha based on current direction
         if self.direction == 0:  # Increasing alpha
             self.alpha += self.alpha_velocity * self.t
+            self.alpha_rad = math.radians(self.alpha)
 
             # Check if alpha exceeds the upper limit
-            if self.alpha >= self.alpha_lims[1]:
+            if self.alpha_limited and self.alpha >= self.alpha_lims[1]:
                 # Set alpha to the upper limit
                 self.alpha = self.alpha_lims[1]
+                self.alpha_rad = self.alpha_rad_lims[1]
                 # Switch direction to decreasing
                 self.direction = 1
+                # switch C1 and C2
+                self.switch_C2_C1()
+            
+            # alpha is not limited values have to stay from -180 to 180
+            if not self.alpha_limited and self.alpha > 180.0:
+                self.alpha = -180.0
+                self.alpha_rad = -math.pi
 
         elif self.direction == 1:  # Decreasing alpha
             self.alpha -= self.alpha_velocity * self.t
+            self.alpha_rad = math.radians(self.alpha)
 
             # Check if alpha falls below the lower limit
-            if self.alpha <= self.alpha_lims[0]:
+            if self.alpha_limited and self.alpha <= self.alpha_lims[0]:
                 # Set alpha to the lower limit
                 self.alpha = self.alpha_lims[0]
+                self.alpha_rad = self.alpha_rad_lims[0]
                 # Switch direction to increasing
                 self.direction = 0
+                # switch C1 and C2
+                self.switch_C2_C1()
+                
+            # alpha is not limited values have to stay from -180 to 180
+            if not self.alpha_limited and self.alpha < -180.0:
+                self.alpha = 180.0
+                self.alpha_rad = math.pi
+        
 
         # Run the main calculation (update point positions)
         self.run()
@@ -568,6 +600,23 @@ class FourBarLinkage:
             self.update_trajectory()
 
         return
+    
+    # function to switch between C1 and C2, call only by alpha_lim
+    def switch_C2_C1(self):
+        if self.C_mode == 'C2':
+            # calculate distance between C1 and C now and in the last step, if it is smaller, change to C1
+            distance = np.linalg.norm([self.C[0]-self.C1[0], self.C[1]-self.C1[1]])
+            distance_prev = np.linalg.norm([self.C_prev[0]-self.C1[0], self.C_prev[1]-self.C1[1]])
+            if distance < distance_prev:
+                self.C_mode = 'C1'
+        else:
+            # calculate distance between C2 and C now and in the last step, if it is smaller, change to C2
+            distance = np.linalg.norm([self.C[0]-self.C2[0], self.C[1]-self.C2[1]])
+            distance_prev = np.linalg.norm([self.C_prev[0]-self.C2[0], self.C_prev[1]-self.C2[1]])
+            if distance < distance_prev:
+                self.C_mode = 'C2'
+        print(self.C_mode)
+        
 
 
 

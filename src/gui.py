@@ -25,7 +25,7 @@ class ResizableCanvas(tk.Canvas):
 class GUI:
     def __init__(self):
         # default parameters
-        self.linkage = FourBarLinkage(3., 1.41, 1., 1.41, 45., 0., 0.5, 0.3, 0.01, 10)
+        self.linkage = FourBarLinkage(3., 1.41, 1., 1.41, 45., 0., 0.5, 0.3, 0.03, 30)
         self.linkage.run()
         self.tk = tk.Tk()
         self.width = round(0.8*self.tk.winfo_screenwidth())
@@ -48,12 +48,6 @@ class GUI:
         self.toolbar_frame.width = round(0.3*self.width)
         self.toolbar_frame.height = round(0.6*self.height)
         self.toolbar_frame.grid(row=0, column=1, columnspan=4)
-        # classification values
-        #self.classification_frame = tk.Frame(self.tk, width=round(0.7*self.width),
-        #                                     height=round(0.3*self.height))
-        #self.classification_frame.width = round(0.7*self.width)
-        #self.classification_frame.height = round(0.3*self.height)
-        #self.classification_frame.grid(row=8, column=0, padx=5, pady=5)
         # generate picture
         self.display_toolbar()
         self.display_classification_values()
@@ -104,7 +98,8 @@ class GUI:
         self.reset_button = tk.Button(self.toolbar_frame, text="reset", command=self.reset)
         self.reset_button.grid(sticky="W", row=9, column=1)
         # all checkbuttons
-        self.animation_button = tk.Checkbutton(self.toolbar_frame, text="animation", variable=tk.IntVar(),
+        self.enable_animation = tk.IntVar()
+        self.animation_button = tk.Checkbutton(self.toolbar_frame, text="animation", variable=self.enable_animation,
                                                onvalue=1, offvalue=0, command=self.animation)
         self.animation_button.grid(row=9, column=2)
         self.trace_text = tk.Text(self.toolbar_frame, height=1, width=6, bd=0, bg="grey94")
@@ -256,7 +251,7 @@ class GUI:
     
     # generate default linkage
     def reset(self):
-        self.linkage = FourBarLinkage(3., 1.41, 1., 1.41, 45., 0., 0.5, 0.3, 0.01, 10)
+        self.linkage = FourBarLinkage(3., 1.41, 1., 1.41, 45., 0., 0.5, 0.3, 0.03, 30)
         self.update_alpha_slider()
         self.linkage.run()
         self.reset_all_sliders()
@@ -272,8 +267,14 @@ class GUI:
         self.slider_theta.set(self.linkage.theta)
     
     def animation(self):
-        pass
+        self.run_animation()
     
+    def run_animation(self):
+        if self.enable_animation.get():
+            self.linkage.Iteration_for_Animation(False)
+            self.refresh()
+            self.tk.after(50, self.run_animation)
+        
     def trace_C(self):
         pass
     def trace_D(self):
