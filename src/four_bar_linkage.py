@@ -150,7 +150,7 @@ class FourBarLinkage:
             self.Linkage_Type = "Grashof"
 
         # Determine geometric validity based on Validity index
-        if V < 0:
+        if V > 0:
             self.geometric_Validity = False  # impossible geometry
         else:
             self.geometric_Validity = True  # possible geometry

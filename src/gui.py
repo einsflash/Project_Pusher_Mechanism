@@ -114,6 +114,8 @@ class GUI:
         self.trace_P_button = tk.Checkbutton(self.toolbar_frame, text="P", variable=tk.IntVar(),
                                              onvalue=1, offvalue=0, command=self.trace_P)
         self.trace_P_button.grid(row=10, column=4)
+        # display type of linkage
+        self.display_information()
         
     # update limits for alpha slider
     def update_alpha_slider(self):
@@ -138,11 +140,32 @@ class GUI:
         self.text_classification_values.insert(tk.END, f'\nT2 = b + g - h - a: {round(self.linkage.T2,3)}')
         self.text_classification_values.insert(tk.END, f'\nT3 = h + b - g - a: {round(self.linkage.T3,3)}')
         self.text_classification_values.insert(tk.END, f'\nL  = g + b + h + a: {round(self.linkage.L,3)}')
-        self.text_classification_values.grid(row=8, column=1, columnspan=4, sticky = tk.W+tk.E)
+        self.text_classification_values.grid(row=8, column=1, columnspan=4, sticky=tk.W+tk.E)
+        
+    # display Input_Link_Type, Output_Link_Type, Linkage_Type
+    def display_information(self):
+        # Set the height and width for the text box
+        text_height = 3  # Adjusted to fit four parameters
+        text_width = 30
+        # Create a text widget to display the parameters
+        self.text_information = tk.Text(self.toolbar_frame, height=text_height, width=text_width, bd=0, bg="grey94")
+        # Display the Input_Link_Type, Output_Link_Type, Linkage_Type
+        self.text_information.insert(tk.END, f'Input Link Type: {self.linkage.Input_Link_Type}')
+        self.text_information.insert(tk.END, f'\nOutput Link Type: {self.linkage.Output_Link_Type}')
+        self.text_information.insert(tk.END, f'\nLinkage Type: {self.linkage.Linkage_Type}')
+        # Use grid layout to display the text widget in the GUI
+        self.text_information.grid(row=11, column=1, columnspan=4, sticky=tk.W+tk.E)
         
     def display_linkage(self):
         # delete already generated linkage picture
         self.model_animation.delete('all')
+        if not self.linkage.geometric_Validity:
+            self.model_animation.create_text(round(self.model_animation.width/2),
+                                             round(self.model_animation.height/2),
+                                             text="Invalid setup, change geometrical values",
+                                             fill="black",
+                                             font=('Helvetica 11 bold'))
+            return
         # scaling factor to transfrom spatial coordinates to pixels
         scale = self.scaling_factor()
         # Mid point in AB should be always placed in center for symmetry
@@ -247,6 +270,7 @@ class GUI:
         self.update_alpha_slider()
         self.linkage.run()
         self.display_classification_values()
+        self.display_information()
         self.display_linkage()
     
     # generate default linkage
