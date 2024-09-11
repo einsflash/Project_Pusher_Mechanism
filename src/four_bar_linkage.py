@@ -615,7 +615,6 @@ class FourBarLinkage:
             distance_prev = np.linalg.norm([self.C_prev[0]-self.C2[0], self.C_prev[1]-self.C2[1]])
             if distance < distance_prev:
                 self.C_mode = 'C2'
-        print(self.C_mode)
         
 
 
