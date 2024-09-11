@@ -247,8 +247,8 @@ class FourBarLinkage:
 
         # Check if the calculated cosine value is valid (cosine should be between -1 and 1)
         if np.abs(cos_alpha_lims) >= 1:
-            # If cosine value is out of bounds, set alpha limits to [0, 0] as the linkage cannot form a closed quadrilateral
-            self.alpha_rad_lims = [0, 0]
+            self.alpha_rad_lims = [0., 2*math.pi]
+            self.alpha_lims = [0., 360.]
         else:
             # If cosine value is valid, calculate the angle limits in radians
             # Add or subtract arccos to get the limits based on the base angle theta_rad
