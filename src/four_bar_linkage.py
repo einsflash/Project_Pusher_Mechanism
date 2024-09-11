@@ -21,16 +21,22 @@ class FourBarLinkage:
     BC = 0. # BC
     CD = 0. # CD
     DA = 0.  # DA
-    # input angle in degrees
+    # input angle in degrees (vector AD to positive x achse)
     alpha = 0.
+    # input angle in degrees (vector BC to positive x achse)
+    beta = 0.
     # angle in degrees between ground bar and horizont
     theta = 0.
     # convert angle from degrees to radians
     alpha_rad = 0.
     theta_rad = 0.
+    beta_rad  = 0.
     # limits for angle alpha
     alpha_lims = [0., 0.]
     alpha_rad_lims = [0., 0.]
+    # limits for angle beta
+    beta_lims = [0., 0.]
+    beta_rad_lims = [0., 0.]
     # coupler positions
     coupler_position = 0. # 0% from DC midpoint towards C
     coupler_offset = 0. # 0% of DC length
@@ -40,6 +46,8 @@ class FourBarLinkage:
     C = np.array([0.0, 0.0])  # C is chosen point for GUI
     C1 = np.array([0.0, 0.0]) # C1 is always with positive cross product
     C2 = np.array([0.0, 0.0]) # C2 is always with negative cross product
+    C_last = np.array([0.0, 0.0]) # C before one iteration
+    C_prev = np.array([0.0, 0.0]) # C before two iterations
     D  = np.array([0.0, 0.0])
     P = np.array([0.0, 0.0])  # P is chosen point for GUI
     P1  = np.array([0.0, 0.0]) # P1 is always with positive cross product
@@ -87,6 +95,9 @@ class FourBarLinkage:
         # check_Parameter
         self.check_Parameter()
 
+        # search Linkage Type
+        self.find_Linkage_Type()
+
         # find_Linkage_Type
         self.find_Linkage_Type()
 
@@ -95,7 +106,14 @@ class FourBarLinkage:
 
         # calculate all coordinates A, B, C, D, P
         self.calculate_Point_Position()
+
+        # calculate angle beta for the link BC with respect to the positive x-axis
+        self.calculate_beta()
+
+        self.C_last = self.C
         return
+
+
 
 
         
@@ -208,22 +226,105 @@ class FourBarLinkage:
         self.CD = (self.L / 4) + (self.T1 / 4) - (self.T2 / 4) + (self.T3 / 4)
         self.DA = (self.L / 4) - (self.T1 / 4) - (self.T2 / 4) - (self.T3 / 4)
         return
-    
+
+
     
     # calculate limits of angle alpha
     def calculate_alpha_lims(self):
-        # using law of cosines
-        a = self.BC + self.CD
-        b = self.AB
-        c = self.DA
-        cos_alpha_lims = (b**2 + c**2 - a**2)/(2*b*c)
+        """
+        Calculate the limit angles for the input link (alpha) of the four-bar linkage.
+        Uses the law of cosines to determine the valid range of alpha, ensuring the linkage can form a closed quadrilateral.
+        If the cosine value is out of the valid range ([-1, 1]), alpha limits are set to [0, 0].
+        """
+
+        # Calculate the effective lengths using the lengths of the linkage bars
+        a = self.BC + self.CD  # Combined length of BC and CD (link lengths between B->C and C->D)
+        b = self.AB  # Length of input link AB
+        c = self.DA  # Length of output link DA
+
+        # Using the law of cosines to find cos(alpha limits)
+        cos_alpha_lims = (b ** 2 + c ** 2 - a ** 2) / (2 * b * c)
+
+        # Check if the calculated cosine value is valid (cosine should be between -1 and 1)
         if np.abs(cos_alpha_lims) >= 1:
             self.alpha_rad_lims = [0., 2*math.pi]
             self.alpha_lims = [0., 360.]
         else:
-            self.alpha_rad_lims = [-np.arccos(cos_alpha_lims) + self.theta_rad, np.arccos(cos_alpha_lims) + self.theta_rad]
-            self.alpha_lims = [math.degrees(self.alpha_rad_lims[0]), math.degrees(self.alpha_rad_lims[1])]
-    
+            # If cosine value is valid, calculate the angle limits in radians
+            # Add or subtract arccos to get the limits based on the base angle theta_rad
+            self.alpha_rad_lims = [
+                -np.arccos(cos_alpha_lims) + self.theta_rad,  # Lower limit of alpha in radians
+                np.arccos(cos_alpha_lims) + self.theta_rad  # Upper limit of alpha in radians
+            ]
+
+            # Convert the radian limits to degrees and store in alpha_lims
+            self.alpha_lims = [
+                math.degrees(self.alpha_rad_lims[0]),  # Lower limit in degrees
+                math.degrees(self.alpha_rad_lims[1])  # Upper limit in degrees
+            ]
+        return
+
+
+    # calculate limits of angle beta
+    def calculate_beta_lims(self):
+        """
+        Calculate the limit angles for the link BC with respect to the positive x-axis (beta).
+        Uses the law of cosines to determine the valid range of beta, ensuring the linkage can form a closed quadrilateral.
+        The sides of the triangle used are AD + DC, AB, and BC.
+        """
+
+        # Calculate the effective lengths of the sides of the triangle formed by the linkage bars
+        a = self.DA + self.CD  # Combined length of AD and DC (link lengths between A->D and D->C)
+        b = self.AB  # Length of input link AB
+        c = self.BC  # Length of link BC
+
+        # Using the law of cosines to find cos(beta limits)
+        cos_beta_lims = (b**2 + c**2 - a**2) / (2 * b * c)
+
+        # Check if the calculated cosine value is valid (cosine should be between -1 and 1)
+        if np.abs(cos_beta_lims) >= 1:
+            # If cosine value is out of bounds, set beta limits to [0, 0] as the linkage cannot form a closed quadrilateral
+            self.beta_rad_lims = [0, 0]
+        else:
+            # If cosine value is valid, calculate the angle limits in radians
+            # Add or subtract arccos to get the limits based on the base angle theta_rad
+            self.beta_rad_lims = [
+                -np.arccos(cos_beta_lims) + self.theta_rad,  # Lower limit of beta in radians
+                np.arccos(cos_beta_lims) + self.theta_rad    # Upper limit of beta in radians
+            ]
+
+            # Convert the radian limits to degrees and store in beta_lims
+            self.beta_lims = [
+                math.degrees(self.beta_rad_lims[0]),  # Lower limit in degrees
+                math.degrees(self.beta_rad_lims[1])   # Upper limit in degrees
+            ]
+        return
+
+
+    # calculate angle beta
+    def calculate_beta(self):
+        """
+        Calculate the angle (beta) between the vector BC (from point B to point C) and the positive x-axis.
+        """
+        # Calculate the vector from point B to point C
+        BC_vector = self.C - self.B
+        # Calculate the magnitude (length) of the BC vector
+        BC_length = np.linalg.norm(BC_vector)
+        # Define the unit vector along the x-axis (1, 0)
+        x_axis_vector = np.array([1, 0])  # normalized vector of positive x-axis
+        # Calculate the dot product between BC_vector and the x_axis_vector
+        dot_product = np.dot(BC_vector, x_axis_vector)
+        # Calculate the cosine of the angle using the dot product formula:
+        # cos(beta) = (BC_vector • x_axis_vector) / (|BC_vector| * |x_axis_vector|)    ----- |x_axis_vector| = 1
+        cos_beta = dot_product / BC_length
+        # Check the cosine value is within the valid range [-1, 1]
+        cos_beta = np.clip(cos_beta, -1, 1)
+        # Calculate the angle in radians using arccos (inverse cosine)
+        self.beta_rad = np.arccos(cos_beta)
+        # Convert the angle from radians to degrees
+        self.beta = math.degrees(self.beta_rad)
+        return
+
 
 
     # calculate position with given angle
@@ -279,7 +380,7 @@ class FourBarLinkage:
             C1 = self.B + projection_length * BD_unit_vector + h * normal_vector_toBD
             C2 = self.B + projection_length * BD_unit_vector - h * normal_vector_toBD
 
-            """ Choose between C1 and C2 """
+            """ Choose between C1 and C2 according to cross product"""
             ###
 
             # calculate vector BC1
@@ -297,10 +398,65 @@ class FourBarLinkage:
             # store results, ensure that cross product of C1 is always positive
             #self.C1 = C_positive
             #self.C2 = C_negative
+
             self.C1 = C1
             self.C2 = C2
-            
+
             self.C = self.C2
+            return
+
+
+
+    """ Choose between C1 and C2 for GUI"""
+    def calculate_C_Position_Animation(self):
+            """ 
+            Choose between C1 and C2 for Animation
+            """
+
+            if np.linalg.norm(self.C_prev - self.C_last) > 0:  # Ensure C_last and C_prev are not equal
+                # Calculate v_last = C_last - C_prev (the previous motion vector v_last)
+                v_last = self.C_last - self.C_prev
+                v_last_magnitude = np.linalg.norm(v_last)
+                if v_last_magnitude > 0:
+                    v_last_normalized = v_last / v_last_magnitude
+                else:
+                    v_last_normalized = v_last
+
+                # Calculate vectors from C_last to C1 and C2
+                v_C1_last = self.C1 - self.C_last
+                v_C2_last = self.C2 - self.C_last
+
+                # Normalize vectors
+                v_C1_last_magnitude = np.linalg.norm(v_C1_last)
+                v_C2_last_magnitude = np.linalg.norm(v_C2_last)
+
+                if v_C1_last_magnitude > 0:
+                    v_C1_last_normalized = v_C1_last / v_C1_last_magnitude
+                else:
+                    v_C1_last_normalized = v_C1_last
+
+                if v_C2_last_magnitude > 0:
+                    v_C2_last_normalized = v_C2_last / v_C2_last_magnitude
+                else:
+                    v_C2_last_normalized = v_C2_last
+
+                # Calculate the cosine of the angles between v_last and the vectors to C1 and C2
+                cos_theta_1 = np.dot(v_last_normalized, v_C1_last_normalized)
+                cos_theta_2 = np.dot(v_last_normalized, v_C2_last_normalized)
+
+                # Choose C1 or C2 based on the smallest angle (largest cosine)
+                if cos_theta_1 > cos_theta_2:
+                    self.C = self.C1
+                else:
+                    self.C = self.C2
+            else:
+                # Default to C2 if no previous motion is detected
+                self.C = self.C2
+
+            # Update the previous C positions for the next iteration
+            self.C_prev = self.C_last
+            self.C_last = self.C
+
             return
 
 
@@ -371,20 +527,49 @@ class FourBarLinkage:
     #calculate coordinates after iteration
     def Iteration_for_Animation(self, trace: bool):
         """
-        Perform an iteration for the animation.
+        Perform an iteration for the animation, simulating back-and-forth (reciprocal) motion of the input link alpha.
+
+        The motion of alpha alternates direction when it hits the upper or lower limit of alpha_lims.
 
         Parameters:
         trace (bool): If True, enables tracking of the points' trajectory.
         """
 
-        self.alpha = self.alpha + self.alpha_velocity * self.t
+        # Initialize iteration state (0 for increasing, 1 for decreasing)
+        if not hasattr(self, 'direction'):  # Check if direction attribute exists
+            self.direction = 0  # 0 means increasing alpha, 1 means decreasing alpha
+
+        # Update alpha based on current direction
+        if self.direction == 0:  # Increasing alpha
+            self.alpha += self.alpha_velocity * self.t
+
+            # Check if alpha exceeds the upper limit
+            if self.alpha >= self.alpha_lims[1]:
+                # Set alpha to the upper limit
+                self.alpha = self.alpha_lims[1]
+                # Switch direction to decreasing
+                self.direction = 1
+
+        elif self.direction == 1:  # Decreasing alpha
+            self.alpha -= self.alpha_velocity * self.t
+
+            # Check if alpha falls below the lower limit
+            if self.alpha <= self.alpha_lims[0]:
+                # Set alpha to the lower limit
+                self.alpha = self.alpha_lims[0]
+                # Switch direction to increasing
+                self.direction = 0
+
+        # Run the main calculation (update point positions)
         self.run()
 
+        # If trace is enabled, update the trajectory data
         if trace:
-            # start tracing and record trajectory
             self.update_trajectory()
 
         return
+
+
 
     def Iteration_for_Animation_Mouse(self, trace: bool, alpha):
         """
