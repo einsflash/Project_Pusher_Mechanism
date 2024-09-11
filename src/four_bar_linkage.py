@@ -404,18 +404,15 @@ class FourBarLinkage:
 
         self.C1 = C1
         self.C2 = C2
+        C_prev = self.C
         if self.C_mode=='C2':
-            C_prev = self.C
             self.C = self.C2
-            # update self.C_prev only if C was updated
-            if [C_prev[0]-self.C[0], C_prev[1]-self.C[1]] != [0, 0]:
-                self.C_prev = C_prev
         else:
-            C_prev = self.C
             self.C = self.C1
-            # update self.C_prev only if C was updated
-            if [C_prev[0]-self.C[0], C_prev[1]-self.C[1]] != [0, 0]:
-                self.C_prev = C_prev
+        
+        # update self.C_prev only if C was updated
+        if [C_prev[0]-self.C[0], C_prev[1]-self.C[1]] != [0, 0]:
+            self.C_prev = C_prev
         return
 
 
