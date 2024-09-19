@@ -187,6 +187,20 @@ class GUI:
         # Point P relative to A
         P_x = round(A_x + (self.linkage.P[0]-self.linkage.A[0])*scale)
         P_y = round(A_y - (self.linkage.P[1]-self.linkage.A[1])*scale)
+        # display angles
+        radius_alpha = round(self.width/30)
+        radius_theta = round(self.width/20)
+        self.model_animation.create_arc(A_x-radius_alpha, A_y-radius_alpha,
+                                        A_x+radius_alpha, A_y+radius_alpha, start = 0,
+                                        extent=self.linkage.alpha, outline = "gray",
+                                        dash=(2,2))
+        if self.linkage.theta!=0:
+            self.model_animation.create_arc(A_x-radius_theta, A_y-radius_theta,
+                                            A_x+radius_theta, A_y+radius_theta, start = 0,
+                                            extent=self.linkage.theta, outline = "gray",
+                                            dash=(2,2))
+        # horizontal line
+        self.model_animation.create_line(A_x, A_y, A_x+3*radius_alpha, A_y, fill="grey", dash=(2,2))
         # lines
         self.model_animation.create_line(A_x, A_y, B_x, B_y, fill="green", width=3)
         self.model_animation.create_line(B_x, B_y, C_x, C_y, fill="green", width=3)
@@ -194,8 +208,10 @@ class GUI:
         self.model_animation.create_line(D_x, D_y, A_x, A_y, fill="green", width=3)
         self.model_animation.create_line(C_x, C_y, P_x, P_y, fill="green", width=3)
         self.model_animation.create_line(P_x, P_y, D_x, D_y, fill="green", width=3)
+    
         
-        # display point names
+        
+        # display names
         delta_x = round(0.012*self.model_animation.width)
         delta_y = round(0.012*self.model_animation.height)
         self.model_animation.create_text(A_x-delta_x, A_y+delta_y, text="A", fill="black",
@@ -208,8 +224,15 @@ class GUI:
                                          font=('Helvetica 11 bold'))
         self.model_animation.create_text(P_x, P_y-np.sqrt(delta_y*delta_y+delta_x*delta_x),
                                          text="P", fill="black", font=('Helvetica 11 bold'))
-        
-        # display bar names
+        self.model_animation.create_text(A_x + radius_alpha*np.cos(self.linkage.alpha_rad/2),
+                                         A_y - radius_alpha*np.sin(self.linkage.alpha_rad/2),
+                                         text="α", fill="black",
+                                         font=('Helvetica 11 bold'))
+        if self.linkage.theta!=0.0: 
+            self.model_animation.create_text(A_x + radius_theta*np.cos(self.linkage.theta_rad/2),
+                                             A_y - radius_theta*np.sin(self.linkage.theta_rad/2),
+                                             text="θ", fill="black",
+                                             font=('Helvetica 11 bold'))
         delta_x = round(0.012*self.model_animation.width)
         delta_y = round(0.012*self.model_animation.height)
         self.model_animation.create_text((D_x+A_x)/2, (D_y+A_y)/2, text="a", fill="black",
