@@ -23,7 +23,7 @@ class FourBarLinkage:
     DA = 0.  # DA
     # input angle in degrees (vector AD to positive x achse)
     alpha = 0.
-    # input angle in degrees (vector BC to positive x achse)
+    # input angle in degrees (vector BC to negative x achse)
     beta = 0.
     # angle in degrees between ground bar and horizont
     theta = 0.
@@ -250,6 +250,8 @@ class FourBarLinkage:
 
         # Check if the calculated cosine value is valid (cosine should be between -1 and 1)
         if np.abs(cos_alpha_lims) >= 1:
+            # If cosine value is out of bounds, there is no cos limits or configuration is invalid,
+            # but we validate it another way
             self.alpha_limited = False
             self.alpha_rad_lims = [-math.pi, math.pi]
             self.alpha_lims = [-180., 180.]
@@ -272,7 +274,7 @@ class FourBarLinkage:
     # calculate limits of angle beta
     def calculate_beta_lims(self):
         """
-        Calculate the limit angles for the link BC with respect to the positive x-axis (beta).
+        Calculate the limit angles for the link BC with respect to the negative x-axis (beta).
         Uses the law of cosines to determine the valid range of beta, ensuring the linkage can form a closed quadrilateral.
         The sides of the triangle used are AD + DC, AB, and BC.
         """
@@ -287,15 +289,16 @@ class FourBarLinkage:
 
         # Check if the calculated cosine value is valid (cosine should be between -1 and 1)
         if np.abs(cos_beta_lims) >= 1:
-            # If cosine value is out of bounds, there is no cos limits
+            # If cosine value is out of bounds, there is no cos limits or configuration is invalid,
+            # but we validate it another way
             self.beta_rad_lims = [-math.pi, math.pi]
             self.beta_lims = [-180.0, 180.0]
         else:
             # If cosine value is valid, calculate the angle limits in radians
             # Add or subtract arccos to get the limits based on the base angle theta_rad
             self.beta_rad_lims = [
-                -np.arccos(cos_beta_lims) + self.theta_rad,  # Lower limit of beta in radians
-                np.arccos(cos_beta_lims) + self.theta_rad    # Upper limit of beta in radians
+                -np.arccos(cos_beta_lims) - self.theta_rad,  # Lower limit of beta in radians
+                np.arccos(cos_beta_lims) - self.theta_rad    # Upper limit of beta in radians
             ]
 
             # Convert the radian limits to degrees and store in beta_lims
@@ -316,7 +319,7 @@ class FourBarLinkage:
         # Calculate the magnitude (length) of the BC vector
         BC_length = np.linalg.norm(BC_vector)
         # Define the unit vector along the x-axis (1, 0)
-        x_axis_vector = np.array([1, 0])  # normalized vector of positive x-axis
+        x_axis_vector = np.array([-1, 0])  # normalized vector of positive x-axis
         # Calculate the dot product between BC_vector and the x_axis_vector
         dot_product = np.dot(BC_vector, x_axis_vector)
         # Calculate the cosine of the angle using the dot product formula:
