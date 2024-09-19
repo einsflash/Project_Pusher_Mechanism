@@ -2,25 +2,6 @@ from four_bar_linkage import FourBarLinkage
 import tkinter as tk
 import numpy as np
 import math
-        
-class ResizableCanvas(tk.Canvas):
-    def __init__(self, parent, **kwargs):
-        tk.Canvas.__init__(self, **kwargs)
-        self.bind("<Configure>", self.resize)
-        self.height = self.winfo_reqheight()
-        self.width = self.winfo_reqwidth()
-        self.scale = [self.width/self.winfo_screenwidth(), self.height/self.winfo_screenheight()]
-
-    def resize(self,event):
-        # determine scale factors
-        wscale = float(event.width)/(self.width*self.scale[0])
-        hscale = float(event.height)/(self.height*self.scale[1])
-        self.width = round(event.width*self.scale[0])
-        self.height = round(event.height*self.scale[1])
-        # resize the canvas 
-        self.config(width=self.width, height=self.height)
-        # rescale all the objects
-        self.scale("all", 0, 0, wscale, hscale)
 
 class GUI:
     def __init__(self):
@@ -46,7 +27,7 @@ class GUI:
         self.toolbar_frame = tk.Frame(self.tk, width=round(0.3*self.width),
                                       height=round(0.6*self.height))
         self.toolbar_frame.width = round(0.3*self.width)
-        self.toolbar_frame.height = round(0.6*self.height)
+        self.toolbar_frame.height = round(0.9*self.height)
         self.toolbar_frame.grid(row=0, column=1, columnspan=4)
         # generate picture
         self.display_toolbar()
@@ -99,7 +80,8 @@ class GUI:
         self.reset_button.grid(sticky="W", row=9, column=1)
         # all checkbuttons
         self.enable_animation = tk.IntVar()
-        self.animation_button = tk.Checkbutton(self.toolbar_frame, text="animation", variable=self.enable_animation,
+        self.animation_button = tk.Checkbutton(self.toolbar_frame, text="animation", 
+                                               variable=self.enable_animation,
                                                onvalue=1, offvalue=0, command=self.animation)
         self.animation_button.grid(row=9, column=2)
         self.trace_text = tk.Text(self.toolbar_frame, height=1, width=6, bd=0, bg="grey94")
@@ -125,7 +107,8 @@ class GUI:
         self.slider_alpha.configure(from_=left_limit, to=right_limit)
         # alpha should be always in alpha_lims
         self.linkage.calculate_alpha_lims()
-        if self.linkage.alpha < self.linkage.alpha_lims[0] or self.linkage.alpha > self.linkage.alpha_lims[1]:
+        if self.linkage.alpha < self.linkage.alpha_lims[0] or \
+           self.linkage.alpha > self.linkage.alpha_lims[1]:
             self.linkage.alpha = (self.linkage.alpha_lims[0] + self.linkage.alpha_lims[1])/2
             self.linkage.alpha_rad = math.radians(self.linkage.alpha)
         self.slider_alpha.set(self.linkage.alpha)
@@ -135,7 +118,8 @@ class GUI:
         # text params in symbols
         text_height=4
         text_width=30
-        self.text_classification_values = tk.Text(self.toolbar_frame, height=text_height, width=text_width, bd=0, bg="grey94")
+        self.text_classification_values = tk.Text(self.toolbar_frame, height=text_height, 
+                                                  width=text_width, bd=0, bg="grey94")
         self.text_classification_values.insert(tk.END, f'T1 = g + h - b - a: {round(self.linkage.T1,3)}')
         self.text_classification_values.insert(tk.END, f'\nT2 = b + g - h - a: {round(self.linkage.T2,3)}')
         self.text_classification_values.insert(tk.END, f'\nT3 = h + b - g - a: {round(self.linkage.T3,3)}')
@@ -148,7 +132,8 @@ class GUI:
         text_height = 3  # Adjusted to fit four parameters
         text_width = 30
         # Create a text widget to display the parameters
-        self.text_information = tk.Text(self.toolbar_frame, height=text_height, width=text_width, bd=0, bg="grey94")
+        self.text_information = tk.Text(self.toolbar_frame, height=text_height,
+                                        width=text_width, bd=0, bg="grey94")
         # Display the Input_Link_Type, Output_Link_Type, Linkage_Type
         self.text_information.insert(tk.END, f'Input Link Type: {self.linkage.Input_Link_Type}')
         self.text_information.insert(tk.END, f'\nOutput Link Type: {self.linkage.Output_Link_Type}')
@@ -247,16 +232,29 @@ class GUI:
     # this function is used to make sure that the four bar linkage model fit in GUI frame
     def scaling_factor(self):
         # max length in x direction
-        max_x = np.abs(np.cos(self.linkage.theta))*self.linkage.AB
-        max_x += 2*max(self.linkage.DA, self.linkage.BC)
-        max_x += 2*max(1, np.sqrt(self.linkage.coupler_offset**2+(np.abs(self.linkage.coupler_position)+ 0.5)**2))*self.linkage.CD
+        max_x = np.abs(np.cos(self.linkage.theta_rad))*self.linkage.AB
+        horizontal_value = max(abs(self.linkage.DA*np.cos(self.linkage.alpha_rad_lims[1])),
+                               abs(self.linkage.BC*np.cos(self.linkage.beta_rad_lims[1])))
+        max_x += 2*horizontal_value
+        max_x += 2*max(abs(self.linkage.coupler_position) - 0.5*self.linkage.CD, 0.0)
         # max length in y direction
-        max_y = np.abs(np.sin(self.linkage.theta))*self.linkage.AB
-        max_y += 2*max(self.linkage.DA, self.linkage.BC)
-        max_y += 2*max(1, np.sqrt(self.linkage.coupler_offset**2+(np.abs(self.linkage.coupler_position)+ 0.5)**2))*self.linkage.CD
+        max_y = np.abs(np.sin(self.linkage.theta_rad))*self.linkage.AB
+        vertical_value = 0.0
+        if self.linkage.alpha_lims[1] > 90.0 and self.linkage.alpha_lims[0] < 90.0:
+            vertical_value = self.linkage.DA
+        else:
+            vertical_value = self.linkage.DA*abs(np.sin(self.linkage.alpha_rad_lims[1]))
+        if self.linkage.beta_lims[1] > 90.0 and self.linkage.beta_lims[0] < 90.0:
+            vertical_value = max(vertical_value, self.linkage.BC)
+        else:
+            vertical_value = max(vertical_value,
+                                 self.linkage.BC*abs(np.sin(self.linkage.beta_rad_lims[1])))
+        max_y += 2*vertical_value
+        max_y += 2*abs(self.linkage.coupler_offset)
         # scaling factor for point coordinates
         scale = min(float(self.model_animation.width)/max_x,
                     float(self.model_animation.height)/max_y)
+        scale *= 0.95 # additional place is required for point names
         return scale
     
 

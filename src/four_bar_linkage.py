@@ -103,8 +103,9 @@ class FourBarLinkage:
         # find_Linkage_Type
         self.find_Linkage_Type()
 
-        # calculate alpha limits
+        # calculate limits
         self.calculate_alpha_lims()
+        self.calculate_beta_lims()
 
         # calculate all coordinates A, B, C, D, P
         self.calculate_Point_Position()
@@ -286,8 +287,9 @@ class FourBarLinkage:
 
         # Check if the calculated cosine value is valid (cosine should be between -1 and 1)
         if np.abs(cos_beta_lims) >= 1:
-            # If cosine value is out of bounds, set beta limits to [0, 0] as the linkage cannot form a closed quadrilateral
-            self.beta_rad_lims = [0, 0]
+            # If cosine value is out of bounds, there is no cos limits
+            self.beta_rad_lims = [-math.pi, math.pi]
+            self.beta_lims = [-180.0, 180.0]
         else:
             # If cosine value is valid, calculate the angle limits in radians
             # Add or subtract arccos to get the limits based on the base angle theta_rad
@@ -361,7 +363,6 @@ class FourBarLinkage:
         BD_vector = self.D - self.B
         BD_length = np.linalg.norm(BD_vector)
         BD_unit_vector = BD_vector / BD_length
-
         # calculate normal vector , which is orthogonal to BD
         normal_vector_toBD = np.array([-BD_unit_vector[1], BD_unit_vector[0]])
 
@@ -372,7 +373,11 @@ class FourBarLinkage:
 
         #Height h is calculated using Heron's formula to find the area of the triangle, and then using the area formula.
         s = (a + b + c) / 2
-        area = np.sqrt(s * (s - a) * (s - b) * (s - c))
+        area_2 = s * (s - a) * (s - b) * (s - c)
+        # some times bug happens for small negative values near double precision
+        if abs(area_2) < 10**-13:
+            area_2 = 0.0
+        area = np.sqrt(area_2)
         h = 2 * area / c
 
 
