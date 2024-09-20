@@ -1,6 +1,5 @@
 import math
 import numpy as np
-import pandas as pd
 class FourBarLinkage:
     # Parameter Check
     Linkage_Type = "Undefined"  # This will be either "Grashof" or "non-Grashof" after check_Parameter()
@@ -8,12 +7,6 @@ class FourBarLinkage:
     # Parameter to display in GUI
     Input_Link_Type = "Undefined" # Type of input linkage (e.g., 'crank', 'π-rocker', '0-rocker')
     Output_Link_Type = "Undefined" # Type of output linkage (e.g., 'rocker', 'π-rocker', 'crank', '0-rocker')
-
-    # Record Trajectories for Animation ==== function is update_trajectory
-    trajectory_df = pd.DataFrame(columns=[
-        'A_x', 'A_y', 'B_x', 'B_y', 'C_x', 'C_y',
-        'D_x', 'D_y', 'P_x', 'P_y'
-    ])
 
     # all parameters you need to calculate coordinates, default initializing
     # bars lengths
@@ -528,29 +521,14 @@ class FourBarLinkage:
 
 
 
-    def update_trajectory(self):
-        """Update the points' trajectory and add it to the DataFrame."""
-        new_data = {
-            'A_x': self.A[0], 'A_y': self.A[1],
-            'B_x': self.B[0], 'B_y': self.B[1],
-            'C_x': self.C[0], 'C_y': self.C[1],
-            'D_x': self.D[0], 'D_y': self.D[1],
-            'P_x': self.P[0], 'P_y': self.P[1],
-        }
-        self.trajectory_df = self.trajectory_df.append(new_data, ignore_index=True)
-        return
-
 
 
     #calculate coordinates after iteration
-    def Iteration_for_Animation(self, trace: bool):
+    def Iteration_for_Animation(self):
         """
         Perform an iteration for the animation, simulating back-and-forth (reciprocal) motion of the input link alpha.
 
         The motion of alpha alternates direction when it hits the upper or lower limit of alpha_lims.
-
-        Parameters:
-        trace (bool): If True, enables tracking of the points' trajectory.
         """
 
         # Initialize iteration state (0 for increasing, 1 for decreasing)
@@ -600,10 +578,6 @@ class FourBarLinkage:
         # Run the main calculation (update point positions)
         self.run()
 
-        # If trace is enabled, update the trajectory data
-        if trace:
-            self.update_trajectory()
-
         return
     
     # function to switch between C1 and C2, call only by alpha_lim
@@ -621,24 +595,3 @@ class FourBarLinkage:
             if distance < distance_prev:
                 self.C_mode = 'C2'
         
-
-
-
-    def Iteration_for_Animation_Mouse(self, trace: bool, alpha):
-        """
-        Perform an iteration for the animation.
-
-        With Mouseclick! And alpha is direction of mouse, which will be input from GUI.
-
-        Parameters:
-        trace (bool): If True, enables tracking of the points' trajectory.
-        """
-
-        self.alpha = alpha
-        self.run()
-
-        if trace:
-            # start tracing and record trajectory
-            self.update_trajectory()
-
-        return
