@@ -32,6 +32,10 @@ class GUI:
         self.toolbar_frame.width = width
         self.toolbar_frame.height = height
         self.toolbar_frame.grid(row=0, column=1, columnspan=4)
+        # positions
+        self.positions_C = []
+        self.positions_D = []
+        self.positions_P = []
         # generate picture
         self.display_toolbar()
         # trace is disabled
@@ -185,15 +189,27 @@ class GUI:
         
         # dasplay
         # tracing
+        # number of points to trace
+        N_points = 10*round((self.linkage.alpha_lims[1]-self.linkage.alpha_lims[0])/ \
+                         (self.linkage.alpha_velocity * self.linkage.t)) # delete later this factor of 10
         if self.trace_C:
-            self.model_animation.create_oval(C_x-1, C_y-1, C_x, C_y, fill="green",
-                                             tags='trace_C')
+            if len(self.positions_C)<=N_points:
+                self.positions_C.append([C_x, C_y])
+            if len(self.positions_C)>2:
+                self.model_animation.create_line(self.positions_C, fill="black", width=1,
+                                                 tags='to_delete_when_refresh')
         if self.trace_D:
-            self.model_animation.create_oval(D_x-1, D_y-1, D_x, D_y, fill="green",
-                                             tags='trace_D')
+            if len(self.positions_D)<=N_points:
+                self.positions_D.append([D_x, D_y])
+            if len(self.positions_D)>2:
+                self.model_animation.create_line(self.positions_D, fill="black", width=1,
+                                                 tags='to_delete_when_refresh')
         if self.trace_P:
-            self.model_animation.create_oval(P_x-1, P_y-1, P_x, P_y, fill="green",
-                                             tags='trace_P')
+            if len(self.positions_P)<=N_points:
+                self.positions_P.append([P_x, P_y])
+            if len(self.positions_P)>2:
+                self.model_animation.create_line(self.positions_P, fill="black", width=1,
+                                                 tags='to_delete_when_refresh')
         # display angles
         radius_alpha = round(min(self.width/30, self.linkage.AB*scale, self.linkage.DA*scale))
         radius_theta = round(min(self.width/20, self.linkage.AB*scale))
@@ -304,7 +320,6 @@ class GUI:
         # scaling factor for point coordinates
         scale = min(float(self.model_animation.width)/max_x,
                     float(self.model_animation.height)/max_y)
-        scale *= 0.95 # additional place is required for point names
         return scale
     
     # normalities to 4 linkage bars
@@ -395,27 +410,27 @@ class GUI:
         else:
             self.trace_C = False
             # delete tracing
-            self.model_animation.delete('trace_C')
+            self.positions_C = []
     def trace_D(self):
         if self.enable_trace_D.get():
             self.trace_D = True
         else:
             self.trace_D = False
             # delete tracing
-            self.model_animation.delete('trace_D')
+            self.positions_D = []
     def trace_P(self):
         if self.enable_trace_P.get():
             self.trace_P = True
         else:
             self.trace_P = False
             # delete tracing
-            self.model_animation.delete('trace_P')
+            self.positions_P = []
     
     # delete tracing
     def delete_tracing(self):
-        self.model_animation.delete('trace_C')
-        self.model_animation.delete('trace_D')
-        self.model_animation.delete('trace_P')
+        self.positions_C = []
+        self.positions_D = []
+        self.positions_P = []
         
   
 if __name__ == "__main__":
