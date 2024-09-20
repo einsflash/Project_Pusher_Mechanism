@@ -523,10 +523,10 @@ class FourBarLinkage:
 
 
 
-    #calculate coordinates after iteration
-    def Iteration_for_Animation(self):
+    # update alpha for animation
+    def animation_alpha(self):
         """
-        Perform an iteration for the animation, simulating back-and-forth (reciprocal) motion of the input link alpha.
+        Update alpha for new iteration of the animation.
 
         The motion of alpha alternates direction when it hits the upper or lower limit of alpha_lims.
         """
@@ -573,10 +573,6 @@ class FourBarLinkage:
             if not self.alpha_limited and self.alpha < -180.0:
                 self.alpha = 180.0
                 self.alpha_rad = math.pi
-        
-
-        # Run the main calculation (update point positions)
-        self.run()
 
         return
     

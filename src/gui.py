@@ -7,7 +7,7 @@ class GUI:
     
     def __init__(self):
         # default parameters
-        self.linkage = FourBarLinkage(3., 1.41, 1., 1.41, 45., 0., 0.25, 0.3, 0.03, 30)
+        self.linkage = FourBarLinkage(3., 1.41, 1., 1.41, 45., 0., 0.25, 0.3, 0.05, 10)
         self.linkage.run()
         self.tk = tk.Tk()
         self.width = round(0.8*self.tk.winfo_screenwidth())
@@ -18,25 +18,27 @@ class GUI:
         self.model_frame = tk.Frame(self.tk, width=round(0.7*self.width),
                                     height=round(0.6*self.height))
         self.model_frame.grid(row=0, column=0)
-        self.model_animation = tk.Canvas(self.model_frame, width=round(0.7*self.width),
-                                         height=round(0.6*self.height))
-        self.model_animation.width = round(0.7*self.width)
-        self.model_animation.height = round(0.6*self.height)
+        width = round(0.7*self.width)
+        height = round(0.9*self.height)
+        self.model_animation = tk.Canvas(self.model_frame, width=width,
+                                         height=height)
+        self.model_animation.width = width
+        self.model_animation.height = height
         self.model_animation.grid(row=0, column=0)
         # toolbar
-        self.toolbar_frame = tk.Frame(self.tk, width=round(0.3*self.width),
-                                      height=round(0.6*self.height))
-        self.toolbar_frame.width = round(0.3*self.width)
-        self.toolbar_frame.height = round(0.9*self.height)
+        width = round(0.3*self.width)
+        self.toolbar_frame = tk.Frame(self.tk, width=width,
+                                      height=height)
+        self.toolbar_frame.width = width
+        self.toolbar_frame.height = height
         self.toolbar_frame.grid(row=0, column=1, columnspan=4)
         # generate picture
         self.display_toolbar()
-        self.display_classification_values()
         # trace is disabled
         self.trace_C = False
         self.trace_D = False
         self.trace_P = False
-        self.display_linkage()
+        self.display_classification_values()
     
     # configure toolbar
     def display_toolbar(self):
@@ -320,21 +322,27 @@ class GUI:
     # functions for scales to update parameters
     def update_parameter_a(self, val):
         self.linkage.DA = float(val)
+        self.delete_tracing()
         self.refresh()
     def update_parameter_g(self, val):
         self.linkage.AB = float(val)
+        self.delete_tracing()
         self.refresh()
     def update_parameter_b(self, val):
         self.linkage.BC = float(val)
+        self.delete_tracing()
         self.refresh()
     def update_parameter_h(self, val):
         self.linkage.CD = float(val)
+        self.delete_tracing()
         self.refresh()
     def update_parameter_p_pos(self, val):
         self.linkage.coupler_position = float(val)/100
+        self.delete_tracing()
         self.refresh()
     def update_parameter_p_off(self, val):
         self.linkage.coupler_offset = float(val)/100
+        self.delete_tracing()
         self.refresh()
     def update_parameter_alpha(self, val):
         self.linkage.alpha = float(val)
@@ -342,6 +350,7 @@ class GUI:
         self.refresh()
     def update_parameter_theta(self, val):
         self.linkage.theta = float(val)
+        self.delete_tracing()
         self.linkage.theta_rad = math.radians(self.linkage.theta)
         self.refresh()
      
@@ -355,10 +364,11 @@ class GUI:
     
     # generate default linkage
     def reset(self):
-        self.linkage = FourBarLinkage(3., 1.41, 1., 1.41, 45., 0., 0.25, 0.3, 0.03, 30)
+        self.linkage = FourBarLinkage(3., 1.41, 1., 1.41, 45., 0., 0.25, 0.3, 0.05, 10)
         self.update_alpha_slider()
         self.linkage.run()
         self.reset_all_sliders()
+        self.delete_tracing()
         
     def reset_all_sliders(self):
         self.slider_a.set(self.linkage.DA)
@@ -375,7 +385,7 @@ class GUI:
     
     def run_animation(self):
         if self.enable_animation.get():
-            self.linkage.Iteration_for_Animation()
+            self.linkage.animation_alpha()
             self.refresh()
             self.tk.after(50, self.run_animation)
         
@@ -400,6 +410,13 @@ class GUI:
             self.trace_P = False
             # delete tracing
             self.model_animation.delete('trace_P')
+    
+    # delete tracing
+    def delete_tracing(self):
+        self.model_animation.delete('trace_C')
+        self.model_animation.delete('trace_D')
+        self.model_animation.delete('trace_P')
+        
   
 if __name__ == "__main__":
     GUI().tk.mainloop() 
