@@ -6,7 +6,7 @@ import math
 class GUI:
     def __init__(self):
         # default parameters
-        self.linkage = FourBarLinkage(3., 1.41, 1., 1.41, 45., 0., 0.5, 0.3, 0.03, 30)
+        self.linkage = FourBarLinkage(3., 1.41, 1., 1.41, 45., 0., 0.25, 0.3, 0.03, 30)
         self.linkage.run()
         self.tk = tk.Tk()
         self.width = round(0.8*self.tk.winfo_screenwidth())
@@ -173,19 +173,19 @@ class GUI:
         P_x = round(A_x + (self.linkage.P[0]-self.linkage.A[0])*scale)
         P_y = round(A_y - (self.linkage.P[1]-self.linkage.A[1])*scale)
         # display angles
-        radius_alpha = round(self.width/30)
-        radius_theta = round(self.width/20)
+        radius_alpha = round(min(self.width/30, self.linkage.AB*scale, self.linkage.DA*scale))
+        radius_theta = round(min(self.width/20, self.linkage.AB*scale))
         self.model_animation.create_arc(A_x-radius_alpha, A_y-radius_alpha,
                                         A_x+radius_alpha, A_y+radius_alpha, start = 0,
-                                        extent=self.linkage.alpha, outline = "gray",
+                                        extent=self.linkage.alpha, outline = "black",
                                         dash=(2,2))
         if self.linkage.theta!=0:
             self.model_animation.create_arc(A_x-radius_theta, A_y-radius_theta,
                                             A_x+radius_theta, A_y+radius_theta, start = 0,
-                                            extent=self.linkage.theta, outline = "gray",
+                                            extent=self.linkage.theta, outline = "black",
                                             dash=(2,2))
         # horizontal line
-        self.model_animation.create_line(A_x, A_y, A_x+3*radius_alpha, A_y, fill="grey", dash=(2,2))
+        self.model_animation.create_line(A_x, A_y, A_x+3*radius_alpha, A_y, fill="black", dash=(2,2))
         # lines
         self.model_animation.create_line(A_x, A_y, B_x, B_y, fill="green", width=3)
         self.model_animation.create_line(B_x, B_y, C_x, C_y, fill="green", width=3)
@@ -209,54 +209,73 @@ class GUI:
                                          font=('Helvetica 11 bold'))
         self.model_animation.create_text(P_x, P_y-np.sqrt(delta_y*delta_y+delta_x*delta_x),
                                          text="P", fill="black", font=('Helvetica 11 bold'))
-        self.model_animation.create_text(A_x + radius_alpha*np.cos(self.linkage.alpha_rad/2),
+        self.model_animation.create_text(A_x + radius_alpha*np.cos(self.linkage.alpha_rad/2)+10,
                                          A_y - radius_alpha*np.sin(self.linkage.alpha_rad/2),
                                          text="α", fill="black",
                                          font=('Helvetica 11 bold'))
         if self.linkage.theta!=0.0: 
-            self.model_animation.create_text(A_x + radius_theta*np.cos(self.linkage.theta_rad/2),
+            self.model_animation.create_text(A_x + radius_theta*np.cos(self.linkage.theta_rad/2)+10,
                                              A_y - radius_theta*np.sin(self.linkage.theta_rad/2),
                                              text="θ", fill="black",
                                              font=('Helvetica 11 bold'))
-        delta_x = round(0.012*self.model_animation.width)
-        delta_y = round(0.012*self.model_animation.height)
-        self.model_animation.create_text((D_x+A_x)/2, (D_y+A_y)/2, text="a", fill="black",
+        
+        radius_names = round(scale*min(self.linkage.AB, self.linkage.BC, self.linkage.CD,
+                                       self.linkage.DA)/10)
+        g, b, h, a = self.calculate_normalities()
+        self.model_animation.create_text(round(radius_names*a[0]+(A_x+D_x)/2),
+                                         round(-radius_names*a[1]+(A_y+D_y)/2),
+                                         text="a", fill="black",
                                          font=('Helvetica 11 bold'))
-        self.model_animation.create_text((B_x+A_x)/2, (B_y+A_y)/2, text="g", fill="black",
+        self.model_animation.create_text(round(radius_names*g[0]+(A_x+B_x)/2),
+                                         round(-radius_names*g[1]+(A_y+B_y)/2),
+                                         text="g", fill="black",
                                          font=('Helvetica 11 bold'))
-        self.model_animation.create_text((B_x+C_x)/2, (B_y+C_y)/2, text="b", fill="black",
+        self.model_animation.create_text(round(radius_names*b[0]+(C_x+B_x)/2),
+                                         round(-radius_names*b[1]+(C_y+B_y)/2),
+                                         text="b", fill="black",
                                          font=('Helvetica 11 bold'))
-        self.model_animation.create_text((D_x+C_x)/2, (D_y+C_y)/2, text="h", fill="black",
+        self.model_animation.create_text(round(radius_names*h[0]+(C_x+D_x)/2),
+                                         round(-radius_names*h[1]+(C_y+D_y)/2),
+                                         text="h", fill="black",
                                          font=('Helvetica 11 bold'))
 
     # this function is used to make sure that the four bar linkage model fit in GUI frame
     def scaling_factor(self):
         # max length in x direction
-        max_x = np.abs(np.cos(self.linkage.theta_rad))*self.linkage.AB
-        horizontal_value = max(abs(self.linkage.DA*np.cos(self.linkage.alpha_rad_lims[1])),
-                               abs(self.linkage.BC*np.cos(self.linkage.beta_rad_lims[1])))
+        # links AB and CD
+        max_x = np.abs(np.cos(self.linkage.theta_rad))*max(self.linkage.AB, self.linkage.CD)
+        # links DA and BC
+        horizontal_value = max(self.linkage.DA, self.linkage.BC)
         max_x += 2*horizontal_value
-        max_x += 2*max(abs(self.linkage.coupler_position) - 0.5*self.linkage.CD, 0.0)
+        # point P
+        max_x += 2*max(np.sqrt(self.linkage.coupler_position**2 +\
+                               self.linkage.coupler_offset**2)*self.linkage.CD, 0.0)
         # max length in y direction
-        max_y = np.abs(np.sin(self.linkage.theta_rad))*self.linkage.AB
-        vertical_value = 0.0
-        if self.linkage.alpha_lims[1] > 90.0 and self.linkage.alpha_lims[0] < 90.0:
-            vertical_value = self.linkage.DA
-        else:
-            vertical_value = self.linkage.DA*abs(np.sin(self.linkage.alpha_rad_lims[1]))
-        if self.linkage.beta_lims[1] > 90.0 and self.linkage.beta_lims[0] < 90.0:
-            vertical_value = max(vertical_value, self.linkage.BC)
-        else:
-            vertical_value = max(vertical_value,
-                                 self.linkage.BC*abs(np.sin(self.linkage.beta_rad_lims[1])))
+        # links AB and CD
+        max_y = np.abs(np.sin(self.linkage.theta_rad))*max(self.linkage.AB, self.linkage.CD)
+        # links DA and BC
+        vertical_value = max(self.linkage.DA, self.linkage.BC)
         max_y += 2*vertical_value
-        max_y += 2*abs(self.linkage.coupler_offset)
+        # point P
+        max_y += 2*max(np.sqrt(self.linkage.coupler_position**2 +\
+                               self.linkage.coupler_offset**2)*self.linkage.CD, 0.0)
         # scaling factor for point coordinates
         scale = min(float(self.model_animation.width)/max_x,
                     float(self.model_animation.height)/max_y)
         scale *= 0.95 # additional place is required for point names
         return scale
     
+    # normalities to 4 linkage bars
+    def calculate_normalities(self):
+        AB = self.linkage.B - self.linkage.A
+        BC = self.linkage.C - self.linkage.B
+        CD = self.linkage.D - self.linkage.C
+        DA = self.linkage.A - self.linkage.D
+        n_AB = [AB[1], -AB[0]]/np.linalg.norm(AB)
+        n_BC = [BC[1], -BC[0]]/np.linalg.norm(BC)
+        n_CD = [CD[1], -CD[0]]/np.linalg.norm(CD)
+        n_DA = [DA[1], -DA[0]]/np.linalg.norm(DA)
+        return n_AB, n_BC, n_CD, n_DA
 
     # functions for scales to update parameters
     def update_parameter_a(self, val):
@@ -272,10 +291,10 @@ class GUI:
         self.linkage.CD = float(val)
         self.refresh()
     def update_parameter_p_pos(self, val):
-        self.linkage.coupler_position = float(val)*self.linkage.CD/100
+        self.linkage.coupler_position = float(val)/100
         self.refresh()
     def update_parameter_p_off(self, val):
-        self.linkage.coupler_offset = float(val)*self.linkage.CD/100
+        self.linkage.coupler_offset = float(val)/100
         self.refresh()
     def update_parameter_alpha(self, val):
         self.linkage.alpha = float(val)
@@ -296,7 +315,7 @@ class GUI:
     
     # generate default linkage
     def reset(self):
-        self.linkage = FourBarLinkage(3., 1.41, 1., 1.41, 45., 0., 0.5, 0.3, 0.03, 30)
+        self.linkage = FourBarLinkage(3., 1.41, 1., 1.41, 45., 0., 0.25, 0.3, 0.03, 30)
         self.update_alpha_slider()
         self.linkage.run()
         self.reset_all_sliders()
@@ -306,8 +325,8 @@ class GUI:
         self.slider_g.set(self.linkage.AB)
         self.slider_b.set(self.linkage.BC)
         self.slider_h.set(self.linkage.CD)
-        self.slider_p_pos.set(self.linkage.coupler_position*100/self.linkage.CD)
-        self.slider_p_off.set(self.linkage.coupler_offset*100/self.linkage.CD)
+        self.slider_p_pos.set(self.linkage.coupler_position*100)
+        self.slider_p_off.set(self.linkage.coupler_offset*100)
         self.slider_alpha.set(self.linkage.alpha)
         self.slider_theta.set(self.linkage.theta)
     

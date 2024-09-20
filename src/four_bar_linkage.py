@@ -490,7 +490,7 @@ class FourBarLinkage:
         DC_unit_vector = DC_vector / DC_length
 
         # calculate position of Q (Q on CD and pq orthogonal to CD)
-        Q = Middle_CD + (self.coupler_position / 2) * DC_vector
+        Q = Middle_CD + self.coupler_position * DC_vector
 
         # Calculate the normal vector perpendicular to CD
         normal_vector_toCD = np.array([-DC_unit_vector[1], DC_unit_vector[0]])
