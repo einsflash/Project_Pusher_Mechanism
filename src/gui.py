@@ -149,7 +149,7 @@ class GUI:
         self.trace_P_button.grid(row=11, column=4)
         
         # display type of linkage
-        self.display_information()
+        self.init_display_information()
         
     # update limits for alpha slider
     def update_alpha_slider(self):
@@ -201,21 +201,22 @@ class GUI:
         self.text_bars_values.insert(tk.END, f'\ng = {round(self.linkage.AB,3)}')
         self.text_bars_values.insert(tk.END, f'\nb = {round(self.linkage.BC,3)}')
         self.text_bars_values.insert(tk.END, f'\nh = {round(self.linkage.CD,3)}')
-        
-    # display Input_Link_Type, Output_Link_Type, Linkage_Type
-    def display_information(self):
+    
+    # init classification of linkage
+    def init_display_information(self):
         # Set the height and width for the text box
         text_height = 3
         text_width = 30
-        # Create a text widget to display the parameters
         self.text_information = tk.Text(self.toolbar_frame, height=text_height,
                                         width=text_width, bd=0, bg="grey94")
-        # Display the Input_Link_Type, Output_Link_Type, Linkage_Type
+        self.text_information.grid(row=12, column=1, columnspan=4, sticky=tk.W+tk.E)
+        
+    # display Input_Link_Type, Output_Link_Type, Linkage_Type
+    def display_information(self):
+        self.text_information.delete('1.0', tk.END)
         self.text_information.insert(tk.END, f'Input Link Type: {self.linkage.Input_Link_Type}')
         self.text_information.insert(tk.END, f'\nOutput Link Type: {self.linkage.Output_Link_Type}')
         self.text_information.insert(tk.END, f'\nLinkage Type: {self.linkage.Linkage_Type}')
-        # Use grid layout to display the text widget in the GUI
-        self.text_information.grid(row=12, column=1, columnspan=4, sticky=tk.W+tk.E)
         
     # initiate all structures for linkage display (all coordinates are set to -1)
     def initiate_linkage_display(self):
