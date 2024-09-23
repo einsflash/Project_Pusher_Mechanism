@@ -57,6 +57,12 @@ class GUI:
                                                                  onvalue=1, offvalue=0,
                                                                  command=self.input_classification)
         self.input_classification_values_button.grid(row=0, column=2)
+        
+        # exit button
+        self.reset_button = tk.Button(self.toolbar_frame, text="Exit", command=self.tk.destroy)
+        self.reset_button.grid(row=0, column=4)
+        
+        
         # initiate sliders to set geometrical parameters
         slider_width = round(0.85*self.toolbar_frame.width)
         # input bar's length
@@ -122,11 +128,11 @@ class GUI:
         self.init_display_bars_values()
         self.hide_bars_values()
         
-        # initialize all buttons
+        # initialize reset button
         self.reset_button = tk.Button(self.toolbar_frame, text="reset", command=self.reset)
         self.reset_button.grid(sticky="W", row=10, column=1)
         
-        # initialize all checkbuttons with necessary text
+        # initialize checkbuttons with necessary text
         self.enable_animation = tk.IntVar()
         self.animation_button = tk.Checkbutton(self.toolbar_frame, text="animation", 
                                                variable=self.enable_animation,
