@@ -89,6 +89,10 @@ class FourBarLinkage:
         
         # check_Parameter
         self.check_Parameter()
+        
+        # update coordinates only if parameters are correct
+        if not self.geometric_Validity:
+            return
 
         # search Linkage Type
         self.find_Linkage_Type()
@@ -370,9 +374,6 @@ class FourBarLinkage:
         #Height h is calculated using Heron's formula to find the area of the triangle, and then using the area formula.
         s = (a + b + c) / 2
         area_2 = s * (s - a) * (s - b) * (s - c)
-        # some times bug happens for small negative values near double precision
-        if abs(area_2) < 10**-13:
-            area_2 = 0.0
         area = np.sqrt(area_2)
         h = 2 * area / c
 
