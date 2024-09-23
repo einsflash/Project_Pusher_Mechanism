@@ -47,73 +47,106 @@ class GUI:
     
     # configure toolbar
     def display_toolbar(self):
+        # checkbutton to select input values
+        self.input_text = tk.Text(self.toolbar_frame, height=1, width=6, bd=0, bg="grey94")
+        self.input_text.insert(tk.END, "Input:")
+        self.input_text.grid(sticky="W", row=0, column=1)
+        self.input_classification_values = tk.IntVar()
+        self.input_classification_values_button = tk.Checkbutton(self.toolbar_frame, text="classification values", 
+                                                                 variable=self.input_classification_values,
+                                                                 onvalue=1, offvalue=0,
+                                                                 command=self.input_classification)
+        self.input_classification_values_button.grid(row=0, column=2)
         # initiate sliders to set geometrical parameters
         slider_width = round(0.85*self.toolbar_frame.width)
+        # input bar's length
         self.slider_a = tk.Scale(self.toolbar_frame, from_=0.1, to=5., resolution=0.01,
                                  orient=tk.HORIZONTAL, length=slider_width, label="a",
                                  command=self.update_parameter_a, variable=tk.DoubleVar())
-        self.slider_a.grid(row=0, column=1, columnspan=4)
+        self.slider_a.grid(row=1, column=1, columnspan=4)
         self.slider_g = tk.Scale(self.toolbar_frame, from_=0.1, to=5., resolution=0.01,
                                  orient=tk.HORIZONTAL, length=slider_width, label="g",
                                  command=self.update_parameter_g, variable=tk.DoubleVar())
-        self.slider_g.grid(row=1, column=1, columnspan=4)
+        self.slider_g.grid(row=2, column=1, columnspan=4)
         self.slider_b = tk.Scale(self.toolbar_frame, from_=0.1, to=5., resolution=0.01,
                                  orient=tk.HORIZONTAL, length=slider_width, label="b",
                                  command=self.update_parameter_b, variable=tk.DoubleVar())
-        self.slider_b.grid(row=2, column=1, columnspan=4)
-    
+        self.slider_b.grid(row=3, column=1, columnspan=4)
         self.slider_h = tk.Scale(self.toolbar_frame, from_=0.1, to=5., resolution=0.01,
                                  orient=tk.HORIZONTAL, length=slider_width, label="h",
                                  command=self.update_parameter_h, variable=tk.DoubleVar())
-        self.slider_h.grid(row=3, column=1, columnspan=4)
+        self.slider_h.grid(row=4, column=1, columnspan=4)
+        # input classification values
+        self.slider_T1 = tk.Scale(self.toolbar_frame, from_=-5., to=5., resolution=0.01,
+                                  orient=tk.HORIZONTAL, length=slider_width, label="T1 = g + h - b - a",
+                                  command=self.update_parameter_T1, variable=tk.DoubleVar())
+        self.slider_T1.grid(row=1, column=1, columnspan=4)
+        self.slider_T2 = tk.Scale(self.toolbar_frame, from_=-5., to=5., resolution=0.01,
+                                  orient=tk.HORIZONTAL, length=slider_width, label="T2 = b + g - h - a",
+                                  command=self.update_parameter_T2, variable=tk.DoubleVar())
+        self.slider_T2.grid(row=2, column=1, columnspan=4)
+        self.slider_T3 = tk.Scale(self.toolbar_frame, from_=-5., to=5., resolution=0.01,
+                                  orient=tk.HORIZONTAL, length=slider_width, label="T3 = h + b - g - a",
+                                  command=self.update_parameter_T3, variable=tk.DoubleVar())
+        self.slider_T3.grid(row=3, column=1, columnspan=4)
+        self.slider_L = tk.Scale(self.toolbar_frame, from_=0.01, to=10., resolution=0.01,
+                                 orient=tk.HORIZONTAL, length=slider_width, label="L  = g + b + h + a",
+                                 command=self.update_parameter_L, variable=tk.DoubleVar())
+        self.slider_L.grid(row=4, column=1, columnspan=4)
+        # hide first classification sliders
+        self.hide_classification_sliders()
+        
+        # input further params
         self.slider_p_pos = tk.Scale(self.toolbar_frame, from_=-200., to=200., orient=tk.HORIZONTAL,
                                      length=slider_width, label="P_pos % in CD",
                                      command=self.update_parameter_p_pos, variable=tk.DoubleVar())
-        self.slider_p_pos.grid(row=4, column=1, columnspan=4)
+        self.slider_p_pos.grid(row=5, column=1, columnspan=4)
         self.slider_p_off = tk.Scale(self.toolbar_frame, from_=-200., to=200., orient=tk.HORIZONTAL,
                                      length=slider_width, label="P_offset % in CD",
                                      command=self.update_parameter_p_off, variable=tk.DoubleVar())
-        self.slider_p_off.grid(row=5, column=1, columnspan=4)
+        self.slider_p_off.grid(row=6, column=1, columnspan=4)
         self.slider_alpha = tk.Scale(self.toolbar_frame, from_=-180, to=180, orient=tk.HORIZONTAL,
                                      length=slider_width, label="α, °",
                                      command=self.update_parameter_alpha, variable=tk.DoubleVar())
-        self.slider_alpha.grid(row=6, column=1, columnspan=4)
+        self.slider_alpha.grid(row=7, column=1, columnspan=4)
         self.update_alpha_slider() # instantly update alpha limits
         self.slider_theta = tk.Scale(self.toolbar_frame, from_=-180., to=180., orient=tk.HORIZONTAL,
                                      length=slider_width, label="θ, °",
                                      command=self.update_parameter_theta, variable=tk.DoubleVar())
-        self.slider_theta.grid(row=7, column=1, columnspan=4)
+        self.slider_theta.grid(row=8, column=1, columnspan=4)
         # reset all sliders with current values
-        self.reset_all_sliders()
+        self.reset_bars_sliders()
         
         # classification values
-        self.display_classification_values()
+        self.init_display_classification_values()
+        self.init_display_bars_values()
+        self.hide_bars_values()
         
         # initialize all buttons
         self.reset_button = tk.Button(self.toolbar_frame, text="reset", command=self.reset)
-        self.reset_button.grid(sticky="W", row=9, column=1)
+        self.reset_button.grid(sticky="W", row=10, column=1)
         
         # initialize all checkbuttons with necessary text
         self.enable_animation = tk.IntVar()
         self.animation_button = tk.Checkbutton(self.toolbar_frame, text="animation", 
                                                variable=self.enable_animation,
                                                onvalue=1, offvalue=0, command=self.animation)
-        self.animation_button.grid(row=9, column=2)
+        self.animation_button.grid(row=10, column=2)
         self.trace_text = tk.Text(self.toolbar_frame, height=1, width=6, bd=0, bg="grey94")
         self.trace_text.insert(tk.END, "Trace:")
-        self.trace_text.grid(sticky="W", row=10, column=1)
+        self.trace_text.grid(sticky="W", row=11, column=1)
         self.enable_trace_C = tk.IntVar()
         self.trace_C_button = tk.Checkbutton(self.toolbar_frame, text="C", variable=self.enable_trace_C,
                                              onvalue=1, offvalue=0, command=self.trace_C)
-        self.trace_C_button.grid(row=10, column=2)
+        self.trace_C_button.grid(row=11, column=2)
         self.enable_trace_D = tk.IntVar()
         self.trace_D_button = tk.Checkbutton(self.toolbar_frame, text="D", variable=self.enable_trace_D,
                                              onvalue=1, offvalue=0, command=self.trace_D)
-        self.trace_D_button.grid(row=10, column=3)
+        self.trace_D_button.grid(row=11, column=3)
         self.enable_trace_P = tk.IntVar()
         self.trace_P_button = tk.Checkbutton(self.toolbar_frame, text="P", variable=self.enable_trace_P,
                                              onvalue=1, offvalue=0, command=self.trace_P)
-        self.trace_P_button.grid(row=10, column=4)
+        self.trace_P_button.grid(row=11, column=4)
         
         # display type of linkage
         self.display_information()
@@ -131,24 +164,48 @@ class GUI:
             self.linkage.alpha = (self.linkage.alpha_lims[0] + self.linkage.alpha_lims[1])/2
             self.linkage.alpha_rad = math.radians(self.linkage.alpha)
         self.slider_alpha.set(self.linkage.alpha)
-        
-    # disply classification values T1, T2, T3, L
-    def display_classification_values(self):
+     
+    # init classification display values
+    def init_display_classification_values(self):
         # text params in symbols
         text_height=4
         text_width=30
+        # display text
         self.text_classification_values = tk.Text(self.toolbar_frame, height=text_height, 
                                                   width=text_width, bd=0, bg="grey94")
+        self.text_classification_values.grid(row=9, column=1, columnspan=4, sticky=tk.W+tk.E)
+        
+    # display classification values T1, T2, T3, L
+    def display_classification_values(self):
+        self.text_classification_values.delete('1.0', tk.END)
         self.text_classification_values.insert(tk.END, f'T1 = g + h - b - a: {round(self.linkage.T1,3)}')
         self.text_classification_values.insert(tk.END, f'\nT2 = b + g - h - a: {round(self.linkage.T2,3)}')
         self.text_classification_values.insert(tk.END, f'\nT3 = h + b - g - a: {round(self.linkage.T3,3)}')
         self.text_classification_values.insert(tk.END, f'\nL  = g + b + h + a: {round(self.linkage.L,3)}')
-        self.text_classification_values.grid(row=8, column=1, columnspan=4, sticky=tk.W+tk.E)
+    
+    # init bars display values
+    def init_display_bars_values(self):
+        # text params in symbols
+        text_height=4
+        text_width=10
+        # display text
+        self.text_bars_values = tk.Text(self.toolbar_frame, height=text_height, 
+                                        width=text_width, bd=0, bg="grey94")
+        self.text_bars_values.grid(row=9, column=1, columnspan=4, sticky=tk.W+tk.E)
+        
+        
+    # display bars values a,b,g,h
+    def display_bars_values(self):
+        self.text_bars_values.delete('1.0', tk.END)
+        self.text_bars_values.insert(tk.END, f'a = {round(self.linkage.DA,3)}')
+        self.text_bars_values.insert(tk.END, f'\ng = {round(self.linkage.AB,3)}')
+        self.text_bars_values.insert(tk.END, f'\nb = {round(self.linkage.BC,3)}')
+        self.text_bars_values.insert(tk.END, f'\nh = {round(self.linkage.CD,3)}')
         
     # display Input_Link_Type, Output_Link_Type, Linkage_Type
     def display_information(self):
         # Set the height and width for the text box
-        text_height = 3  # Adjusted to fit four parameters
+        text_height = 3
         text_width = 30
         # Create a text widget to display the parameters
         self.text_information = tk.Text(self.toolbar_frame, height=text_height,
@@ -158,9 +215,9 @@ class GUI:
         self.text_information.insert(tk.END, f'\nOutput Link Type: {self.linkage.Output_Link_Type}')
         self.text_information.insert(tk.END, f'\nLinkage Type: {self.linkage.Linkage_Type}')
         # Use grid layout to display the text widget in the GUI
-        self.text_information.grid(row=11, column=1, columnspan=4, sticky=tk.W+tk.E)
+        self.text_information.grid(row=12, column=1, columnspan=4, sticky=tk.W+tk.E)
         
-    # initiate all structures for linkage display
+    # initiate all structures for linkage display (all coordinates are set to -1)
     def initiate_linkage_display(self):
         # invalid linkage text
         self.model_animation.invalid_text = self.model_animation.create_text(round(self.model_animation.width/2),
@@ -169,11 +226,14 @@ class GUI:
                                                                              fill="black", font=('Helvetica 11 bold'))
         # hide the error text
         self.model_animation.itemconfigure(self.model_animation.invalid_text, state='hidden')
+        
         # dasplay
-        # tracing is firstly disabled
+        
+        # trace
         self.model_animation.trace_C = self.model_animation.create_line([(-1,-1), (-1,-1)], fill="black", width=1)
         self.model_animation.trace_D = self.model_animation.create_line([(-1,-1), (-1,-1)], fill="black", width=1)
         self.model_animation.trace_P = self.model_animation.create_line([(-1,-1), (-1,-1)], fill="black", width=1)
+        
         # display angles
         self.model_animation.alpha_arc = self.model_animation.create_arc(-1,-1,-1,-1, start = 0,
                                                                          extent=self.linkage.alpha, outline = "black",
@@ -181,9 +241,10 @@ class GUI:
         self.model_animation.theta_arc = self.model_animation.create_arc(-1,-1,-1,-1, start = 0,
                                                                          extent=self.linkage.theta, outline = "black",
                                                                          dash=(2,2))
-            
+        
         # horizontal line
         self.model_animation.horizont_line = self.model_animation.create_line(-1,-1,-1,-1, fill="black", dash=(2,2))
+        
         # bars
         self.model_animation.AB_line = self.model_animation.create_line(-1,-1,-1,-1, fill="green", width=3)
         self.model_animation.BC_line = self.model_animation.create_line(-1,-1,-1,-1, fill="green", width=3)
@@ -192,19 +253,29 @@ class GUI:
         self.model_animation.CP_line = self.model_animation.create_line(-1,-1,-1,-1, fill="green", width=3)
         self.model_animation.PD_line = self.model_animation.create_line(-1,-1,-1,-1, fill="green", width=3)
     
-        
         # display names
-        self.model_animation.A_text = self.model_animation.create_text(-1,-1, text="A", fill="black", font=('Helvetica 11 bold'))
-        self.model_animation.B_text = self.model_animation.create_text(-1,-1, text="B", fill="black", font=('Helvetica 11 bold'))
-        self.model_animation.C_text = self.model_animation.create_text(-1,-1, text="C", fill="black", font=('Helvetica 11 bold'))
-        self.model_animation.D_text = self.model_animation.create_text(-1,-1, text="D", fill="black", font=('Helvetica 11 bold'))
-        self.model_animation.P_text = self.model_animation.create_text(-1,-1, text="P", fill="black", font=('Helvetica 11 bold'))
-        self.model_animation.alpha_text = self.model_animation.create_text(-1,-1, text="α", fill="black", font=('Helvetica 11 bold'))
-        self.model_animation.theta_text = self.model_animation.create_text(-1,-1, text="θ", fill="black", font=('Helvetica 11 bold'))
-        self.model_animation.DA_text = self.model_animation.create_text(-1,-1, text="a", fill="black", font=('Helvetica 11 bold'))
-        self.model_animation.AB_text = self.model_animation.create_text(-1,-1, text="g", fill="black", font=('Helvetica 11 bold'))
-        self.model_animation.BC_text = self.model_animation.create_text(-1,-1, text="b", fill="black", font=('Helvetica 11 bold'))
-        self.model_animation.CD_text = self.model_animation.create_text(-1,-1, text="h", fill="black", font=('Helvetica 11 bold'))
+        self.model_animation.A_text = self.model_animation.create_text(-1,-1, text="A", fill="black",
+                                                                       font=('Helvetica 11 bold'))
+        self.model_animation.B_text = self.model_animation.create_text(-1,-1, text="B", fill="black",
+                                                                       font=('Helvetica 11 bold'))
+        self.model_animation.C_text = self.model_animation.create_text(-1,-1, text="C", fill="black",
+                                                                       font=('Helvetica 11 bold'))
+        self.model_animation.D_text = self.model_animation.create_text(-1,-1, text="D", fill="black",
+                                                                       font=('Helvetica 11 bold'))
+        self.model_animation.P_text = self.model_animation.create_text(-1,-1, text="P", fill="black",
+                                                                       font=('Helvetica 11 bold'))
+        self.model_animation.alpha_text = self.model_animation.create_text(-1,-1, text="α", fill="black",
+                                                                           font=('Helvetica 11 bold'))
+        self.model_animation.theta_text = self.model_animation.create_text(-1,-1, text="θ", fill="black",
+                                                                           font=('Helvetica 11 bold'))
+        self.model_animation.DA_text = self.model_animation.create_text(-1,-1, text="a", fill="black",
+                                                                        font=('Helvetica 11 bold'))
+        self.model_animation.AB_text = self.model_animation.create_text(-1,-1, text="g", fill="black",
+                                                                        font=('Helvetica 11 bold'))
+        self.model_animation.BC_text = self.model_animation.create_text(-1,-1, text="b", fill="black",
+                                                                        font=('Helvetica 11 bold'))
+        self.model_animation.CD_text = self.model_animation.create_text(-1,-1, text="h", fill="black",
+                                                                        font=('Helvetica 11 bold'))
         
         # firstly hide all the objects, as they are not configured yet
         self.hide_linkage()
@@ -280,12 +351,33 @@ class GUI:
         self.delete_tracing()
         self.linkage.theta_rad = math.radians(self.linkage.theta)
         self.refresh()
+    def update_parameter_T1(self, val):
+        self.linkage.T1 = float(val)
+        self.delete_tracing()
+        self.linkage.calculate_Edge_Value()
+        self.refresh()
+    def update_parameter_T2(self, val):
+        self.linkage.T2 = float(val)
+        self.delete_tracing()
+        self.linkage.calculate_Edge_Value()
+        self.refresh()
+    def update_parameter_T3(self, val):
+        self.linkage.T3 = float(val)
+        self.delete_tracing()
+        self.linkage.calculate_Edge_Value()
+        self.refresh()
+    def update_parameter_L(self, val):
+        self.linkage.L = float(val)
+        self.delete_tracing()
+        self.linkage.calculate_Edge_Value()
+        self.refresh()
      
     # refresh the GUI
     def refresh(self):
         self.update_alpha_slider()
         self.linkage.run()
         self.display_classification_values()
+        self.display_bars_values()
         self.display_information()
         self.update_linkage_display()
     
@@ -294,11 +386,12 @@ class GUI:
         self.linkage = FourBarLinkage(3., 1.41, 1., 1.41, 45., 0., 0.25, 0.3, 0.05, 10)
         self.update_alpha_slider()
         self.linkage.run()
-        self.reset_all_sliders()
+        self.reset_bars_sliders()
+        self.reset_classifications_sliders()
         self.delete_tracing()
     
-    # reset all sliders
-    def reset_all_sliders(self):
+    # reset bars sliders + angles
+    def reset_bars_sliders(self):
         self.slider_a.set(self.linkage.DA)
         self.slider_g.set(self.linkage.AB)
         self.slider_b.set(self.linkage.BC)
@@ -308,6 +401,78 @@ class GUI:
         self.slider_alpha.set(self.linkage.alpha)
         self.slider_theta.set(self.linkage.theta)
     
+    # reset classifications sliders + angles
+    def reset_classifications_sliders(self):
+        self.slider_T1.set(self.linkage.T1)
+        self.slider_T2.set(self.linkage.T2)
+        self.slider_T3.set(self.linkage.T3)
+        self.slider_L.set(self.linkage.L)
+        self.slider_p_pos.set(self.linkage.coupler_position*100)
+        self.slider_p_off.set(self.linkage.coupler_offset*100)
+        self.slider_alpha.set(self.linkage.alpha)
+        self.slider_theta.set(self.linkage.theta)
+        
+    # input classifiaction values instead of bar's length
+    def input_classification(self):
+        if self.input_classification_values.get():
+            self.hide_bars_sliders()
+            self.hide_classification_values()
+            self.show_classification_sliders()
+            self.show_bars_values()
+            self.reset_classifications_sliders()
+            self.display_bars_values()
+        else:
+            self.hide_classification_sliders()
+            self.hide_bars_values()
+            self.show_bars_sliders()
+            self.show_classification_values()
+            self.reset_bars_sliders()
+            self.display_classification_values()
+    
+    # hide classification sliders
+    def hide_classification_sliders(self):
+        self.slider_T1.grid_remove()
+        self.slider_T2.grid_remove()
+        self.slider_T3.grid_remove()
+        self.slider_L.grid_remove()
+        
+    # show classification sliders
+    def show_classification_sliders(self):
+        self.slider_T1.grid()
+        self.slider_T2.grid()
+        self.slider_T3.grid()
+        self.slider_L.grid()
+    
+    # hide bars sliders
+    def hide_bars_sliders(self):
+        self.slider_a.grid_remove()
+        self.slider_b.grid_remove()
+        self.slider_g.grid_remove()
+        self.slider_h.grid_remove()
+        
+    # show bars sliders
+    def show_bars_sliders(self):
+        self.slider_a.grid()
+        self.slider_b.grid()
+        self.slider_g.grid()
+        self.slider_h.grid()
+        
+    # hide values of classification values
+    def hide_classification_values(self):
+        self.text_classification_values.grid_remove()
+        
+    # show values of classification values
+    def show_classification_values(self):
+        self.text_classification_values.grid()
+       
+    # hide values of bars values
+    def hide_bars_values(self):
+        self.text_bars_values.grid_remove()
+        
+    # show values of bars values
+    def show_bars_values(self):
+        self.text_bars_values.grid()
+        
     # function to initialize animation
     def animation(self):
         self.run_animation()
@@ -438,6 +603,7 @@ class GUI:
         # number of points to trace
         N_points = 5*round((self.linkage.alpha_lims[1]-self.linkage.alpha_lims[0])/ \
                    (self.linkage.alpha_velocity * self.linkage.t)) # delete later this factor of 5
+        # trace C
         if self.trace_C:
             if len(self.positions_C)<=N_points:
                 self.positions_C.append(C_x)
@@ -446,7 +612,7 @@ class GUI:
                 self.model_animation.coords(self.model_animation.trace_C, self.positions_C)
         else:
             self.model_animation.itemconfigure(self.model_animation.trace_C, state='hidden')
-        
+        # trace D
         if self.trace_D:
             if len(self.positions_D)<=N_points:
                 self.positions_D.append(D_x)
@@ -455,7 +621,7 @@ class GUI:
                 self.model_animation.coords(self.model_animation.trace_D, self.positions_D)
         else:
             self.model_animation.itemconfigure(self.model_animation.trace_D, state='hidden')
-            
+        # trace P   
         if self.trace_P:
             if len(self.positions_P)<=N_points:
                 self.positions_P.append(P_x)
