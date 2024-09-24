@@ -608,8 +608,8 @@ class GUI:
         
         # tracing
         # number of points to trace
-        N_points = 5*round((self.linkage.alpha_lims[1]-self.linkage.alpha_lims[0])/ \
-                   (self.linkage.alpha_velocity * self.linkage.t)) # delete later this factor of 5
+        N_points = 10*round((self.linkage.alpha_lims[1]-self.linkage.alpha_lims[0])/ \
+                   (self.linkage.alpha_velocity * self.linkage.t)) # delete later this factor of 10
         # trace C
         if self.trace_C:
             if len(self.positions_C)<=N_points:
