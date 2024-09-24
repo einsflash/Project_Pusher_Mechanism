@@ -390,7 +390,7 @@ class GUI:
     
     # generate default linkage
     def reset(self):
-        self.linkage = FourBarLinkage(3., 1.41, 1., 1.41, 45., 0., 0.25, 0.3, 0.05, 10)
+        self.linkage = FourBarLinkage(3., 1.41, 1., 1.41, 45., 0., 0.25, 0.3, 0.025, 20)
         self.update_alpha_slider()
         self.linkage.run()
         self.reset_bars_sliders()
