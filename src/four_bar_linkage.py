@@ -250,8 +250,8 @@ class FourBarLinkage:
             # If cosine value is out of bounds, there is no cos limits or configuration is invalid,
             # but we validate it another way
             self.alpha_limited = False
-            self.alpha_rad_lims = [-math.pi, math.pi]
-            self.alpha_lims = [-180., 180.]
+            self.alpha_rad_lims = [0, 2*math.pi]
+            self.alpha_lims = [0., 360.]
         else:
             # If cosine value is valid, calculate the angle limits in radians
             # Add or subtract arccos to get the limits based on the base angle theta_rad
@@ -265,6 +265,20 @@ class FourBarLinkage:
                 math.degrees(self.alpha_rad_lims[0]),  # Lower limit in degrees
                 math.degrees(self.alpha_rad_lims[1])  # Upper limit in degrees
             ]
+        
+        # case when point D crosses BC, alpha has additional limits
+        if self.BC - self.CD > 0:
+            a = self.BC - self.CD  # Combined length of BC and CD (link lengths between B->C and C->D)
+            b = self.AB  # Length of input link AB
+            c = self.DA  # Length of output link DA
+            cos_alpha_lims = (b ** 2 + c ** 2 - a ** 2) / (2 * b * c)
+            if np.abs(cos_alpha_lims) <= 1:
+                self.alpha_rad_lims[0] = np.arccos(cos_alpha_lims) + self.theta_rad
+                self.alpha_lims[0] = math.degrees(self.alpha_rad_lims[0])
+                if not self.alpha_limited:
+                    self.alpha_limited = True
+                    self.alpha_rad_lims[1] = 2*math.pi - np.arccos(cos_alpha_lims) + self.theta_rad
+                    self.alpha_lims[1] = math.degrees(self.alpha_rad_lims[1])
         return
 
 
@@ -373,7 +387,8 @@ class FourBarLinkage:
 
         #Height h is calculated using Heron's formula to find the area of the triangle, and then using the area formula.
         s = (a + b + c) / 2
-        area_2 = s * (s - a) * (s - b) * (s - c)
+        # clip area_2 to positiv values to solve some problems with floating point precision
+        area_2 = max(s * (s - a) * (s - b) * (s - c), 0.0)
         area = np.sqrt(area_2)
         h = 2 * area / c
 
@@ -551,10 +566,10 @@ class FourBarLinkage:
                 # switch C1 and C2
                 self.switch_C2_C1()
             
-            # alpha is not limited values have to stay from -180 to 180
-            if not self.alpha_limited and self.alpha > 180.0:
-                self.alpha = -180.0
-                self.alpha_rad = -math.pi
+            # alpha is not limited values have to stay from 0 to 360
+            if not self.alpha_limited and self.alpha > 360.0:
+                self.alpha = 0.0
+                self.alpha_rad = 0.0
 
         elif self.direction == 1:  # Decreasing alpha
             self.alpha -= self.alpha_velocity * self.t
@@ -570,10 +585,10 @@ class FourBarLinkage:
                 # switch C1 and C2
                 self.switch_C2_C1()
                 
-            # alpha is not limited values have to stay from -180 to 180
-            if not self.alpha_limited and self.alpha < -180.0:
-                self.alpha = 180.0
-                self.alpha_rad = math.pi
+            # alpha is not limited values have to stay from 0 to 360
+            if not self.alpha_limited and self.alpha < 0.0:
+                self.alpha = 360.0
+                self.alpha_rad = 2*math.pi
 
         return
     

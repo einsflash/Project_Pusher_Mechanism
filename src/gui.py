@@ -7,7 +7,7 @@ class GUI:
     
     def __init__(self):
         # default parameters
-        self.linkage = FourBarLinkage(3., 1.41, 1., 1.41, 45., 0., 0.25, 0.3, 0.05, 10)
+        self.linkage = FourBarLinkage(3., 1.41, 1., 1.41, 45., 0., 0.25, 0.3, 0.025, 20)
         self.linkage.run()
         self.tk = tk.Tk()
         self.width = round(0.8*self.tk.winfo_screenwidth())
@@ -489,7 +489,7 @@ class GUI:
         if self.enable_animation.get():
             self.linkage.animation_alpha()
             self.refresh()
-            self.tk.after(50, self.run_animation)
+            self.tk.after(25, self.run_animation)
     
     # enable/disable C-point tracing
     def trace_C(self):
