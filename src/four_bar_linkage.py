@@ -77,6 +77,7 @@ class FourBarLinkage:
         # initialize coordinates of connection points
         self.switch_C2_C1_180 = False
         self.switch_C2_C1_360 = False
+        self.C2_C1_switched_last_time = False
         self.alpha_limited = True
         self.run()
         return
@@ -456,6 +457,8 @@ class FourBarLinkage:
         # Initialize iteration state (0 for increasing, 1 for decreasing)
         if not hasattr(self, 'direction'):  # Check if direction attribute exists
             self.direction = 0  # 0 means increasing alpha, 1 means decreasing alpha
+            
+        C2_C1_switched_pre_last_time = self.C2_C1_switched_last_time
 
         # Update alpha based on current direction
         if self.direction == 0:  # Increasing alpha
@@ -470,14 +473,20 @@ class FourBarLinkage:
                 # Switch direction to decreasing
                 self.direction = 1
                 # switch C1 and C2
-                self.switch_C2_C1()
+                if not self.C2_C1_switched_last_time: 
+                    self.switch_C2_C1()
+                    self.C2_C1_switched_last_time = True
                 
             if self.switch_C2_C1_360 and ((self.alpha - self.theta >= 0.0 and self.alpha - self.theta - self.alpha_velocity * self.t <= 0.0) or \
                                           (self.alpha - self.theta >= 360.0 and self.alpha - self.theta - self.alpha_velocity * self.t <= 360.0)):
-                self.switch_C2_C1()
+                if not self.C2_C1_switched_last_time: 
+                    self.switch_C2_C1()
+                    self.C2_C1_switched_last_time = True
                 
             if self.switch_C2_C1_180 and self.alpha - self.theta >= 180.0 and self.alpha - self.theta - self.alpha_velocity * self.t <= 180.0:
-                self.switch_C2_C1()
+                if not self.C2_C1_switched_last_time: 
+                    self.switch_C2_C1()
+                    self.C2_C1_switched_last_time = True
                 
             # alpha is not limited values have to stay from 0 to 360
             if not self.alpha_limited and self.alpha >= 360.0:
@@ -497,20 +506,29 @@ class FourBarLinkage:
                 # Switch direction to increasing
                 self.direction = 0
                 # switch C1 and C2
-                self.switch_C2_C1()
+                if not self.C2_C1_switched_last_time: 
+                    self.switch_C2_C1()
+                    self.C2_C1_switched_last_time = True
             
                 
             if self.switch_C2_C1_180 and self.alpha - self.theta <= 180.0 and self.alpha - self.theta + self.alpha_velocity * self.t >= 180.0:
-                self.switch_C2_C1()
+                if not self.C2_C1_switched_last_time: 
+                    self.switch_C2_C1()
+                    self.C2_C1_switched_last_time = True
                 
             if self.switch_C2_C1_360 and self.alpha - self.theta <= 0.0 and self.alpha - self.theta + self.alpha_velocity * self.t >= 0.0:
-                self.switch_C2_C1()
+                if not self.C2_C1_switched_last_time: 
+                    self.switch_C2_C1()
+                    self.C2_C1_switched_last_time = True
                 
             # alpha is not limited values have to stay from 0 to 360
             if not self.alpha_limited and self.alpha <= 0.0:
                 self.alpha = self.alpha + 360.0
                 self.alpha_rad = math.radians(self.alpha)
-
+                
+        # if didn't switch this time
+        if C2_C1_switched_pre_last_time:
+            self.C2_C1_switched_last_time = False
         return
     
     # function to switch between C1 and C2, call only by alpha_lim
