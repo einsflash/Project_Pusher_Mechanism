@@ -251,30 +251,31 @@ class FourBarLinkage:
         cos_alpha_lims_1 = (b ** 2 + c ** 2 - a_1 ** 2) / (2 * b * c)
         cos_alpha_lims_2 = (b ** 2 + c ** 2 - a_2 ** 2) / (2 * b * c)
         
-        if abs(cos_alpha_lims_1) < 1.0:
+        # compare cos with one with some precision of 1e-10
+        if abs(cos_alpha_lims_1) < 1.0 - 1e-10:
             self.alpha_limited = True
             self.switch_C2_C1_180 = False
             self.switch_C2_C1_360 = False
             self.alpha_rad_lims = [-np.arccos(cos_alpha_lims_1) + self.theta_rad,
                                    np.arccos(cos_alpha_lims_1) + self.theta_rad]
             
-            if abs(cos_alpha_lims_2) < 1.0:
+            if abs(cos_alpha_lims_2) < 1.0 - 1e-10:
                 self.alpha_rad_lims[0] = np.arccos(cos_alpha_lims_2) + self.theta_rad
             else:
-                if abs(abs(cos_alpha_lims_2) - 1.0) < 1e-12:
+                if abs(abs(cos_alpha_lims_2) - 1.0) < 1e-10:
                     self.switch_C2_C1_360 = True
                 
         else:
             self.switch_C2_C1_180 = False
             self.switch_C2_C1_360 = False
-            if abs(abs(cos_alpha_lims_1) - 1.0) < 1e-12:
+            if abs(abs(cos_alpha_lims_1) - 1.0) < 1e-10:
                 self.switch_C2_C1_180 = True
-            if abs(cos_alpha_lims_2) < 1.0:
+            if abs(cos_alpha_lims_2) < 1.0 - 1e-10:
                 self.alpha_limited = True
                 self.alpha_rad_lims = [np.arccos(cos_alpha_lims_2) + self.theta_rad,
                                        2*math.pi - np.arccos(cos_alpha_lims_2) + self.theta_rad]
             else:
-                if abs(abs(cos_alpha_lims_2) - 1.0) < 1e-12:
+                if abs(abs(cos_alpha_lims_2) - 1.0) < 1e-10:
                     self.switch_C2_C1_360 = True
                 self.alpha_limited = False
                 self.alpha_rad_lims = [0.0, 2*math.pi]
