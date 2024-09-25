@@ -79,6 +79,7 @@ class FourBarLinkage:
         self.switch_C2_C1_360 = False
         self.C2_C1_switched_last_time = False
         self.alpha_limited = True
+        self.direction = 0
         self.run()
         return
 
@@ -453,10 +454,6 @@ class FourBarLinkage:
 
         The motion of alpha alternates direction when it hits the upper or lower limit of alpha_lims.
         """
-
-        # Initialize iteration state (0 for increasing, 1 for decreasing)
-        if not hasattr(self, 'direction'):  # Check if direction attribute exists
-            self.direction = 0  # 0 means increasing alpha, 1 means decreasing alpha
             
         C2_C1_switched_pre_last_time = self.C2_C1_switched_last_time
 

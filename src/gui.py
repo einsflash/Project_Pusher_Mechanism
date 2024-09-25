@@ -35,7 +35,7 @@ class GUI:
         self.toolbar_frame.grid(row=0, column=1, columnspan=4)
         # generate picture
         self.display_toolbar()
-        self.initiate_linkage_display()
+        self.init_linkage_display()
         # trace is disabled
         self.trace_C = False
         self.trace_D = False
@@ -44,6 +44,16 @@ class GUI:
         self.positions_C = []
         self.positions_D = []
         self.positions_P = []
+        # for optimization problem A and x-, y-axis are not coplaced
+        self.x_axis = 170
+        self.y_axis = 220
+        # position of A in new coordinates
+        self.A_x = 0.
+        self.A_y = 0.
+        # to move box in optimization problem
+        self.pin_box_to_coupler = False
+        self.prev_coupler_position = None
+        self.prev_box_position = None
     
     # configure toolbar
     def display_toolbar(self):
@@ -95,7 +105,7 @@ class GUI:
                                   orient=tk.HORIZONTAL, length=slider_width, label="T3 = h + b - g - a",
                                   command=self.update_parameter_T3, variable=tk.DoubleVar())
         self.slider_T3.grid(row=3, column=1, columnspan=4)
-        self.slider_L = tk.Scale(self.toolbar_frame, from_=0.01, to=10., resolution=0.01,
+        self.slider_L = tk.Scale(self.toolbar_frame, from_=0.01, to=20., resolution=0.01,
                                  orient=tk.HORIZONTAL, length=slider_width, label="L  = g + b + h + a",
                                  command=self.update_parameter_L, variable=tk.DoubleVar())
         self.slider_L.grid(row=4, column=1, columnspan=4)
@@ -116,6 +126,17 @@ class GUI:
                                      command=self.update_parameter_alpha, variable=tk.DoubleVar())
         self.slider_alpha.grid(row=7, column=1, columnspan=4)
         self.update_alpha_slider() # instantly update alpha limits
+        # additional sliders for optimization problem (position of A)
+        self.slider_A_x = tk.Scale(self.toolbar_frame, from_=-100., to=300., resolution=0.1, orient=tk.HORIZONTAL,
+                                   length=round(0.5*slider_width), label="A_x",
+                                   command=self.update_parameter_A_x, variable=tk.DoubleVar())
+        self.slider_A_x.grid(row=7, column=1, columnspan=2)
+        self.slider_A_y = tk.Scale(self.toolbar_frame, from_=-100, to=100, resolution=0.1, orient=tk.HORIZONTAL,
+                                   length=round(0.5*slider_width), label="A_y",
+                                   command=self.update_parameter_A_y, variable=tk.DoubleVar())
+        self.slider_A_y.grid(row=7, column=3, columnspan=2)
+        # hide A_x and A_y
+        self.hide_A_x_A_y()
         self.slider_theta = tk.Scale(self.toolbar_frame, from_=-180., to=180., orient=tk.HORIZONTAL,
                                      length=slider_width, label="θ, °",
                                      command=self.update_parameter_theta, variable=tk.DoubleVar())
@@ -138,6 +159,11 @@ class GUI:
                                                variable=self.enable_animation,
                                                onvalue=1, offvalue=0, command=self.animation)
         self.animation_button.grid(row=10, column=2)
+        self.enable_optimization_problem = tk.IntVar()
+        self.optimization_problem_button = tk.Checkbutton(self.toolbar_frame, text="optimization problem", 
+                                                          variable=self.enable_optimization_problem,
+                                                          onvalue=1, offvalue=0, command=self.config_optimization_problem)
+        self.optimization_problem_button.grid(row=10, column=3)
         self.trace_text = tk.Text(self.toolbar_frame, height=1, width=6, bd=0, bg="grey94")
         self.trace_text.insert(tk.END, "Trace:")
         self.trace_text.grid(sticky="W", row=11, column=1)
@@ -225,7 +251,7 @@ class GUI:
         self.text_information.insert(tk.END, f'\nLinkage Type: {self.linkage.Linkage_Type}')
         
     # initiate all structures for linkage display (all coordinates are set to -1)
-    def initiate_linkage_display(self):
+    def init_linkage_display(self):
         # invalid linkage text
         self.model_animation.invalid_text = self.model_animation.create_text(round(self.model_animation.width/2),
                                                                              round(self.model_animation.height/2),
@@ -234,7 +260,51 @@ class GUI:
         # hide the error text
         self.model_animation.itemconfigure(self.model_animation.invalid_text, state='hidden')
         
-        # dasplay
+        # display
+        
+        # optimization problem
+        # all figures
+        self.model_animation.movement_line = self.model_animation.create_line(-1,-1,-1,-1, fill="black", width=3)
+        self.model_animation.label_rectangle = self.model_animation.create_rectangle(-1,-1,-1,-1, fill="gray", width=3)
+        self.model_animation.point_1 = self.model_animation.create_oval(-1,-1,-1,-1, fill="black", width=3)
+        self.model_animation.point_2 = self.model_animation.create_oval(-1,-1,-1,-1, fill="black", width=3)
+        self.model_animation.x_axis = self.model_animation.create_line(-1, -1, -1, -1, fill="black", arrow=tk.LAST, width=3)
+        self.model_animation.y_axis = self.model_animation.create_line(-1, -1, -1, -1, fill="black", arrow=tk.LAST, width=3)
+        self.model_animation.x_0 = self.model_animation.create_line(-1, -1, -1, -1, fill="black", width=1)
+        self.model_animation.x_220 = self.model_animation.create_line(-1, -1, -1, -1, fill="black", width=1)
+        self.model_animation.box_rectangle = self.model_animation.create_rectangle(-1,-1,-1,-1, fill="gray", width=3)
+        self.model_animation.box_rectangle_dashed = self.model_animation.create_rectangle(-1,-1,-1,-1, fill='', width=3, dash=(2,2))
+        # text for opimization problem
+        self.model_animation.labelling_machine_text = self.model_animation.create_text(-1,-1, 
+                                                                                       text="Labelling machine",
+                                                                                       fill="black",
+                                                                                       font=('Helvetica 11 bold'))
+        self.model_animation.text_80_70 = self.model_animation.create_text(-1,-1, 
+                                                                           text="(80, 70)",
+                                                                           fill="black",
+                                                                           font=('Helvetica 11 bold'))
+        self.model_animation.text_120_80 = self.model_animation.create_text(-1,-1, 
+                                                                            text="(120, 80)",
+                                                                            fill="black",
+                                                                            font=('Helvetica 11 bold'))
+        self.model_animation.text_220_80 = self.model_animation.create_text(-1,-1, 
+                                                                            text="(220, 80)",
+                                                                            fill="black",
+                                                                            font=('Helvetica 11 bold'))
+        self.model_animation.x_0_text = self.model_animation.create_text(-1,-1, 
+                                                                         text="x = 0",
+                                                                         fill="black",
+                                                                         font=('Helvetica 11 bold'))
+        self.model_animation.x_220_text = self.model_animation.create_text(-1,-1, 
+                                                                           text="x = 220",
+                                                                           fill="black",
+                                                                           font=('Helvetica 11 bold'))
+        self.model_animation.box_text = self.model_animation.create_text(-1,-1, 
+                                                                         text="Box",
+                                                                         fill="black",
+                                                                         font=('Helvetica 11 bold'))
+        # hide optimization problem
+        self.hide_optimization_problem()
         
         # trace
         self.model_animation.trace_C = self.model_animation.create_line([(-1,-1), (-1,-1)], fill="black", width=1)
@@ -284,11 +354,17 @@ class GUI:
         self.model_animation.CD_text = self.model_animation.create_text(-1,-1, text="h", fill="black",
                                                                         font=('Helvetica 11 bold'))
         
+        
         # firstly hide all the objects, as they are not configured yet
         self.hide_linkage()
 
     # this function is used to make sure that the four bar linkage model fit in GUI frame
     def scaling_factor(self):
+        # fix scale for optimization problem
+        if self.enable_optimization_problem.get():
+            scale = min(float(self.model_animation.width)/400,
+                        float(self.model_animation.height)/350)
+            return scale
         # max length in x direction
         # links AB and CD
         max_x = np.abs(np.cos(self.linkage.theta_rad))*max(self.linkage.AB, self.linkage.CD)
@@ -378,6 +454,14 @@ class GUI:
         self.delete_tracing()
         self.linkage.calculate_Edge_Value()
         self.refresh()
+    def update_parameter_A_x(self, val):
+        self.A_x = float(val)
+        self.delete_tracing()
+        self.refresh()
+    def update_parameter_A_y(self, val):
+        self.A_y = float(val)
+        self.delete_tracing()
+        self.refresh()
      
     # refresh the GUI
     def refresh(self):
@@ -390,12 +474,22 @@ class GUI:
     
     # generate default linkage
     def reset(self):
-        self.linkage = FourBarLinkage(3., 1.41, 1., 1.41, 45., 0., 0.25, 0.3, 0.025, 20)
-        self.update_alpha_slider()
-        self.linkage.run()
+        if self.enable_optimization_problem.get():
+            # solution of optimization problem
+            self.linkage = FourBarLinkage(168.0, 168.0, 118.5, 120.8, 45., 0., 0.3, 0.45, 0.025, 20)
+            self.A_x = 25.5
+            self.A_y = 60.5
+            self.reset_A_x_A_y()
+            self.linkage.theta = -69.0
+            self.linkage.theta_rad = math.radians(self.linkage.theta)
+            self.linkage.direction = 1
+        else:
+            # default config
+            self.linkage = FourBarLinkage(3., 1.41, 1., 1.41, 45., 0., 0.25, 0.3, 0.025, 20)
         self.reset_bars_sliders()
         self.reset_classifications_sliders()
         self.delete_tracing()
+        self.refresh()
     
     # reset bars sliders + angles
     def reset_bars_sliders(self):
@@ -479,6 +573,47 @@ class GUI:
     # show values of bars values
     def show_bars_values(self):
         self.text_bars_values.grid()
+    
+    # hide optimization problem drawings 
+    def hide_optimization_problem(self):
+        self.model_animation.itemconfigure(self.model_animation.movement_line, state='hidden')
+        self.model_animation.itemconfigure(self.model_animation.label_rectangle, state='hidden')
+        self.model_animation.itemconfigure(self.model_animation.point_1, state='hidden')
+        self.model_animation.itemconfigure(self.model_animation.point_2, state='hidden')
+        self.model_animation.itemconfigure(self.model_animation.x_axis, state='hidden')
+        self.model_animation.itemconfigure(self.model_animation.y_axis, state='hidden')
+        self.model_animation.itemconfigure(self.model_animation.x_0, state='hidden')
+        self.model_animation.itemconfigure(self.model_animation.x_220, state='hidden')
+        self.model_animation.itemconfigure(self.model_animation.box_rectangle, state='hidden')
+        self.model_animation.itemconfigure(self.model_animation.box_rectangle_dashed, state='hidden')
+        self.model_animation.itemconfigure(self.model_animation.labelling_machine_text, state='hidden')
+        self.model_animation.itemconfigure(self.model_animation.text_80_70, state='hidden')
+        self.model_animation.itemconfigure(self.model_animation.text_120_80, state='hidden')
+        self.model_animation.itemconfigure(self.model_animation.text_220_80, state='hidden')
+        self.model_animation.itemconfigure(self.model_animation.x_0_text, state='hidden')
+        self.model_animation.itemconfigure(self.model_animation.x_220_text, state='hidden')
+        self.model_animation.itemconfigure(self.model_animation.box_text, state='hidden')
+        self.model_animation.itemconfigure(self.model_animation.box_rectangle_dashed, state='hidden')
+    
+    # show optimization problem drawings 
+    def show_optimization_problem(self):
+        self.model_animation.itemconfigure(self.model_animation.movement_line, state='normal')
+        self.model_animation.itemconfigure(self.model_animation.label_rectangle, state='normal')
+        self.model_animation.itemconfigure(self.model_animation.point_1, state='normal')
+        self.model_animation.itemconfigure(self.model_animation.point_2, state='normal')
+        self.model_animation.itemconfigure(self.model_animation.x_axis, state='normal')
+        self.model_animation.itemconfigure(self.model_animation.y_axis, state='normal')
+        self.model_animation.itemconfigure(self.model_animation.x_0, state='normal')
+        self.model_animation.itemconfigure(self.model_animation.x_220, state='normal')
+        self.model_animation.itemconfigure(self.model_animation.box_rectangle, state='normal')
+        self.model_animation.itemconfigure(self.model_animation.box_rectangle_dashed, state='normal')
+        self.model_animation.itemconfigure(self.model_animation.labelling_machine_text, state='normal')
+        self.model_animation.itemconfigure(self.model_animation.text_80_70, state='normal')
+        self.model_animation.itemconfigure(self.model_animation.text_120_80, state='normal')
+        self.model_animation.itemconfigure(self.model_animation.text_220_80, state='normal')
+        self.model_animation.itemconfigure(self.model_animation.x_0_text, state='normal')
+        self.model_animation.itemconfigure(self.model_animation.x_220_text, state='normal')
+        self.model_animation.itemconfigure(self.model_animation.box_text, state='normal')
         
     # function to initialize animation
     def animation(self):
@@ -570,6 +705,24 @@ class GUI:
         self.model_animation.itemconfigure(self.model_animation.BC_text, state='normal')
         self.model_animation.itemconfigure(self.model_animation.CD_text, state='normal')
         
+    # hide sliders A_x and A_y and show alpha one
+    def hide_A_x_A_y(self):
+        self.slider_A_x.grid_forget()
+        self.slider_A_y.grid_forget()
+        self.slider_alpha.grid(row=7, column=1, columnspan=4)
+    
+    # show sliders A_x and A_y and hide alpha one
+    def show_A_x_A_y(self):
+        self.slider_alpha.grid_forget()
+        self.slider_A_x.grid(row=7, column=1, columnspan=2)
+        self.slider_A_y.grid(row=7, column=3, columnspan=2)
+        
+    # reset sliders A_x and A_y
+    def reset_A_x_A_y(self):
+        self.slider_A_x.set(self.A_x)
+        self.slider_A_y.set(self.A_y)
+        
+        
     def update_linkage_display(self):
         # check if setup is valid
         if self.linkage.geometric_Validity:
@@ -591,8 +744,17 @@ class GUI:
         AB_mid_x = round(self.model_animation.width/2)
         AB_mid_y = round(self.model_animation.height/2)
         # Point A is a bias and positioned relative to AB_mid
-        A_x = round(AB_mid_x - AB_mid[0]*scale)
-        A_y = round(AB_mid_y + AB_mid[1]*scale)
+        A_x = 0
+        A_y = 0
+        # in case of optimization problem A_x and A_y are moved with respect to coordinates x, y
+        if self.enable_optimization_problem.get():
+            x = round(self.x_axis*scale)
+            y = round(self.y_axis*scale)
+            A_x = round(self.A_x*scale) + x
+            A_y = - round(self.A_y*scale) + y
+        else:
+            A_x = round(AB_mid_x - AB_mid[0]*scale)
+            A_y = round(AB_mid_y + AB_mid[1]*scale)
         # Point B relative to A
         B_x = round(A_x + (self.linkage.B[0]-self.linkage.A[0])*scale)
         B_y = round(A_y - (self.linkage.B[1]-self.linkage.A[1])*scale)
@@ -606,6 +768,47 @@ class GUI:
         P_x = round(A_x + (self.linkage.P[0]-self.linkage.A[0])*scale)
         P_y = round(A_y - (self.linkage.P[1]-self.linkage.A[1])*scale)
         
+        # show optimization problem
+        if self.enable_optimization_problem.get():
+            x = round(self.x_axis*scale)
+            y = round(self.y_axis*scale)
+            # generate all figures and text
+            self.model_animation.coords(self.model_animation.movement_line, [0, y, self.model_animation.width, y])
+            self.model_animation.coords(self.model_animation.x_axis, [x, y, x, y-40*scale])
+            self.model_animation.coords(self.model_animation.x_0, [x, y+5*scale, x, y+25*scale])
+            self.model_animation.coords(self.model_animation.x_0_text, [x+10*scale, y+15*scale])
+            self.model_animation.coords(self.model_animation.x_220, [x+220*scale, y+5*scale, x+220*scale, y+25*scale])
+            self.model_animation.coords(self.model_animation.x_220_text, [x+235*scale, y+15*scale])
+            self.model_animation.coords(self.model_animation.y_axis, [x, y, x+40*scale, y])
+            self.model_animation.coords(self.model_animation.label_rectangle, [x+80*scale, y-70*scale, x-160*scale, y-120*scale])
+            self.model_animation.coords(self.model_animation.labelling_machine_text, [x-40*scale, y-95*scale])
+            self.model_animation.coords(self.model_animation.text_80_70, [x+95*scale, y-70*scale])
+            self.model_animation.coords(self.model_animation.point_1, [x+119*scale, y-81*scale, x+121*scale, y-79*scale])
+            self.model_animation.coords(self.model_animation.text_120_80, [x+120*scale, y-87*scale])
+            self.model_animation.coords(self.model_animation.point_2, [x+219*scale, y-81*scale, x+221*scale, y-79*scale])
+            self.model_animation.coords(self.model_animation.text_220_80, [x+221*scale, y-87*scale])
+            self.model_animation.coords(self.model_animation.box_rectangle_dashed, [x+140*scale, y, x+220*scale, y-70*scale])
+            # save previous box position
+            if self.prev_box_position is None:
+                self.prev_box_position = [x+140*scale, y, x+220*scale, y-70*scale]
+            box_text_position = [round((self.prev_box_position[0]+self.prev_box_position[2])/2),
+                                 round((self.prev_box_position[1]+self.prev_box_position[3])/2)]
+            # decide if pox is moved by coupler or remains at place
+            if self.pin_box_to_coupler and self.prev_coupler_position is not None:
+                self.prev_box_position = [P_x-80*scale, y, P_x, y-70*scale]
+                self.model_animation.coords(self.model_animation.box_rectangle, self.prev_box_position)
+                self.model_animation.coords(self.model_animation.box_text, box_text_position)
+                if self.prev_coupler_position[0] < P_x:
+                    self.pin_box_to_coupler = False
+                if P_y > y or P_y < y - 80*scale:
+                    self.pin_box_to_coupler = False
+            else:
+                self.model_animation.coords(self.model_animation.box_rectangle, self.prev_box_position)
+                self.model_animation.coords(self.model_animation.box_text, box_text_position)
+                if self.prev_coupler_position is not None and self.prev_coupler_position[0] >= x+220*scale and \
+                   P_x <= x+220*scale and P_y <= y and P_y >= y - 80*scale:
+                    self.pin_box_to_coupler = True
+        
         # tracing
         # number of points to trace
         N_points = 10*round((self.linkage.alpha_lims[1]-self.linkage.alpha_lims[0])/ \
@@ -616,7 +819,10 @@ class GUI:
                 self.positions_C.append(C_x)
                 self.positions_C.append(C_y)
             if len(self.positions_C)>2:
+                self.model_animation.itemconfigure(self.model_animation.trace_C, state='normal')
                 self.model_animation.coords(self.model_animation.trace_C, self.positions_C)
+            else:
+                self.model_animation.itemconfigure(self.model_animation.trace_C, state='hidden')
         else:
             self.model_animation.itemconfigure(self.model_animation.trace_C, state='hidden')
         # trace D
@@ -625,7 +831,10 @@ class GUI:
                 self.positions_D.append(D_x)
                 self.positions_D.append(D_y)
             if len(self.positions_D)>2:
+                self.model_animation.itemconfigure(self.model_animation.trace_D, state='normal')
                 self.model_animation.coords(self.model_animation.trace_D, self.positions_D)
+            else:
+                self.model_animation.itemconfigure(self.model_animation.trace_D, state='hidden')
         else:
             self.model_animation.itemconfigure(self.model_animation.trace_D, state='hidden')
         # trace P   
@@ -634,7 +843,10 @@ class GUI:
                 self.positions_P.append(P_x)
                 self.positions_P.append(P_y)
             if len(self.positions_P)>2:
+                self.model_animation.itemconfigure(self.model_animation.trace_P, state='normal')
                 self.model_animation.coords(self.model_animation.trace_P, self.positions_P)
+            else:
+                self.model_animation.itemconfigure(self.model_animation.trace_P, state='hidden')
         else:
             self.model_animation.itemconfigure(self.model_animation.trace_P, state='hidden')
 
@@ -697,7 +909,46 @@ class GUI:
         self.model_animation.coords(self.model_animation.CD_text, [round(radius_names*h[0]+(C_x+D_x)/2),
                                                                    round(-radius_names*h[1]+(C_y+D_y)/2)])
         
-  
+        self.prev_coupler_position = [P_x, P_y]
+        
+    # change slider limits for optimization problem
+    def change_slider_limits_optimization_problem(self):
+        self.slider_a.configure(from_=1., to=200., resolution=0.1)
+        self.slider_g.configure(from_=1., to=200., resolution=0.1)
+        self.slider_b.configure(from_=1., to=200., resolution=0.1)
+        self.slider_h.configure(from_=1., to=200., resolution=0.1)
+        self.slider_T1.configure(from_=-300., to=300., resolution=0.1)
+        self.slider_T2.configure(from_=-300., to=300., resolution=0.1)
+        self.slider_T3.configure(from_=-300., to=300., resolution=0.1)
+        self.slider_L.configure(from_=1., to=800., resolution=0.1)
+        
+    # change slider limits for normal mode
+    def change_slider_limits_normal(self):
+        self.slider_a.configure(from_=0.1, to=5., resolution=0.01)
+        self.slider_g.configure(from_=0.1, to=5., resolution=0.01)
+        self.slider_b.configure(from_=0.1, to=5., resolution=0.01)
+        self.slider_h.configure(from_=0.1, to=5., resolution=0.01)
+        self.slider_T1.configure(from_=-5., to=5., resolution=0.01)
+        self.slider_T2.configure(from_=-5., to=5., resolution=0.01)
+        self.slider_T3.configure(from_=-5., to=5., resolution=0.01)
+        self.slider_L.configure(from_=0.01, to=20., resolution=0.01)
+        
+    # configure optimization problem
+    def config_optimization_problem(self):
+        if self.enable_optimization_problem.get():
+            self.show_optimization_problem()
+            self.change_slider_limits_optimization_problem()
+            self.show_A_x_A_y()
+            self.reset_A_x_A_y()
+            
+        else:
+            self.hide_optimization_problem()
+            self.change_slider_limits_normal()
+            self.hide_A_x_A_y()
+        
+        self.reset()
+        self.refresh()
+        
 if __name__ == "__main__":
     GUI().tk.mainloop() 
     pass
