@@ -307,8 +307,8 @@ class GUI:
         self.hide_optimization_problem()
         
         # trace
-        self.model_animation.trace_C = self.model_animation.create_line([(-1,-1), (-1,-1)], fill="black", width=1)
-        self.model_animation.trace_D = self.model_animation.create_line([(-1,-1), (-1,-1)], fill="black", width=1)
+        self.model_animation.trace_C = self.model_animation.create_line([(-1,-1), (-1,-1)], fill="gray60", width=1)
+        self.model_animation.trace_D = self.model_animation.create_line([(-1,-1), (-1,-1)], fill="gray35", width=1)
         self.model_animation.trace_P = self.model_animation.create_line([(-1,-1), (-1,-1)], fill="black", width=1)
         
         # display angles
@@ -335,9 +335,9 @@ class GUI:
                                                                        font=('Helvetica 11 bold'))
         self.model_animation.B_text = self.model_animation.create_text(-1,-1, text="B", fill="black",
                                                                        font=('Helvetica 11 bold'))
-        self.model_animation.C_text = self.model_animation.create_text(-1,-1, text="C", fill="black",
+        self.model_animation.C_text = self.model_animation.create_text(-1,-1, text="C", fill="gray60",
                                                                        font=('Helvetica 11 bold'))
-        self.model_animation.D_text = self.model_animation.create_text(-1,-1, text="D", fill="black",
+        self.model_animation.D_text = self.model_animation.create_text(-1,-1, text="D", fill="gray35",
                                                                        font=('Helvetica 11 bold'))
         self.model_animation.P_text = self.model_animation.create_text(-1,-1, text="P", fill="black",
                                                                        font=('Helvetica 11 bold'))
