@@ -17,7 +17,7 @@ class GUI:
         # frame for linkage
         self.model_frame = tk.Frame(self.tk, width=round(0.7*self.width),
                                     height=round(0.6*self.height))
-        self.model_frame.grid(row=0, column=0)
+        self.model_frame.grid(sticky="W", row=0, column=0)
         width = round(0.7*self.width)
         height = round(0.9*self.height)
         # canvas to display linkage
@@ -25,14 +25,14 @@ class GUI:
                                          height=height)
         self.model_animation.width = width
         self.model_animation.height = height
-        self.model_animation.grid(row=0, column=0)
+        self.model_animation.grid(sticky="W", row=0, column=0)
         # toolbar
         width = round(0.3*self.width)
         self.toolbar_frame = tk.Frame(self.tk, width=width,
                                       height=height)
         self.toolbar_frame.width = width
         self.toolbar_frame.height = height
-        self.toolbar_frame.grid(row=0, column=1, columnspan=4)
+        self.toolbar_frame.grid(sticky="W", row=0, column=1, columnspan=4)
         # generate picture
         self.display_toolbar()
         self.init_linkage_display()
@@ -66,11 +66,11 @@ class GUI:
                                                                  variable=self.input_classification_values,
                                                                  onvalue=1, offvalue=0,
                                                                  command=self.input_classification)
-        self.input_classification_values_button.grid(row=0, column=2)
+        self.input_classification_values_button.grid(sticky="W", row=0, column=2, columnspan=2)
         
         # exit button
         self.reset_button = tk.Button(self.toolbar_frame, text="Exit", command=self.tk.destroy)
-        self.reset_button.grid(row=0, column=4)
+        self.reset_button.grid(sticky="W", row=0, column=4)
         
         
         # initiate sliders to set geometrical parameters
@@ -79,36 +79,36 @@ class GUI:
         self.slider_a = tk.Scale(self.toolbar_frame, from_=0.1, to=5., resolution=0.01,
                                  orient=tk.HORIZONTAL, length=slider_width, label="a",
                                  command=self.update_parameter_a, variable=tk.DoubleVar())
-        self.slider_a.grid(row=1, column=1, columnspan=4)
+        self.slider_a.grid(sticky="W", row=1, column=1, columnspan=4)
         self.slider_g = tk.Scale(self.toolbar_frame, from_=0.1, to=5., resolution=0.01,
                                  orient=tk.HORIZONTAL, length=slider_width, label="g",
                                  command=self.update_parameter_g, variable=tk.DoubleVar())
-        self.slider_g.grid(row=2, column=1, columnspan=4)
+        self.slider_g.grid(sticky="W", row=2, column=1, columnspan=4)
         self.slider_b = tk.Scale(self.toolbar_frame, from_=0.1, to=5., resolution=0.01,
                                  orient=tk.HORIZONTAL, length=slider_width, label="b",
                                  command=self.update_parameter_b, variable=tk.DoubleVar())
-        self.slider_b.grid(row=3, column=1, columnspan=4)
+        self.slider_b.grid(sticky="W", row=3, column=1, columnspan=4)
         self.slider_h = tk.Scale(self.toolbar_frame, from_=0.1, to=5., resolution=0.01,
                                  orient=tk.HORIZONTAL, length=slider_width, label="h",
                                  command=self.update_parameter_h, variable=tk.DoubleVar())
-        self.slider_h.grid(row=4, column=1, columnspan=4)
+        self.slider_h.grid(sticky="W", row=4, column=1, columnspan=4)
         # input classification values
         self.slider_T1 = tk.Scale(self.toolbar_frame, from_=-5., to=5., resolution=0.01,
                                   orient=tk.HORIZONTAL, length=slider_width, label="T1 = g + h - b - a",
                                   command=self.update_parameter_T1, variable=tk.DoubleVar())
-        self.slider_T1.grid(row=1, column=1, columnspan=4)
+        self.slider_T1.grid(sticky="W", row=1, column=1, columnspan=4)
         self.slider_T2 = tk.Scale(self.toolbar_frame, from_=-5., to=5., resolution=0.01,
                                   orient=tk.HORIZONTAL, length=slider_width, label="T2 = b + g - h - a",
                                   command=self.update_parameter_T2, variable=tk.DoubleVar())
-        self.slider_T2.grid(row=2, column=1, columnspan=4)
+        self.slider_T2.grid(sticky="W", row=2, column=1, columnspan=4)
         self.slider_T3 = tk.Scale(self.toolbar_frame, from_=-5., to=5., resolution=0.01,
                                   orient=tk.HORIZONTAL, length=slider_width, label="T3 = h + b - g - a",
                                   command=self.update_parameter_T3, variable=tk.DoubleVar())
-        self.slider_T3.grid(row=3, column=1, columnspan=4)
+        self.slider_T3.grid(sticky="W", row=3, column=1, columnspan=4)
         self.slider_L = tk.Scale(self.toolbar_frame, from_=0.01, to=20., resolution=0.01,
                                  orient=tk.HORIZONTAL, length=slider_width, label="L  = g + b + h + a",
                                  command=self.update_parameter_L, variable=tk.DoubleVar())
-        self.slider_L.grid(row=4, column=1, columnspan=4)
+        self.slider_L.grid(sticky="W", row=4, column=1, columnspan=4)
         # hide first classification sliders
         self.hide_classification_sliders()
         
@@ -116,31 +116,31 @@ class GUI:
         self.slider_p_pos = tk.Scale(self.toolbar_frame, from_=-200., to=200., orient=tk.HORIZONTAL,
                                      length=slider_width, label="P_pos % in CD",
                                      command=self.update_parameter_p_pos, variable=tk.DoubleVar())
-        self.slider_p_pos.grid(row=5, column=1, columnspan=4)
+        self.slider_p_pos.grid(sticky="W", row=5, column=1, columnspan=4)
         self.slider_p_off = tk.Scale(self.toolbar_frame, from_=-200., to=200., orient=tk.HORIZONTAL,
                                      length=slider_width, label="P_offset % in CD",
                                      command=self.update_parameter_p_off, variable=tk.DoubleVar())
-        self.slider_p_off.grid(row=6, column=1, columnspan=4)
+        self.slider_p_off.grid(sticky="W", row=6, column=1, columnspan=4)
         self.slider_alpha = tk.Scale(self.toolbar_frame, from_=-180, to=180, orient=tk.HORIZONTAL,
                                      length=slider_width, label="α, °",
                                      command=self.update_parameter_alpha, variable=tk.DoubleVar())
-        self.slider_alpha.grid(row=7, column=1, columnspan=4)
+        self.slider_alpha.grid(sticky="W", row=7, column=1, columnspan=4)
         self.update_alpha_slider() # instantly update alpha limits
         # additional sliders for optimization problem (position of A)
         self.slider_A_x = tk.Scale(self.toolbar_frame, from_=-100., to=300., resolution=0.1, orient=tk.HORIZONTAL,
-                                   length=round(0.5*slider_width), label="A_x",
+                                   length=round(0.49*slider_width), label="A_x",
                                    command=self.update_parameter_A_x, variable=tk.DoubleVar())
-        self.slider_A_x.grid(row=7, column=1, columnspan=2)
+        self.slider_A_x.grid(sticky="W", row=7, column=1, columnspan=2)
         self.slider_A_y = tk.Scale(self.toolbar_frame, from_=-100, to=100, resolution=0.1, orient=tk.HORIZONTAL,
-                                   length=round(0.5*slider_width), label="A_y",
+                                   length=round(0.49*slider_width), label="A_y",
                                    command=self.update_parameter_A_y, variable=tk.DoubleVar())
-        self.slider_A_y.grid(row=7, column=3, columnspan=2)
+        self.slider_A_y.grid(sticky="W", row=7, column=3, columnspan=2)
         # hide A_x and A_y
         self.hide_A_x_A_y()
         self.slider_theta = tk.Scale(self.toolbar_frame, from_=-180., to=180., orient=tk.HORIZONTAL,
                                      length=slider_width, label="θ, °",
                                      command=self.update_parameter_theta, variable=tk.DoubleVar())
-        self.slider_theta.grid(row=8, column=1, columnspan=4)
+        self.slider_theta.grid(sticky="W", row=8, column=1, columnspan=4)
         # reset all sliders with current values
         self.reset_bars_sliders()
         
@@ -158,27 +158,27 @@ class GUI:
         self.animation_button = tk.Checkbutton(self.toolbar_frame, text="animation", 
                                                variable=self.enable_animation,
                                                onvalue=1, offvalue=0, command=self.animation)
-        self.animation_button.grid(row=10, column=2)
+        self.animation_button.grid(sticky="W", row=10, column=2)
         self.enable_optimization_problem = tk.IntVar()
         self.optimization_problem_button = tk.Checkbutton(self.toolbar_frame, text="optimization problem", 
                                                           variable=self.enable_optimization_problem,
                                                           onvalue=1, offvalue=0, command=self.config_optimization_problem)
-        self.optimization_problem_button.grid(row=10, column=3)
+        self.optimization_problem_button.grid(sticky="W", row=10, column=3, columnspan=2)
         self.trace_text = tk.Text(self.toolbar_frame, height=1, width=6, bd=0, bg="grey94")
         self.trace_text.insert(tk.END, "Trace:")
         self.trace_text.grid(sticky="W", row=11, column=1)
         self.enable_trace_C = tk.IntVar()
         self.trace_C_button = tk.Checkbutton(self.toolbar_frame, text="C", variable=self.enable_trace_C,
                                              onvalue=1, offvalue=0, command=self.trace_C)
-        self.trace_C_button.grid(row=11, column=2)
+        self.trace_C_button.grid(sticky="W", row=11, column=2)
         self.enable_trace_D = tk.IntVar()
         self.trace_D_button = tk.Checkbutton(self.toolbar_frame, text="D", variable=self.enable_trace_D,
                                              onvalue=1, offvalue=0, command=self.trace_D)
-        self.trace_D_button.grid(row=11, column=3)
+        self.trace_D_button.grid(sticky="W", row=11, column=3)
         self.enable_trace_P = tk.IntVar()
         self.trace_P_button = tk.Checkbutton(self.toolbar_frame, text="P", variable=self.enable_trace_P,
                                              onvalue=1, offvalue=0, command=self.trace_P)
-        self.trace_P_button.grid(row=11, column=4)
+        self.trace_P_button.grid(sticky="W", row=11, column=4)
         
         # display type of linkage
         self.init_display_information()
@@ -205,7 +205,7 @@ class GUI:
         # display text
         self.text_classification_values = tk.Text(self.toolbar_frame, height=text_height, 
                                                   width=text_width, bd=0, bg="grey94")
-        self.text_classification_values.grid(row=9, column=1, columnspan=4, sticky=tk.W+tk.E)
+        self.text_classification_values.grid(sticky="W", row=9, column=1, columnspan=4)
         
     # display classification values T1, T2, T3, L
     def display_classification_values(self):
@@ -223,7 +223,7 @@ class GUI:
         # display text
         self.text_bars_values = tk.Text(self.toolbar_frame, height=text_height, 
                                         width=text_width, bd=0, bg="grey94")
-        self.text_bars_values.grid(row=9, column=1, columnspan=4, sticky=tk.W+tk.E)
+        self.text_bars_values.grid(sticky="W", row=9, column=1, columnspan=4)
         
         
     # display bars values a,b,g,h
@@ -241,7 +241,7 @@ class GUI:
         text_width = 30
         self.text_information = tk.Text(self.toolbar_frame, height=text_height,
                                         width=text_width, bd=0, bg="grey94")
-        self.text_information.grid(row=12, column=1, columnspan=4, sticky=tk.W+tk.E)
+        self.text_information.grid(sticky="W", row=12, column=1, columnspan=4)
         
     # display Input_Link_Type, Output_Link_Type, Linkage_Type
     def display_information(self):
@@ -709,13 +709,13 @@ class GUI:
     def hide_A_x_A_y(self):
         self.slider_A_x.grid_forget()
         self.slider_A_y.grid_forget()
-        self.slider_alpha.grid(row=7, column=1, columnspan=4)
+        self.slider_alpha.grid(sticky="W", row=7, column=1, columnspan=4)
     
     # show sliders A_x and A_y and hide alpha one
     def show_A_x_A_y(self):
         self.slider_alpha.grid_forget()
-        self.slider_A_x.grid(row=7, column=1, columnspan=2)
-        self.slider_A_y.grid(row=7, column=3, columnspan=2)
+        self.slider_A_x.grid(sticky="W", row=7, column=1, columnspan=2)
+        self.slider_A_y.grid(sticky="W", row=7, column=3, columnspan=2)
         
     # reset sliders A_x and A_y
     def reset_A_x_A_y(self):
