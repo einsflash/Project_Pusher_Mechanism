@@ -377,14 +377,17 @@ class FourBarLinkage:
         # calculate vector BD
         BD_vector = self.D - self.B
         BD_length = np.linalg.norm(BD_vector)
-        BA_vector = self.B - self.A
-        # if BD_length is zero, unit vector should be parallel to BA with sign depending on latest C to not observe any jumps
-        BD_unit_vector = np.sign(np.dot(BA_vector, self.C))*BA_vector/self.AB
+        BA_vector = self.A - self.B
+        BC_vector = self.C - self.B
+        # if BD_length is zero, unit vector is also zero
+        BD_unit_vector = np.array([0.0, 0.0])
         if BD_length > 10**-12:
             BD_unit_vector = BD_vector / BD_length
         # calculate normal vector , which is orthogonal to BD
         normal_vector_toBD = np.array([-BD_unit_vector[1], BD_unit_vector[0]])
-
+        # if BD vector is zero one, normal is along BA with sign depending on previous C
+        if BD_length < 10**-12:
+            normal_vector_toBD = np.sign(np.dot(BA_vector, BC_vector))*BA_vector/self.AB
         # length of the edges of triangle
         a = self.BC
         b = self.CD
@@ -398,12 +401,16 @@ class FourBarLinkage:
         h = 0.0
         if c > 10**-12:
             h = 2 * area / c
-
+        # if BD vector is zero, h is equal to BC
+        if c <= 10**-12:
+            h = self.BC
         # Calculate the distance from point C to BD (the projection length along the direction of BD)
         projection_length = np.sqrt(self.BC ** 2 - h ** 2)
         
-        # to choose sign of projection
-        cos_CBD = (self.BC**2 + c**2 - self.CD**2)/(2*self.BC*c)
+        # to choose sign of projection find angle between AB and BD
+        cos_CBD = 1.0
+        if c > 10**-12:
+            cos_CBD = (self.BC**2 + c**2 - self.CD**2)/(2*self.BC*c)
         if cos_CBD < 0:
             projection_length = -projection_length
 
@@ -418,6 +425,10 @@ class FourBarLinkage:
         if self.C_mode=='C2':
             self.C = self.C2
         else:
+            self.C = self.C1
+            
+        # if BD vector is zero C=C1 independing on C1 and C2 to not observe any jumps
+        if BD_length < 10**-12:
             self.C = self.C1
             
         return
@@ -477,7 +488,7 @@ class FourBarLinkage:
                     self.switch_C2_C1()
                     self.C2_C1_switched_last_time = True
                 
-            if self.switch_C2_C1_360 and ((self.alpha - self.theta >= 0.0 and self.alpha - self.theta - self.alpha_velocity * self.t <= 0.0) or \
+            if self.switch_C2_C1_360 and ((self.alpha - self.theta >= -10**-12 and self.alpha - self.theta - self.alpha_velocity * self.t <= 10**-12) or \
                                           (self.alpha - self.theta >= 360.0 and self.alpha - self.theta - self.alpha_velocity * self.t <= 360.0)):
                 if not self.C2_C1_switched_last_time: 
                     self.switch_C2_C1()
@@ -516,7 +527,7 @@ class FourBarLinkage:
                     self.switch_C2_C1()
                     self.C2_C1_switched_last_time = True
                 
-            if self.switch_C2_C1_360 and self.alpha - self.theta <= 0.0 and self.alpha - self.theta + self.alpha_velocity * self.t >= 0.0:
+            if self.switch_C2_C1_360 and self.alpha - self.theta <= 10**-12 and self.alpha - self.theta + self.alpha_velocity * self.t >= -10**-12:
                 if not self.C2_C1_switched_last_time: 
                     self.switch_C2_C1()
                     self.C2_C1_switched_last_time = True
