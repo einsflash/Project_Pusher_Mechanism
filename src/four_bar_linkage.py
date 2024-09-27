@@ -377,7 +377,9 @@ class FourBarLinkage:
         # calculate vector BD
         BD_vector = self.D - self.B
         BD_length = np.linalg.norm(BD_vector)
-        BD_unit_vector = (self.B - self.A)/self.AB
+        BA_vector = self.B - self.A
+        # if BD_length is zero, unit vector should be parallel to BA with sign depending on latest C to not observe any jumps
+        BD_unit_vector = np.sign(np.dot(BA_vector, self.C))*BA_vector/self.AB
         if BD_length > 10**-12:
             BD_unit_vector = BD_vector / BD_length
         # calculate normal vector , which is orthogonal to BD
