@@ -6,9 +6,12 @@ import math
 class GUI:
     
     def __init__(self):
-        # default parameters
+        # default parameters g=3, b=1.41, h=1, a=1.41, alpha=45 degrees, theta=0, p_pos=25%, p_off=30%, dt=0.025 s,
+        # alpha_dot=20 degrees/s 
         self.linkage = FourBarLinkage(3., 1.41, 1., 1.41, 45., 0., 0.25, 0.3, 0.025, 20)
+        # calculate all geometric values
         self.linkage.run()
+        # initialize GUI
         self.tk = tk.Tk()
         self.width = round(0.8*self.tk.winfo_screenwidth())
         self.height = round(0.8*self.tk.winfo_screenheight())
@@ -34,7 +37,7 @@ class GUI:
         self.toolbar_frame.height = height
         self.toolbar_frame.grid(sticky="W", row=0, column=1, columnspan=4)
         # generate picture
-        self.display_toolbar()
+        self.init_toolbar()
         self.init_linkage_display()
         # trace is disabled
         self.trace_C = False
@@ -56,7 +59,7 @@ class GUI:
         self.prev_box_position = None
     
     # configure toolbar
-    def display_toolbar(self):
+    def init_toolbar(self):
         # checkbutton to select input values
         self.input_text = tk.Text(self.toolbar_frame, height=1, width=6, bd=0, bg="grey94")
         self.input_text.insert(tk.END, "Input:")
@@ -125,7 +128,8 @@ class GUI:
                                      length=slider_width, label="α, °",
                                      command=self.update_parameter_alpha, variable=tk.DoubleVar())
         self.slider_alpha.grid(sticky="W", row=7, column=1, columnspan=4)
-        self.update_alpha_slider() # instantly update alpha limits
+        # instantly update alpha limits
+        self.update_alpha_limits()
         # additional sliders for optimization problem (position of A)
         self.slider_A_x = tk.Scale(self.toolbar_frame, from_=-100., to=300., resolution=0.1, orient=tk.HORIZONTAL,
                                    length=round(0.49*slider_width), label="A_x",
@@ -137,6 +141,7 @@ class GUI:
         self.slider_A_y.grid(sticky="W", row=7, column=3, columnspan=2)
         # hide A_x and A_y
         self.hide_A_x_A_y()
+        # slider for theta
         self.slider_theta = tk.Scale(self.toolbar_frame, from_=-180., to=180., orient=tk.HORIZONTAL,
                                      length=slider_width, label="θ, °",
                                      command=self.update_parameter_theta, variable=tk.DoubleVar())
@@ -145,8 +150,15 @@ class GUI:
         self.reset_bars_sliders()
         
         # classification values
-        self.init_display_classification_values()
-        self.init_display_bars_values()
+        self.text_classification_values = tk.Text(self.toolbar_frame, height=4, 
+                                                  width=30, bd=0, bg="grey94")
+        self.text_classification_values.grid(sticky="W", row=9, column=1, columnspan=4)
+        
+        # bar values
+        self.text_bars_values = tk.Text(self.toolbar_frame, height=4, 
+                                        width=10, bd=0, bg="grey94")
+        self.text_bars_values.grid(sticky="W", row=9, column=1, columnspan=4)
+        # hide bars values firstly
         self.hide_bars_values()
         
         # initialize reset button
@@ -181,75 +193,11 @@ class GUI:
         self.trace_P_button.grid(sticky="W", row=11, column=4)
         
         # display type of linkage
-        self.init_display_information()
-        
-    # update limits for alpha slider
-    def update_alpha_slider(self):
-        # round alpha limits to prevent errors
-        left_limit = np.ceil(self.linkage.alpha_lims[0])
-        right_limit = np.floor(self.linkage.alpha_lims[1])
-        self.slider_alpha.configure(from_=left_limit, to=right_limit)
-        # alpha should be always in alpha_lims
-        self.linkage.calculate_alpha_lims()
-        if self.linkage.alpha < self.linkage.alpha_lims[0] or \
-           self.linkage.alpha > self.linkage.alpha_lims[1]:
-            self.linkage.alpha = (self.linkage.alpha_lims[0] + self.linkage.alpha_lims[1])/2
-            self.linkage.alpha_rad = math.radians(self.linkage.alpha)
-        self.slider_alpha.set(self.linkage.alpha)
-     
-    # init classification display values
-    def init_display_classification_values(self):
-        # text params in symbols
-        text_height=4
-        text_width=30
-        # display text
-        self.text_classification_values = tk.Text(self.toolbar_frame, height=text_height, 
-                                                  width=text_width, bd=0, bg="grey94")
-        self.text_classification_values.grid(sticky="W", row=9, column=1, columnspan=4)
-        
-    # display classification values T1, T2, T3, L
-    def display_classification_values(self):
-        self.text_classification_values.delete('1.0', tk.END)
-        self.text_classification_values.insert(tk.END, f'T1 = g + h - b - a: {round(self.linkage.T1,3)}')
-        self.text_classification_values.insert(tk.END, f'\nT2 = b + g - h - a: {round(self.linkage.T2,3)}')
-        self.text_classification_values.insert(tk.END, f'\nT3 = h + b - g - a: {round(self.linkage.T3,3)}')
-        self.text_classification_values.insert(tk.END, f'\nL  = g + b + h + a: {round(self.linkage.L,3)}')
-    
-    # init bars display values
-    def init_display_bars_values(self):
-        # text params in symbols
-        text_height=4
-        text_width=10
-        # display text
-        self.text_bars_values = tk.Text(self.toolbar_frame, height=text_height, 
-                                        width=text_width, bd=0, bg="grey94")
-        self.text_bars_values.grid(sticky="W", row=9, column=1, columnspan=4)
-        
-        
-    # display bars values a,b,g,h
-    def display_bars_values(self):
-        self.text_bars_values.delete('1.0', tk.END)
-        self.text_bars_values.insert(tk.END, f'a = {round(self.linkage.DA,3)}')
-        self.text_bars_values.insert(tk.END, f'\ng = {round(self.linkage.AB,3)}')
-        self.text_bars_values.insert(tk.END, f'\nb = {round(self.linkage.BC,3)}')
-        self.text_bars_values.insert(tk.END, f'\nh = {round(self.linkage.CD,3)}')
-    
-    # init classification of linkage
-    def init_display_information(self):
-        # Set the height and width for the text box
-        text_height = 3
-        text_width = 30
-        self.text_information = tk.Text(self.toolbar_frame, height=text_height,
-                                        width=text_width, bd=0, bg="grey94")
+        self.text_information = tk.Text(self.toolbar_frame, height=3,
+                                        width=30, bd=0, bg="grey94")
         self.text_information.grid(sticky="W", row=12, column=1, columnspan=4)
         
-    # display Input_Link_Type, Output_Link_Type, Linkage_Type
-    def display_information(self):
-        self.text_information.delete('1.0', tk.END)
-        self.text_information.insert(tk.END, f'Input Link Type: {self.linkage.Input_Link_Type}')
-        self.text_information.insert(tk.END, f'\nOutput Link Type: {self.linkage.Output_Link_Type}')
-        self.text_information.insert(tk.END, f'\nLinkage Type: {self.linkage.Linkage_Type}')
-        
+    
     # initiate all structures for linkage display (all coordinates are set to -1)
     def init_linkage_display(self):
         # invalid linkage text
@@ -260,10 +208,8 @@ class GUI:
         # hide the error text
         self.model_animation.itemconfigure(self.model_animation.invalid_text, state='hidden')
         
-        # display
-        
         # optimization problem
-        # all figures
+        # additional figures
         self.model_animation.movement_line = self.model_animation.create_line(-1,-1,-1,-1, fill="black", width=3)
         self.model_animation.label_rectangle = self.model_animation.create_rectangle(-1,-1,-1,-1, fill="gray", width=3)
         self.model_animation.point_1 = self.model_animation.create_oval(-1,-1,-1,-1, fill="black", width=3)
@@ -311,7 +257,7 @@ class GUI:
         self.model_animation.trace_D = self.model_animation.create_line([(-1,-1), (-1,-1)], fill="gray35", width=1)
         self.model_animation.trace_P = self.model_animation.create_line([(-1,-1), (-1,-1)], fill="black", width=1)
         
-        # display angles
+        # display angles arc
         self.model_animation.alpha_arc = self.model_animation.create_arc(-1,-1,-1,-1, start = 0,
                                                                          extent=self.linkage.alpha, outline = "black",
                                                                          dash=(2,2))
@@ -357,6 +303,30 @@ class GUI:
         
         # firstly hide all the objects, as they are not configured yet
         self.hide_linkage()
+        
+    # display classification values T1, T2, T3, L
+    def display_classification_values(self):
+        self.text_classification_values.delete('1.0', tk.END)
+        self.text_classification_values.insert(tk.END, f'T1 = g + h - b - a: {round(self.linkage.T1,3)}')
+        self.text_classification_values.insert(tk.END, f'\nT2 = b + g - h - a: {round(self.linkage.T2,3)}')
+        self.text_classification_values.insert(tk.END, f'\nT3 = h + b - g - a: {round(self.linkage.T3,3)}')
+        self.text_classification_values.insert(tk.END, f'\nL  = g + b + h + a: {round(self.linkage.L,3)}')        
+        
+    # display bars values a,b,g,h
+    def display_bars_values(self):
+        self.text_bars_values.delete('1.0', tk.END)
+        self.text_bars_values.insert(tk.END, f'a = {round(self.linkage.DA,3)}')
+        self.text_bars_values.insert(tk.END, f'\ng = {round(self.linkage.AB,3)}')
+        self.text_bars_values.insert(tk.END, f'\nb = {round(self.linkage.BC,3)}')
+        self.text_bars_values.insert(tk.END, f'\nh = {round(self.linkage.CD,3)}')
+        
+    # display Input_Link_Type, Output_Link_Type, Linkage_Type
+    def display_information(self):
+        self.text_information.delete('1.0', tk.END)
+        self.text_information.insert(tk.END, f'Input Link Type: {self.linkage.Input_Link_Type}')
+        self.text_information.insert(tk.END, f'\nOutput Link Type: {self.linkage.Output_Link_Type}')
+        self.text_information.insert(tk.END, f'\nLinkage Type: {self.linkage.Linkage_Type}')
+        
 
     # this function is used to make sure that the four bar linkage model fit in GUI frame
     def scaling_factor(self):
@@ -370,6 +340,7 @@ class GUI:
         max_x = np.abs(np.cos(self.linkage.theta_rad))*max(self.linkage.AB, self.linkage.CD)
         # links DA and BC
         horizontal_value = max(self.linkage.DA, self.linkage.BC)
+        # always factor of two for symmetry of generated picture
         max_x += 2*horizontal_value
         # point P
         max_x += 2*max(np.sqrt(self.linkage.coupler_position**2 +\
@@ -379,6 +350,7 @@ class GUI:
         max_y = np.abs(np.sin(self.linkage.theta_rad))*max(self.linkage.AB, self.linkage.CD)
         # links DA and BC
         vertical_value = max(self.linkage.DA, self.linkage.BC)
+        # always factor of two for symmetry of generated picture
         max_y += 2*vertical_value
         # point P
         max_y += 2*max(np.sqrt(self.linkage.coupler_position**2 +\
@@ -388,7 +360,7 @@ class GUI:
                     float(self.model_animation.height)/max_y)
         return scale
     
-    # normalities to 4 linkage bars
+    # normalities to 4 linkage bars, used to display bar's names
     def calculate_normalities(self):
         AB = self.linkage.B - self.linkage.A
         BC = self.linkage.C - self.linkage.B
@@ -465,11 +437,15 @@ class GUI:
      
     # refresh the GUI
     def refresh(self):
-        self.update_alpha_slider()
+        # set new alpha limits
+        self.update_alpha_limits()
+        # calculate points position
         self.linkage.run()
+        # display info on toolbar
         self.display_classification_values()
         self.display_bars_values()
         self.display_information()
+        # generate new picture
         self.update_linkage_display()
     
     # generate default linkage
@@ -486,9 +462,12 @@ class GUI:
         else:
             # default config
             self.linkage = FourBarLinkage(3., 1.41, 1., 1.41, 45., 0., 0.25, 0.3, 0.025, 20)
+        # reset all the sliders and info
         self.reset_bars_sliders()
         self.reset_classifications_sliders()
+        # delete saved tracing info
         self.delete_tracing()
+        # generate new image
         self.refresh()
     
     # reset bars sliders + angles
@@ -512,6 +491,11 @@ class GUI:
         self.slider_p_off.set(self.linkage.coupler_offset*100)
         self.slider_alpha.set(self.linkage.alpha)
         self.slider_theta.set(self.linkage.theta)
+        
+    # reset sliders A_x and A_y
+    def reset_A_x_A_y(self):
+        self.slider_A_x.set(self.A_x)
+        self.slider_A_y.set(self.A_y)
         
     # input classifiaction values instead of bar's length
     def input_classification(self):
@@ -615,44 +599,6 @@ class GUI:
         self.model_animation.itemconfigure(self.model_animation.x_220_text, state='normal')
         self.model_animation.itemconfigure(self.model_animation.box_text, state='normal')
         
-    # function to initialize animation
-    def animation(self):
-        self.run_animation()
-    
-    # repeated function to animate movement
-    def run_animation(self):
-        if self.enable_animation.get():
-            self.linkage.animation_alpha()
-            self.refresh()
-            self.tk.after(25, self.run_animation)
-    
-    # enable/disable C-point tracing
-    def trace_C(self):
-        if self.enable_trace_C.get():
-            self.trace_C = True
-        else:
-            self.trace_C = False
-            
-    # enable/disable D-point tracing
-    def trace_D(self):
-        if self.enable_trace_D.get():
-            self.trace_D = True
-        else:
-            self.trace_D = False
-            
-    # enable/disable P-point tracing
-    def trace_P(self):
-        if self.enable_trace_P.get():
-            self.trace_P = True
-        else:
-            self.trace_P = False
-    
-    # delete tracing
-    def delete_tracing(self):
-        self.positions_C = []
-        self.positions_D = []
-        self.positions_P = []
-    
     # hide all linkage widgets
     def hide_linkage(self):
         self.model_animation.itemconfigure(self.model_animation.trace_C, state='hidden')
@@ -717,11 +663,43 @@ class GUI:
         self.slider_A_x.grid(sticky="W", row=7, column=1, columnspan=2)
         self.slider_A_y.grid(sticky="W", row=7, column=3, columnspan=2)
         
-    # reset sliders A_x and A_y
-    def reset_A_x_A_y(self):
-        self.slider_A_x.set(self.A_x)
-        self.slider_A_y.set(self.A_y)
-        
+    # function to initialize animation
+    def animation(self):
+        self.run_animation()
+    
+    # repeated function to animate movement
+    def run_animation(self):
+        if self.enable_animation.get():
+            self.linkage.animation_alpha()
+            self.refresh()
+            self.tk.after(25, self.run_animation)
+    
+    # enable/disable C-point tracing
+    def trace_C(self):
+        if self.enable_trace_C.get():
+            self.trace_C = True
+        else:
+            self.trace_C = False
+            
+    # enable/disable D-point tracing
+    def trace_D(self):
+        if self.enable_trace_D.get():
+            self.trace_D = True
+        else:
+            self.trace_D = False
+            
+    # enable/disable P-point tracing
+    def trace_P(self):
+        if self.enable_trace_P.get():
+            self.trace_P = True
+        else:
+            self.trace_P = False
+    
+    # delete tracing
+    def delete_tracing(self):
+        self.positions_C = []
+        self.positions_D = []
+        self.positions_P = []
         
     def update_linkage_display(self):
         # check if setup is valid
@@ -739,7 +717,7 @@ class GUI:
         
         # scaling factor to transfrom spatial coordinates to pixels
         scale = self.scaling_factor()
-        # Mid point in AB should be always placed in center for symmetry
+        # Mid point in AB should be always placed in center for symmetry (except of optimization problem)
         AB_mid = (self.linkage.A + self.linkage.B)/2
         AB_mid_x = round(self.model_animation.width/2)
         AB_mid_y = round(self.model_animation.height/2)
@@ -770,6 +748,7 @@ class GUI:
         
         # show optimization problem
         if self.enable_optimization_problem.get():
+            # axis position
             x = round(self.x_axis*scale)
             y = round(self.y_axis*scale)
             # generate all figures and text
@@ -791,13 +770,16 @@ class GUI:
             # save previous box position
             if self.prev_box_position is None:
                 self.prev_box_position = [x+140*scale, y, x+220*scale, y-70*scale]
+            # position of text "Box"
             box_text_position = [round((self.prev_box_position[0]+self.prev_box_position[2])/2),
                                  round((self.prev_box_position[1]+self.prev_box_position[3])/2)]
-            # decide if pox is moved by coupler or remains at place
+            # decide if box is moved by coupler or remains at place
             if self.pin_box_to_coupler and self.prev_coupler_position is not None:
+                # save next box position
                 self.prev_box_position = [P_x-80*scale, y, P_x, y-70*scale]
                 self.model_animation.coords(self.model_animation.box_rectangle, self.prev_box_position)
                 self.model_animation.coords(self.model_animation.box_text, box_text_position)
+                # unpin box
                 if self.prev_coupler_position[0] < P_x:
                     self.pin_box_to_coupler = False
                 if P_y > y or P_y < y - 80*scale:
@@ -805,25 +787,28 @@ class GUI:
             else:
                 self.model_animation.coords(self.model_animation.box_rectangle, self.prev_box_position)
                 self.model_animation.coords(self.model_animation.box_text, box_text_position)
+                # pin box
                 if self.prev_coupler_position is not None and self.prev_coupler_position[0] >= x+220*scale and \
                    P_x <= x+220*scale and P_y <= y and P_y >= y - 80*scale:
                     self.pin_box_to_coupler = True
         
         # tracing
-        # number of points to trace
+        # number of points to trace (factor of 10 makes sure to save full trajectory)
         N_points = 10*round((self.linkage.alpha_lims[1]-self.linkage.alpha_lims[0])/ \
-                   (self.linkage.alpha_velocity * self.linkage.t)) # delete later this factor of 10
+                   (self.linkage.alpha_velocity * self.linkage.t))
         # trace C
         if self.trace_C:
             if len(self.positions_C)<=N_points:
                 self.positions_C.append(C_x)
                 self.positions_C.append(C_y)
             if len(self.positions_C)>2:
+                # show C trajectory
                 self.model_animation.itemconfigure(self.model_animation.trace_C, state='normal')
                 self.model_animation.coords(self.model_animation.trace_C, self.positions_C)
             else:
                 self.model_animation.itemconfigure(self.model_animation.trace_C, state='hidden')
         else:
+            # hide C trajectory
             self.model_animation.itemconfigure(self.model_animation.trace_C, state='hidden')
         # trace D
         if self.trace_D:
@@ -831,9 +816,11 @@ class GUI:
                 self.positions_D.append(D_x)
                 self.positions_D.append(D_y)
             if len(self.positions_D)>2:
+                # show D trajectory
                 self.model_animation.itemconfigure(self.model_animation.trace_D, state='normal')
                 self.model_animation.coords(self.model_animation.trace_D, self.positions_D)
             else:
+                # hide D trajectory
                 self.model_animation.itemconfigure(self.model_animation.trace_D, state='hidden')
         else:
             self.model_animation.itemconfigure(self.model_animation.trace_D, state='hidden')
@@ -843,9 +830,11 @@ class GUI:
                 self.positions_P.append(P_x)
                 self.positions_P.append(P_y)
             if len(self.positions_P)>2:
+                # show P trajectory
                 self.model_animation.itemconfigure(self.model_animation.trace_P, state='normal')
                 self.model_animation.coords(self.model_animation.trace_P, self.positions_P)
             else:
+                # hide P trajectory
                 self.model_animation.itemconfigure(self.model_animation.trace_P, state='hidden')
         else:
             self.model_animation.itemconfigure(self.model_animation.trace_P, state='hidden')
@@ -858,6 +847,7 @@ class GUI:
         
         # update arc theta
         radius_theta = round(min(self.width/20, self.linkage.AB*scale))
+        # show only if theta is non zero
         if self.linkage.theta!=0:            
             self.model_animation.coords(self.model_animation.theta_arc, [A_x-radius_theta, A_y-radius_theta,
                                                                          A_x+radius_theta, A_y+radius_theta])
@@ -898,7 +888,8 @@ class GUI:
         
         # update bar's names
         radius_names = round(scale*min(self.linkage.AB, self.linkage.BC, self.linkage.CD,
-                                       self.linkage.DA)/10)        
+                                       self.linkage.DA)/10)
+        # normalities to all bars to show their names
         g, b, h, a = self.calculate_normalities()
         self.model_animation.coords(self.model_animation.DA_text, [round(radius_names*a[0]+(A_x+D_x)/2),
                                                                    round(-radius_names*a[1]+(A_y+D_y)/2)])
@@ -909,6 +900,7 @@ class GUI:
         self.model_animation.coords(self.model_animation.CD_text, [round(radius_names*h[0]+(C_x+D_x)/2),
                                                                    round(-radius_names*h[1]+(C_y+D_y)/2)])
         
+        # save previous coupler position
         self.prev_coupler_position = [P_x, P_y]
         
     # change slider limits for optimization problem
@@ -932,6 +924,20 @@ class GUI:
         self.slider_T2.configure(from_=-5., to=5., resolution=0.01)
         self.slider_T3.configure(from_=-5., to=5., resolution=0.01)
         self.slider_L.configure(from_=0.01, to=20., resolution=0.01)
+    
+    # update limits for alpha slider
+    def update_alpha_limits(self):
+        # round alpha limits to prevent errors
+        left_limit = np.ceil(self.linkage.alpha_lims[0])
+        right_limit = np.floor(self.linkage.alpha_lims[1])
+        self.slider_alpha.configure(from_=left_limit, to=right_limit)
+        # alpha should be always in alpha_lims
+        self.linkage.calculate_alpha_lims()
+        if self.linkage.alpha < self.linkage.alpha_lims[0] or \
+           self.linkage.alpha > self.linkage.alpha_lims[1]:
+            self.linkage.alpha = (self.linkage.alpha_lims[0] + self.linkage.alpha_lims[1])/2
+            self.linkage.alpha_rad = math.radians(self.linkage.alpha)
+        self.slider_alpha.set(self.linkage.alpha)
         
     # configure optimization problem
     def config_optimization_problem(self):
