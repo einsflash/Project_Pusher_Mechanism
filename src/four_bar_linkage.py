@@ -1,62 +1,6 @@
 import math
 import numpy as np
 class FourBarLinkage:
-    # Parameter Check
-    Linkage_Type = "Undefined"  # This will be either "Grashof" or "non-Grashof" after check_Parameter()
-    geometric_Validity = True  # Bool: True or False (possible geometry)
-    # Parameter to display in GUI
-    Input_Link_Type = "Undefined" # Type of input linkage (e.g., 'crank', 'π-rocker', '0-rocker')
-    Output_Link_Type = "Undefined" # Type of output linkage (e.g., 'rocker', 'π-rocker', 'crank', '0-rocker')
-
-    # all parameters you need to calculate coordinates, default initializing
-    # bars lengths
-    AB = 0. # AB
-    BC = 0. # BC
-    CD = 0. # CD
-    DA = 0.  # DA
-    # input angle in degrees (vector AD to positive x achse)
-    alpha = 0.
-    # input angle in degrees (vector BC to negative x achse)
-    beta = 0.
-    # angle in degrees between ground bar and horizont
-    theta = 0.
-    # convert angle from degrees to radians
-    alpha_rad = 0.
-    theta_rad = 0.
-    beta_rad  = 0.
-    # limits for angle alpha
-    alpha_lims = [0., 0.]
-    alpha_rad_lims = [0., 0.]
-    alpha_limited = True
-    # limits for angle beta
-    beta_lims = [0., 0.]
-    beta_rad_lims = [0., 0.]
-    # coupler positions
-    coupler_position = 0. # 0% from DC midpoint towards C
-    coupler_offset = 0. # 0% of DC length
-    # all coordinates of conection points A,B,C,D,P
-    A  = np.array([0.0, 0.0]) # coordinates of A are always (0,0)
-    B  = np.array([0.0, 0.0])
-    C = np.array([0.0, 0.0])  # C is chosen point for GUI
-    C1 = np.array([0.0, 0.0]) # C1 is always with positive cross product
-    C2 = np.array([0.0, 0.0]) # C2 is always with negative cross product
-    C_last = np.array([0.0, 0.0]) # C before one iteration
-    D  = np.array([0.0, 0.0])
-    P = np.array([0.0, 0.0])  # P is chosen point for GUI
-    P1  = np.array([0.0, 0.0]) # P1 is always with positive cross product
-    P2 = np.array([0.0, 0.0])  # P2 is always with negative cross product
-
-    # you can classify motions using following values
-    T1 = 0. # AB + CD - BC - DA
-    T2 = 0. # BC + AB - CD - DA
-    T3 = 0. # CD + BC - AB - DA
-    L =  0.  # AB + BC + CD + DA
-    # consult https://en.wikipedia.org/wiki/Four-bar_linkage, all values are like in wikipedia, and in four_bar_linkage.png
-
-    # timeinterval (second)
-    t = 0.01
-    # angular velocity per second
-    alpha_velocity = 0.
     # this is constructor that will be used from GUI to initialize all needed parameters,
     # lengths, angles, coordinated of fixed points and so one
     def __init__(self, AB, BC, CD, DA, alpha, theta, coupler_position, coupler_offset , timeinterval , alpha_velocity):
@@ -75,18 +19,47 @@ class FourBarLinkage:
         self.alpha_velocity = alpha_velocity
         self.C_mode = 'C2'
         # initialize coordinates of connection points
-        self.switch_C2_C1_180 = False
-        self.switch_C2_C1_360 = False
-        self.C2_C1_switched_last_time = False
-        self.alpha_limited = True
-        self.direction = 0
+        self.init_default_values()
+        # calculate all positions
         self.run()
         return
 
+    # default values initialization
+    def init_default_values(self):
+        # values for animation (when to switch C2 and C1)
+        self.switch_C2_C1_180 = False
+        self.switch_C2_C1_360 = False
+        self.C2_C1_switched_last_time = False
+        self.direction = 0
+        
+        # Parameter Check
+        self.Linkage_Type = "Undefined"  # This will be either "Grashof" or "non-Grashof" after check_Parameter()
+        self.geometric_Validity = True  # Bool: True or False (possible geometry)
+        # Parameter to display in GUI
+        self.Input_Link_Type = "Undefined" # Type of input linkage (e.g., 'crank', 'π-rocker', '0-rocker')
+        self.Output_Link_Type = "Undefined" # Type of output linkage (e.g., 'rocker', 'π-rocker', 'crank', '0-rocker')
+        
+        # limits for angle alpha
+        self.alpha_lims = [0., 0.]
+        self.alpha_rad_lims = [0., 0.]
+        self.alpha_limited = True
+        
+        # all coordinates of conection points A,B,C,D,P
+        self.A  = np.array([0.0, 0.0]) # coordinates of A are always (0,0)
+        self.B  = np.array([0.0, 0.0])
+        self.C = np.array([0.0, 0.0])  # C is chosen point for GUI
+        self.C1 = np.array([0.0, 0.0])
+        self.C2 = np.array([0.0, 0.0])
+        self.D  = np.array([0.0, 0.0])
+        self.P = np.array([0.0, 0.0])
+    
+        # classification values consult https://en.wikipedia.org/wiki/Four-bar_linkage
+        self.T1 = 0. # AB + CD - BC - DA
+        self.T2 = 0. # BC + AB - CD - DA
+        self.T3 = 0. # CD + BC - AB - DA
+        self.L =  0. # AB + BC + CD + DA
 
-
-    # implement here geometry to calculate coordinates of all points from parameters (lengths, angles, ...)
-    # this function will be called from GUI after updating some parameters to get coordinates for GUI animation
+    # implement geometry to calculate coordinates of all points from parameters
     def run(self):
         # calculate classification values
         self.calculate_Classification_Value()
@@ -101,29 +74,13 @@ class FourBarLinkage:
         # search Linkage Type
         self.find_Linkage_Type()
 
-        # find_Linkage_Type
-        self.find_Linkage_Type()
-
-        # calculate limits
+        # calculate alpha limits
         self.calculate_alpha_lims()
-        self.calculate_beta_lims()
 
         # calculate all coordinates A, B, C, D, P
         self.calculate_Point_Position()
-
-        # calculate angle beta for the link BC with respect to the positive x-axis
-        self.calculate_beta()
-
-        self.C_last = self.C
-        return
-
-
-
-
         
-    # add some functions, if you need it to implement run function. Keep it simple, 
-    # split run() in subfunctions, that you will call from run().
-    # The important thing is that GUI needs to call only run() to update coordinates!
+        return
 
     """ 
     check Parameter 
@@ -159,13 +116,12 @@ class FourBarLinkage:
 
         return
 
-
-    """
-    Determines the types of input and output linkages based on the values of T1, T2, and T3.
-    Sets the input linkage type in self.Input_Link_Type 
-    and the output linkage type in self.Output_Link_Type.
-    """
     def find_Linkage_Type(self):
+        """
+        Determines the types of input and output linkages based on the values of T1, T2, and T3.
+        Sets the input linkage type in self.Input_Link_Type 
+        and the output linkage type in self.Output_Link_Type.
+        """
         # Define a dictionary that maps (T1, T2, T3) to (Input α, Output β)
         linkage_map = {
             ('+', '+', '+'): ('crank', 'rocker'),
@@ -213,25 +169,21 @@ class FourBarLinkage:
 
         return
 
-
-
-    """ calculate classification values according to given 4 edges"""
     def calculate_Classification_Value(self):
+        """ calculate classification values according to given 4 edges"""
         self.T1 = self.AB + self.CD - self.BC - self.DA
         self.T2 = self.BC + self.AB - self.CD - self.DA
         self.T3 = self.CD + self.BC - self.AB - self.DA
         self.L =  self.AB + self.BC + self.CD + self.DA
         return
 
-    """ calculate 4 edges according to given classification values """
     def calculate_Edge_Value(self):
+        """ calculate 4 edges according to given classification values """
         self.AB = (self.L / 4) + (self.T1 / 4) + (self.T2 / 4) - (self.T3 / 4)
         self.BC = (self.L / 4) - (self.T1 / 4) + (self.T2 / 4) + (self.T3 / 4)
         self.CD = (self.L / 4) + (self.T1 / 4) - (self.T2 / 4) + (self.T3 / 4)
         self.DA = (self.L / 4) - (self.T1 / 4) - (self.T2 / 4) - (self.T3 / 4)
         return
-
-
     
     # calculate limits of angle alpha
     def calculate_alpha_lims(self):
@@ -248,12 +200,15 @@ class FourBarLinkage:
         c = self.DA  # Length of output link DA
 
         # Using the law of cosines to find cos(alpha limits)
+        # upper limit
         cos_alpha_lims_1 = (b ** 2 + c ** 2 - a_1 ** 2) / (2 * b * c)
+        # lower limit
         cos_alpha_lims_2 = (b ** 2 + c ** 2 - a_2 ** 2) / (2 * b * c)
         
         # compare cos with one with some precision of 1e-10
         if abs(cos_alpha_lims_1) < 1.0 - 1e-10:
             self.alpha_limited = True
+            # do not switch additionally by 180 and 360 degrees
             self.switch_C2_C1_180 = False
             self.switch_C2_C1_360 = False
             self.alpha_rad_lims = [-np.arccos(cos_alpha_lims_1) + self.theta_rad,
@@ -263,12 +218,15 @@ class FourBarLinkage:
                 self.alpha_rad_lims[0] = np.arccos(cos_alpha_lims_2) + self.theta_rad
             else:
                 if abs(abs(cos_alpha_lims_2) - 1.0) < 1e-10:
+                    # switch additionally by 360 degrees
                     self.switch_C2_C1_360 = True
                 
         else:
+            # do not switch additionally by 180 and 360 degrees
             self.switch_C2_C1_180 = False
             self.switch_C2_C1_360 = False
             if abs(abs(cos_alpha_lims_1) - 1.0) < 1e-10:
+                # switch additionally by 180 degrees
                 self.switch_C2_C1_180 = True
             if abs(cos_alpha_lims_2) < 1.0 - 1e-10:
                 self.alpha_limited = True
@@ -276,76 +234,12 @@ class FourBarLinkage:
                                        2*math.pi - np.arccos(cos_alpha_lims_2) + self.theta_rad]
             else:
                 if abs(abs(cos_alpha_lims_2) - 1.0) < 1e-10:
+                    # switch additionally by 360 degrees
                     self.switch_C2_C1_360 = True
                 self.alpha_limited = False
                 self.alpha_rad_lims = [0.0, 2*math.pi]
         self.alpha_lims = [math.degrees(self.alpha_rad_lims[0]), math.degrees(self.alpha_rad_lims[1])]
         return
-
-
-    # calculate limits of angle beta
-    def calculate_beta_lims(self):
-        """
-        Calculate the limit angles for the link BC with respect to the negative x-axis (beta).
-        Uses the law of cosines to determine the valid range of beta, ensuring the linkage can form a closed quadrilateral.
-        The sides of the triangle used are AD + DC, AB, and BC.
-        """
-
-        # Calculate the effective lengths of the sides of the triangle formed by the linkage bars
-        a = self.DA + self.CD  # Combined length of AD and DC (link lengths between A->D and D->C)
-        b = self.AB  # Length of input link AB
-        c = self.BC  # Length of link BC
-
-        # Using the law of cosines to find cos(beta limits)
-        cos_beta_lims = (b**2 + c**2 - a**2) / (2 * b * c)
-
-        # Check if the calculated cosine value is valid (cosine should be between -1 and 1)
-        if np.abs(cos_beta_lims) >= 1:
-            # If cosine value is out of bounds, there is no cos limits or configuration is invalid,
-            # but we validate it another way
-            self.beta_rad_lims = [-math.pi, math.pi]
-            self.beta_lims = [-180.0, 180.0]
-        else:
-            # If cosine value is valid, calculate the angle limits in radians
-            # Add or subtract arccos to get the limits based on the base angle theta_rad
-            self.beta_rad_lims = [
-                -np.arccos(cos_beta_lims) - self.theta_rad,  # Lower limit of beta in radians
-                np.arccos(cos_beta_lims) - self.theta_rad    # Upper limit of beta in radians
-            ]
-
-            # Convert the radian limits to degrees and store in beta_lims
-            self.beta_lims = [
-                math.degrees(self.beta_rad_lims[0]),  # Lower limit in degrees
-                math.degrees(self.beta_rad_lims[1])   # Upper limit in degrees
-            ]
-        return
-
-
-    # calculate angle beta
-    def calculate_beta(self):
-        """
-        Calculate the angle (beta) between the vector BC (from point B to point C) and the positive x-axis.
-        """
-        # Calculate the vector from point B to point C
-        BC_vector = self.C - self.B
-        # Calculate the magnitude (length) of the BC vector
-        BC_length = np.linalg.norm(BC_vector)
-        # Define the unit vector along the x-axis (1, 0)
-        x_axis_vector = np.array([-1, 0])  # normalized vector of positive x-axis
-        # Calculate the dot product between BC_vector and the x_axis_vector
-        dot_product = np.dot(BC_vector, x_axis_vector)
-        # Calculate the cosine of the angle using the dot product formula:
-        # cos(beta) = (BC_vector • x_axis_vector) / (|BC_vector| * |x_axis_vector|)    ----- |x_axis_vector| = 1
-        cos_beta = dot_product / BC_length
-        # Check the cosine value is within the valid range [-1, 1]
-        cos_beta = np.clip(cos_beta, -1, 1)
-        # Calculate the angle in radians using arccos (inverse cosine)
-        self.beta_rad = np.arccos(cos_beta)
-        # Convert the angle from radians to degrees
-        self.beta = math.degrees(self.beta_rad)
-        return
-
-
 
     # calculate position with given angle
     def calculate_Point_Position(self):
@@ -361,20 +255,17 @@ class FourBarLinkage:
         D_y = np.sin(self.alpha_rad) * self.DA
         self.D = np.array([D_x, D_y])
 
-        # calculate C1 and C2
+        # calculate C
         self.calculate_C_Position()
 
         # calculate P
         self.calculate_P_Position()
 
         return
-
-
-
+    
     # calculate position of point C (2 possible points)
     def calculate_C_Position(self):
-        ### calculate C (2 possible position)
-        # calculate vector BD
+        # calculate vectors BD, BA, BC
         BD_vector = self.D - self.B
         BD_length = np.linalg.norm(BD_vector)
         BA_vector = self.A - self.B
@@ -433,7 +324,6 @@ class FourBarLinkage:
             
         return
 
-
     # calculate position of point C (2 possible points)
     def calculate_P_Position(self):
         # calculate middle point of CD
@@ -457,10 +347,6 @@ class FourBarLinkage:
 
         return
 
-
-
-
-
     # update alpha for animation
     def animation_alpha(self):
         """
@@ -483,18 +369,25 @@ class FourBarLinkage:
                 self.alpha_rad = self.alpha_rad_lims[1]
                 # Switch direction to decreasing
                 self.direction = 1
-                # switch C1 and C2
+                # switch C1 and C2 if didnt switch last time
                 if not self.C2_C1_switched_last_time: 
                     self.switch_C2_C1()
                     self.C2_C1_switched_last_time = True
                 
-            if self.switch_C2_C1_360 and ((self.alpha - self.theta >= -10**-12 and self.alpha - self.theta - self.alpha_velocity * self.t <= 10**-12) or \
-                                          (self.alpha - self.theta >= 360.0 and self.alpha - self.theta - self.alpha_velocity * self.t <= 360.0)):
+            # switch by 0 and 360 degrees if needed
+            if self.switch_C2_C1_360 and ((self.alpha - self.theta >= -10**-12 and \
+                                           self.alpha - self.theta - self.alpha_velocity * self.t <= 10**-12) or \
+                                          (self.alpha - self.theta >= 360.0 and \
+                                           self.alpha - self.theta - self.alpha_velocity * self.t <= 360.0)):
+                # switch C1 and C2 if didnt switch last time
                 if not self.C2_C1_switched_last_time: 
                     self.switch_C2_C1()
                     self.C2_C1_switched_last_time = True
-                
-            if self.switch_C2_C1_180 and self.alpha - self.theta >= 180.0 and self.alpha - self.theta - self.alpha_velocity * self.t <= 180.0:
+            
+            # switch by 180 degrees if needed
+            if self.switch_C2_C1_180 and self.alpha - self.theta >= 180.0 and \
+               self.alpha - self.theta - self.alpha_velocity * self.t <= 180.0:
+                # switch C1 and C2 if didnt switch last time
                 if not self.C2_C1_switched_last_time: 
                     self.switch_C2_C1()
                     self.C2_C1_switched_last_time = True
@@ -504,7 +397,6 @@ class FourBarLinkage:
                 self.alpha = self.alpha - 360.0
                 self.alpha_rad = math.radians(self.alpha)
                 
-
         elif self.direction == 1:  # Decreasing alpha
             self.alpha -= self.alpha_velocity * self.t
             self.alpha_rad = math.radians(self.alpha)
@@ -516,18 +408,23 @@ class FourBarLinkage:
                 self.alpha_rad = self.alpha_rad_lims[0]
                 # Switch direction to increasing
                 self.direction = 0
-                # switch C1 and C2
+                # switch C1 and C2 if didnt switch last time
                 if not self.C2_C1_switched_last_time: 
                     self.switch_C2_C1()
                     self.C2_C1_switched_last_time = True
             
-                
-            if self.switch_C2_C1_180 and self.alpha - self.theta <= 180.0 and self.alpha - self.theta + self.alpha_velocity * self.t >= 180.0:
+            # switch by 180 degrees if needed
+            if self.switch_C2_C1_180 and self.alpha - self.theta <= 180.0 and \
+               self.alpha - self.theta + self.alpha_velocity * self.t >= 180.0:
+                # switch C1 and C2 if didnt switch last time
                 if not self.C2_C1_switched_last_time: 
                     self.switch_C2_C1()
                     self.C2_C1_switched_last_time = True
-                
-            if self.switch_C2_C1_360 and self.alpha - self.theta <= 10**-12 and self.alpha - self.theta + self.alpha_velocity * self.t >= -10**-12:
+                    
+            # switch by 360 degrees if needed  
+            if self.switch_C2_C1_360 and self.alpha - self.theta <= 10**-12 and \
+               self.alpha - self.theta + self.alpha_velocity * self.t >= -10**-12:
+                # switch C1 and C2 if didnt switch last time
                 if not self.C2_C1_switched_last_time: 
                     self.switch_C2_C1()
                     self.C2_C1_switched_last_time = True
