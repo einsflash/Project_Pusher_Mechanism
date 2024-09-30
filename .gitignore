@@ -1,1 +1,13 @@
+**/*.bkp
+**/*.aux
+**/*.bbl
+**/*.blg
+**/*.log
+**/*.out
+**/*.spl
+**/*.pyg
+**/*.synctex*
 **/*.pyc
+**/*.nav
+**/*.snm
+**/*.toc

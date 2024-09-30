@@ -156,7 +156,7 @@ class GUI:
         
         # bar values
         self.text_bars_values = tk.Text(self.toolbar_frame, height=4, 
-                                        width=10, bd=0, bg="grey94")
+                                        width=30, bd=0, bg="grey94")
         self.text_bars_values.grid(sticky="W", row=9, column=1, columnspan=4)
         # hide bars values firstly
         self.hide_bars_values()
@@ -452,12 +452,10 @@ class GUI:
     def reset(self):
         if self.enable_optimization_problem.get():
             # solution of optimization problem
-            self.linkage = FourBarLinkage(168.0, 168.0, 118.5, 120.8, 45., 0., 0.3, 0.45, 0.025, 20)
-            self.A_x = 25.5
-            self.A_y = 60.5
+            self.linkage = FourBarLinkage(172.1, 171.2, 122.6, 124.0, 45., -70., 0.2, 0.42, 0.025, 20)
+            self.A_x = 27.0
+            self.A_y = 66.0
             self.reset_A_x_A_y()
-            self.linkage.theta = -69.0
-            self.linkage.theta_rad = math.radians(self.linkage.theta)
             self.linkage.direction = 1
         else:
             # default config
@@ -766,30 +764,30 @@ class GUI:
             self.model_animation.coords(self.model_animation.text_120_80, [x+120*scale, y-87*scale])
             self.model_animation.coords(self.model_animation.point_2, [x+219*scale, y-81*scale, x+221*scale, y-79*scale])
             self.model_animation.coords(self.model_animation.text_220_80, [x+221*scale, y-87*scale])
-            self.model_animation.coords(self.model_animation.box_rectangle_dashed, [x+140*scale, y, x+220*scale, y-70*scale])
+            self.model_animation.coords(self.model_animation.box_rectangle_dashed, [x+140*scale, y, x+220*scale, y-60*scale])
             # save previous box position
             if self.prev_box_position is None:
-                self.prev_box_position = [x+140*scale, y, x+220*scale, y-70*scale]
+                self.prev_box_position = [x+140*scale, y, x+220*scale, y-60*scale]
             # position of text "Box"
             box_text_position = [round((self.prev_box_position[0]+self.prev_box_position[2])/2),
                                  round((self.prev_box_position[1]+self.prev_box_position[3])/2)]
             # decide if box is moved by coupler or remains at place
             if self.pin_box_to_coupler and self.prev_coupler_position is not None:
                 # save next box position
-                self.prev_box_position = [P_x-80*scale, y, P_x, y-70*scale]
+                self.prev_box_position = [P_x-80*scale, y, P_x, y-60*scale]
                 self.model_animation.coords(self.model_animation.box_rectangle, self.prev_box_position)
                 self.model_animation.coords(self.model_animation.box_text, box_text_position)
                 # unpin box
                 if self.prev_coupler_position[0] < P_x:
                     self.pin_box_to_coupler = False
-                if P_y > y or P_y < y - 80*scale:
+                if P_y > y or P_y < y - 60*scale:
                     self.pin_box_to_coupler = False
             else:
                 self.model_animation.coords(self.model_animation.box_rectangle, self.prev_box_position)
                 self.model_animation.coords(self.model_animation.box_text, box_text_position)
                 # pin box
                 if self.prev_coupler_position is not None and self.prev_coupler_position[0] >= x+220*scale and \
-                   P_x <= x+220*scale and P_y <= y and P_y >= y - 80*scale:
+                   P_x <= x+220*scale and P_y <= y and P_y >= y - 60*scale:
                     self.pin_box_to_coupler = True
         
         # tracing
