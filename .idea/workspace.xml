@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="54b9ac63-d43c-4049-9fc8-62cc497044f8" name="更改" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/Project_Pusher_Mechanism.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Project_Pusher_Mechanism.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="54b9ac63-d43c-4049-9fc8-62cc497044f8" name="更改" comment="project management, live demo">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/talk_october/Arseniy/slides.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/talk_october/Arseniy/slides.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/talk_october/Arseniy/slides.tex" beforeDir="false" afterPath="$PROJECT_DIR$/talk_october/Arseniy/slides.tex" afterDir="false" />
@@ -110,8 +108,16 @@
       <workItem from="1727750253178" duration="463000" />
       <workItem from="1727750730398" duration="7404000" />
       <workItem from="1727896691472" duration="6752000" />
-      <workItem from="1727904631226" duration="4145000" />
+      <workItem from="1727904631226" duration="4770000" />
     </task>
+    <task id="LOCAL-00001" summary="project management, live demo">
+      <created>1727910383045</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1727910383045</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -141,6 +147,10 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="project management, live demo" />
+    <option name="LAST_COMMIT_MESSAGE" value="project management, live demo" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Project_Pusher_Mechanism$test.coverage" NAME="test 覆盖结果" MODIFIED="1725298088394" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
