@@ -1,6 +1,8 @@
 \documentclass[ucs,10pt]{beamer}
 \include{stce-beamer-template}  
 \usepackage{multicol}
+\usepackage{caption}
+\usepackage{subcaption}
 
 \begin{document}
 \title[{\tt info@stce.rwth-aachen.de}]{\textcolor{rwth-blue}{Software Lab Computational Engineering Science} \vspace{.2cm} \\ {\small Group 12, Pusher Mechanism}}
@@ -25,7 +27,7 @@
 \frametitle{Preface \\
 	\small \color{rwth-blue} Four-bar linkage model}
 	\begin{center}
-		\includegraphics[width=\linewidth]{./GUI_screen.png}
+		\includegraphics[width=\linewidth]{./Figures/GUI_screen.png}
 	\end{center}
 \end{frame}
 
@@ -60,9 +62,9 @@
 			\end{itemize}
 		\end{minipage}
 		\hspace{0.05\linewidth}
-		\begin{minipage}{0.32\linewidth}
+		\begin{minipage}{0.31\linewidth}
 			\begin{figure}[h]
-				\includegraphics[width=\textwidth]{./motion_classification.pdf}
+				\includegraphics[width=\textwidth]{./Figures/motion_classification.pdf}
 			\end{figure}
 		\end{minipage}
 	\end{minipage}
@@ -73,7 +75,7 @@
 \frametitle{Analysis \\
 	\small \color{rwth-blue} User Requirements}
 	\begin{center}
-		\includegraphics[width=0.75\linewidth]{./optimization_problem.png}
+		\includegraphics[width=0.75\linewidth]{./Figures/optimization_problem.png}
 	\end{center}
 	\begin{itemize}
 			\item Solve an optimization problem:
@@ -169,11 +171,11 @@
 	\small \color{rwth-blue} Four-Bar Linkage Model}
 \end{frame}
 
-\subsubsection{Software Tests}
+\subsection{Software Tests}
 
 \begin{frame}
 	\frametitle{Implementation \\
-		\small \color{rwth-blue} Four-Bar Linkage Model / Software Tests}
+		\small \color{rwth-blue} Software Tests}
 \end{frame}
 
 \subsection{GUI}
@@ -183,13 +185,41 @@
 	\small \color{rwth-blue} GUI}
 \end{frame}
 
-\section{Optimization problem}
+\section{Results}
+
+\subsection{27 movement types}
 
 \begin{frame}
-\frametitle{Optimization problem \\
-	\small \color{rwth-blue} Solution}
+\frametitle{Results \\
+	\small \color{rwth-blue} 27 movement types}	
 	\begin{center}
-		\includegraphics[width=0.82\linewidth]{./optimization_problem_solution.png}
+		\begin{tabular}{ c@{\hskip 5pt}c@{\hskip 5pt}c@{\hskip 5pt}c@{\hskip 5pt}c}
+			\begin{minipage}{0.185\linewidth}\begin{center} \includegraphics[width=\linewidth]{./Figures/27_motion_cases/111.png} \hfill {\tiny $T_{1,2,3} = 1.0, 1.0, 1.0$}\end{center}\end{minipage}& \begin{minipage}{0.185\linewidth}\begin{center} \includegraphics[width=0.55\linewidth]{./Figures/27_motion_cases/011.png} \hfill {\tiny $T_{1,2,3} = 0.0, 1.0, 1.0$}\end{center}\end{minipage}& \begin{minipage}{0.185\linewidth}\begin{center} \includegraphics[width=0.55\linewidth]{./Figures/27_motion_cases/-111.png} \hfill {\tiny $T_{1,2,3} = -1.0, 1.0, 1.0$}\end{center}\end{minipage}& \begin{minipage}{0.185\linewidth}\begin{center} \includegraphics[width=\linewidth]{./Figures/27_motion_cases/101.png} \hfill {\tiny $T_{1,2,3} = 1.0, 0.0, 1.0$}\end{center}\end{minipage}& \begin{minipage}{0.185\linewidth}\begin{center} \includegraphics[width=0.9\linewidth]{./Figures/27_motion_cases/001.png} \hfill {\tiny $T_{1,2,3} = 0.0, 0.0, 1.0$}\end{center}\end{minipage} \\
+			\begin{minipage}{0.185\linewidth}\begin{center} \includegraphics[width=0.8\linewidth]{./Figures/27_motion_cases/-101.png} \hfill {\tiny $T_{1,2,3} = -1.0, 0.0, 1.0$}\end{center}\end{minipage}& \begin{minipage}{0.185\linewidth}\begin{center} \includegraphics[width=0.9\linewidth]{./Figures/27_motion_cases/1-11.png} \hfill {\tiny $T_{1,2,3} = 1.0, -1.0, 1.0$}\end{center}\end{minipage}& \begin{minipage}{0.185\linewidth}\begin{center} \includegraphics[width=0.9\linewidth]{./Figures/27_motion_cases/0-11.png} \hfill {\tiny $T_{1,2,3} = 0.0, -1.0, 1.0$}\end{center}\end{minipage}& \begin{minipage}{0.2\linewidth}\begin{center} \includegraphics[width=0.75\linewidth]{./Figures/27_motion_cases/-1-11.png} \hfill {\tiny $T_{1,2,3} = -1.0, -1.0, 1.0$}\end{center}\end{minipage}& \begin{minipage}{0.185\linewidth}\begin{center} \includegraphics[width=0.75\linewidth]{./Figures/27_motion_cases/110.png} \hfill {\tiny $T_{1,2,3} = 1.0, 1.0, 0.0$}\end{center}\end{minipage} \\
+			\begin{minipage}{0.185\linewidth}\begin{center} \includegraphics[width=0.65\linewidth]{./Figures/27_motion_cases/010.png} \hfill {\tiny $T_{1,2,3} = 0.0, 1.0, 0.0$}\end{center}\end{minipage}& \begin{minipage}{0.185\linewidth}\begin{center} \includegraphics[width=0.55\linewidth]{./Figures/27_motion_cases/-110.png} \hfill {\tiny $T_{1,2,3} = -1.0, 1.0, 0.0$}\end{center}\end{minipage}& \begin{minipage}{0.185\linewidth}\begin{center} \includegraphics[width=\linewidth]{./Figures/27_motion_cases/100.png} \hfill {\tiny $T_{1,2,3} = 1.0, 0.0, 0.0$}\end{center}\end{minipage}& \begin{minipage}{0.185\linewidth}\begin{center} \includegraphics[width=0.9\linewidth]{./Figures/27_motion_cases/000.png} \hfill {\tiny $T_{1,2,3} = 0.0, 0.0, 0.0$}\end{center}\end{minipage}& \begin{minipage}{0.185\linewidth}\begin{center} \includegraphics[width=0.8\linewidth]{./Figures/27_motion_cases/-100.png} \hfill {\tiny $T_{1,2,3} = -1.0, 0.0, 0.0$}\end{center}\end{minipage} \\
+		\end{tabular}
+	\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Results \\
+	\small \color{rwth-blue} 27 movement types}	
+\begin{center}
+	\begin{tabular}{ c@{\hskip 5pt}c@{\hskip 5pt}c@{\hskip 5pt}c}
+		\begin{minipage}{0.185\linewidth}\begin{center} \includegraphics[width=0.9\linewidth]{./Figures/27_motion_cases/1-10.png} \hfill {\tiny $T_{1,2,3} = 1.0, -1.0, 0.0$}\end{center}\end{minipage}& \begin{minipage}{0.185\linewidth}\begin{center} \includegraphics[width=0.85\linewidth]{./Figures/27_motion_cases/0-10.png} \hfill {\tiny $T_{1,2,3} = 0.0, -1.0, 0.0$}\end{center}\end{minipage}& \begin{minipage}{0.21\linewidth}\begin{center} \includegraphics[width=0.7\linewidth]{./Figures/27_motion_cases/-1-10.png} \hfill {\tiny $T_{1,2,3} = -1.0, -1.0, 0.0$}\end{center}\end{minipage}& \begin{minipage}{0.185\linewidth}\begin{center} \includegraphics[width=0.7\linewidth]{./Figures/27_motion_cases/11-1.png} \hfill {\tiny $T_{1,2,3} = 1.0, 1.0, -1.0$}\end{center}\end{minipage} \\ \begin{minipage}{0.185\linewidth}\begin{center} \includegraphics[width=0.65\linewidth]{./Figures/27_motion_cases/01-1.png} \hfill {\tiny $T_{1,2,3} = 0.0, 1.0, -1.0$}\end{center}\end{minipage}&
+		\begin{minipage}{0.21\linewidth}\begin{center} \includegraphics[width=0.75\linewidth]{./Figures/27_motion_cases/-11-1.png} \hfill {\tiny $T_{1,2,3} = -1.0, 1.0, -1.0$}\end{center}\end{minipage}& \begin{minipage}{0.185\linewidth}\begin{center} \includegraphics[width=0.85\linewidth]{./Figures/27_motion_cases/10-1.png} \hfill {\tiny $T_{1,2,3} = 1.0, 0.0, -1.0$}\end{center}\end{minipage}& \begin{minipage}{0.185\linewidth}\begin{center} \includegraphics[width=0.7\linewidth]{./Figures/27_motion_cases/00-1.png} \hfill {\tiny $T_{1,2,3} = 0.0, 0.0, -1.0$}\end{center}\end{minipage} \\ \begin{minipage}{0.2\linewidth}\begin{center} \includegraphics[width=0.7\linewidth]{./Figures/27_motion_cases/-10-1.png} \hfill {\tiny $T_{1,2,3} = -1.0, 0.0, -1.0$}\end{center}\end{minipage}& \begin{minipage}{0.21\linewidth}\begin{center} \includegraphics[width=0.9\linewidth]{./Figures/27_motion_cases/1-1-1.png} \hfill {\tiny $T_{1,2,3} = 1.0, -1.0, -1.0$}\end{center}\end{minipage}&
+		\begin{minipage}{0.21\linewidth}\begin{center} \includegraphics[width=0.55\linewidth]{./Figures/27_motion_cases/0-1-1.png} \hfill {\tiny $T_{1,2,3} = 0.0, -1.0, -1.0$}\end{center}\end{minipage}& \begin{minipage}{0.23\linewidth}\begin{center} \includegraphics[width=0.5\linewidth]{./Figures/27_motion_cases/-1-1-1.png} \hfill {\tiny $T_{1,2,3} = -1.0, -1.0, -1.0$}\end{center}\end{minipage}\\
+	\end{tabular}
+\end{center}
+\end{frame}
+
+\subsection{Optimization problem}
+
+\begin{frame}
+\frametitle{Results \\
+	\small \color{rwth-blue} Optimization problem}
+	\begin{center}
+		\includegraphics[width=0.8\linewidth]{./Figures/optimization_problem_solution.png}
 	\end{center}
 	\begin{itemize}
 		\item 9 degrees of freedom (all lengths in cm):
@@ -220,12 +250,11 @@
 \frametitle{Summary and Conclusion}
 \end{frame}
 
-\section{Literature}
 \begin{frame}
 \frametitle{Literature}
-\begin{itemize}
-	\item Cvetkovic, Ivana and Stojicevic, Misa and Popkonstantinović, Branislav and Cvetković, Dragan. (2018). Classification, geometrical and kinematic analysis of four-bar linkages. 261-266. 10.15308/Sinteza-2018-261-266.
-\end{itemize}
+	\begin{itemize}
+		\item Cvetkovic, Ivana and Stojicevic, Misa and Popkonstantinović, Branislav and Cvetković, Dragan. (2018). Classification, geometrical and kinematic analysis of four-bar linkages. 261-266. 10.15308/Sinteza-2018-261-266.
+	\end{itemize}
 \end{frame}
 
 \end{document}
