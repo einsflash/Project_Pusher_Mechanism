@@ -35,7 +35,7 @@ class GUI:
                                       height=height)
         self.toolbar_frame.width = width
         self.toolbar_frame.height = height
-        self.toolbar_frame.grid(sticky="W", row=0, column=1, columnspan=4)
+        self.toolbar_frame.grid(sticky="W", row=0, column=1)
         # generate picture
         self.init_toolbar()
         self.init_linkage_display()
