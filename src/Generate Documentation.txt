@@ -1,0 +1,2 @@
+pdoc -o doc_for_four_bar_linkage four_bar_linkage.py
+pdoc -o doc_for_gui gui.py

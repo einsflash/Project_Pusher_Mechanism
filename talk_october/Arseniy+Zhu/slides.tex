@@ -1,0 +1,273 @@
+\documentclass[ucs,10pt]{beamer}
+\include{stce-beamer-template}  
+\usepackage{multicol}
+
+\begin{document}
+\title[{\tt info@stce.rwth-aachen.de}]{\textcolor{rwth-blue}{Software Lab Computational Engineering Science} \vspace{.2cm} \\ {\small Group 12, Pusher Mechanism}}
+\author[Group 12, Pusher Mechanism]{Aaron Floerke, Arseniy Kholod, Xinyang Song and Yanliang Zhu} 
+\institute[Software Lab CES]{
+{Informatik 12: Software and Tools for Computational Engineering (STCE)} \\ RWTH Aachen University \vspace{.5cm}
+}
+\date[]{}
+
+\begin{frame}[plain]
+\titlepage
+\end{frame}
+
+\begin{frame}
+	\frametitle{Contents}
+\tableofcontents
+\end{frame}
+
+\section{Preface}
+
+\begin{frame}
+\frametitle{Preface \\
+	\small \color{rwth-blue} Four-bar linkage model}
+	\begin{center}
+		\includegraphics[width=\linewidth]{./GUI_screen.png}
+	\end{center}
+\end{frame}
+
+\section{Analysis}
+
+\subsection{User Requirements}
+
+\begin{frame}
+\frametitle{Analysis \\
+	\small \color{rwth-blue} User Requirements}
+	  \begin{minipage}{\linewidth}
+		\centering
+		\begin{minipage}{0.6\linewidth}
+			\begin{itemize}
+				\item Implement 27 motion types of the four-bar linkage with one bar fixed:
+				\begin{itemize}
+					\item Classification values:
+					\begin{itemize}
+						\item $T_1 = g + h - b - a$
+						\item $T_2 = b + g - h - a$
+						\item $T_3 = h + b - g - a$
+					\end{itemize}
+				\end{itemize}
+				\item Implement GUI with motion animation and the ability to choose geometrical parameters:
+				\begin{itemize}
+					\item Length of the bars
+					\item Position of the coupler
+					\item Input angle
+					\item Angle relative to the horizon
+					\item Classification values as alternative input
+				\end{itemize}
+			\end{itemize}
+		\end{minipage}
+		\hspace{0.05\linewidth}
+		\begin{minipage}{0.32\linewidth}
+			\begin{figure}[h]
+				\includegraphics[width=\textwidth]{./motion_classification.pdf}
+			\end{figure}
+		\end{minipage}
+	\end{minipage}
+	{\tiny Figure from "Classification, geometrical and kinematic analysis of four-bar linkages" 10.15308/Sinteza-2018-261-266 by Ivana Cvetkovic et al.}
+\end{frame}
+
+\begin{frame}
+\frametitle{Analysis \\
+	\small \color{rwth-blue} User Requirements}
+	\begin{center}
+		\includegraphics[width=0.75\linewidth]{./optimization_problem.png}
+	\end{center}
+	\begin{itemize}
+			\item Solve an optimization problem:
+			\begin{itemize}
+				\item Push box with size $80\times60$ from $x=220$ to $x=0$
+				\item Do not cross the area of the labelling machine (Area with $x<80$ and $y>70$).
+				\item Pass above points $(120, 80)$ and $(220, 80)$
+			\end{itemize}
+	\end{itemize}
+\end{frame}
+
+
+\subsection{System Requirements}
+
+\begin{frame}
+	\frametitle{System Requirements \\
+		\small \color{rwth-blue} Functional}
+	\begin{itemize}
+		\item \textbf{Four-bar linkage model}:
+		\begin{itemize}
+			\item System simulates all the motion types of the four-bar linkage.
+			\item System does not crash with any input of geometrical configuration.
+		\end{itemize}
+		\item \textbf{Tests}:
+		\begin{itemize}
+			\item Implement test cases for geometry.
+			\item Implement test cases with bad input to test system stability.
+		\end{itemize}
+		
+		\item \textbf{Graphical User Interface}:
+		\begin{itemize}
+			\item GUI provides the four-bar linkage visualization and motion animation.
+			\item User can input geometrical data by moving a point on a slide bar.
+			\item GUI is coupled with the four-bar linkage model to use implemented motion cases for animation.
+			\item GUI provides tracing for trajectories of the points.
+			\item GUI classifies of the linkage.
+		\end{itemize}
+		\item \textbf{Optimization problem}:
+		\begin{itemize}
+			\item It should be possible to find a solution (manually) for the optimization problem using the four-bar linkage model.
+			\item GUI visualizes the solution.
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{System Requirements \\
+		\small \color{rwth-blue} Non-Functional}
+	\begin{itemize}
+		\item \textbf{Performance}:
+		\begin{itemize}
+			\item The four-bar linkage model is fast enough to provide smooth GUI animations.
+			\item GUI animations are not slower than 30 frames per second.
+		\end{itemize}
+		\item \textbf{Usability}:
+		\begin{itemize}
+			\item Every essential part of the four-bar linkage model is well documented.
+			\item GUI is easy to operate and all functionalities are self-explanatory.
+			\item GUI source code is well documented.
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\section{Design}
+
+\subsection{System Requirements}
+
+\begin{frame}
+\frametitle{Design \\
+	\small \color{rwth-blue} Principal Components and Third-Party Software}
+\end{frame}
+
+\subsection{Class Model(s)}
+
+\begin{frame}
+\frametitle{Design \\
+	\small \color{rwth-blue} Class Model(s)}
+\end{frame}
+
+\section{Implementation}
+
+\subsection{Development Infrastructure}
+
+\begin{frame}
+\frametitle{Implementation \\
+    \small \color{rwth-blue} Development Infrastructure}
+    \begin{itemize}
+        \item \textbf{1. Operating System:}
+            \begin{itemize}
+                \item Xubuntu/Windows
+            \end{itemize}
+        \item \textbf{2. Developing Environment:}
+            \begin{itemize}
+                \item Programming Language: Python.
+                \item IDE: Spyder/Pycharm.
+                \item Package Manager: Anaconda.
+            \end{itemize}
+        \item \textbf{3. Libraries:}
+            \begin{itemize}
+                \item Frontend: tkinter, math, numpy
+                \item Backend: math, numpy
+            \end{itemize}
+        \item \textbf{4. Version Control System:}
+            \begin{itemize}
+                \item GitHub: Remote code repositories for team collaboration, code reviews, and version control. \url{https://github.com/einsflash/Project_Pusher_Mechanism}
+            \end{itemize}
+        \item \textbf{5. Frameworks:}
+            \begin{itemize}
+                \item Pdoc: Used for generating project documentation, helping the team understand and maintain the code better.
+                \item Makefile: For build management.
+            \end{itemize}
+    \end{itemize}
+\end{frame}
+
+
+\subsection{Four-Bar Linkage Model}
+
+\begin{frame}
+\frametitle{Implementation \\
+	\small \color{rwth-blue} Four-Bar Linkage Model}
+\end{frame}
+
+\subsubsection{Software Tests}
+
+\begin{frame}
+	\frametitle{Implementation \\
+		\small \color{rwth-blue} Four-Bar Linkage Model / Software Tests}
+\end{frame}
+
+\subsection{GUI}
+
+\begin{frame}
+\frametitle{Implementation \\
+	\small \color{rwth-blue} GUI}
+\end{frame}
+
+\section{Optimization problem}
+
+\begin{frame}
+\frametitle{Optimization problem \\
+	\small \color{rwth-blue} Solution}
+	\begin{center}
+		\includegraphics[width=0.82\linewidth]{./optimization_problem_solution.png}
+	\end{center}
+	\begin{itemize}
+		\item 9 degrees of freedom (all lengths in cm):
+		\begin{itemize}
+			\item Length of four bars: $a = 124.0$, $b = 171.2$, $g = 172.1$, $h = 122.6$.
+			\item Coupler position: $P_{pos} = 20.0 \%, P_{offset} = 42.0 \%$ of $h$.
+			\item Position of point A: $A_x = 27.0$, $A_y = 66.0$.
+			\item Angle of ground bar relative to horizon: $\theta = -70.0^{\circ}$
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\section{Documentation}
+
+\begin{frame}
+\frametitle{Documentation for Frontend(GUI)}
+\centering
+\includegraphics[height=0.65\textwidth]{./doc_gui.png}
+\end{frame}
+
+\begin{frame}
+\frametitle{Documentation for Backend}
+\centering
+\includegraphics[height=0.65\textwidth]{./doc_four_bar_linkage.png}
+\end{frame}
+
+
+\section{Project Management}
+
+\begin{frame}
+\frametitle{Project Management}
+\end{frame}
+
+\section{Live Software Demo}
+
+\begin{frame}
+\frametitle{Live Software Demo} 
+\end{frame}
+
+\section{Summary and Conclusion}
+
+\begin{frame}
+\frametitle{Summary and Conclusion}
+\end{frame}
+
+\section{Literature}
+\begin{frame}
+\frametitle{Literature}
+\begin{itemize}
+	\item Cvetkovic, Ivana and Stojicevic, Misa and Popkonstantinović, Branislav and Cvetković, Dragan. (2018). Classification, geometrical and kinematic analysis of four-bar linkages. 261-266. 10.15308/Sinteza-2018-261-266.
+\end{itemize}
+\end{frame}
+
+\end{document}
