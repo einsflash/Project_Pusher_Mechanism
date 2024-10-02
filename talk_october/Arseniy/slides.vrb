@@ -1,15 +1,30 @@
 \frametitle{Implementation \\
-	\small \color{rwth-blue} GUI, Show and hide objects}
-	\begin{itemize}
-		\item To display different modes, some objects have to be hidden or shown.
-		\item For objects in \lstinline|tk.Canvas| use \lstinline|itemconfigure|:
-		\begin{itemize}
-			\item Hide: \lstinline|self.model_animation.itemconfigure(self.model_animation.AB_line, state='hidden')|
-			\item Show: \lstinline|self.model_animation.itemconfigure(self.model_animation.AB_line, state='normal')|
-		\end{itemize}
-		\item For widgets like \lstinline|tk.Scale| or \lstinline|tk.Text|:
-		\begin{itemize}
-			\item Hide: \lstinline|self.slider_T1.grid_remove()|
-			\item Show: \lstinline|self.slider_T1.grid()|
-		\end{itemize}
-	\end{itemize}
+	\small \color{rwth-blue} GUI, Invalid Setup Handling}
+	\begin{lstlisting}[basicstyle=\ssmall]
+		class GUI:
+			def __init__(self):
+				...
+				self.init_linkage_display()
+				...
+			...
+			def init_linkage_display(self):
+				self.model_animation.invalid_text = self.model_animation.create_text(round(self.model_animation.width/2),
+				                                                              round(self.model_animation.height/2),
+				                                                              text="Invalid setup, change geometrical values",
+				                                                              fill="black", font=('Helvetica 11 bold'))
+				self.model_animation.itemconfigure(self.model_animation.invalid_text, state='hidden')
+				...
+			...
+			def update_linkage_display(self):
+				if self.linkage.geometric_Validity:
+					self.show_linkage()
+					if self.enable_optimization_problem.get():
+						self.show_optimization_problem()
+					self.model_animation.itemconfigure(self.model_animation.invalid_text, state='hidden')
+				else:
+					self.hide_linkage()
+					self.hide_optimization_problem()
+					self.model_animation.itemconfigure(self.model_animation.invalid_text, state='normal')
+					return
+				...
+	\end{lstlisting}

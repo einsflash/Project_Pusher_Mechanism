@@ -704,11 +704,16 @@ class GUI:
         if self.linkage.geometric_Validity:
             # show linkage
             self.show_linkage()
+            if self.enable_optimization_problem.get():
+                # show optimization problem
+                self.show_optimization_problem()
             # hide error message
             self.model_animation.itemconfigure(self.model_animation.invalid_text, state='hidden')
         else:
             # hide linkage
             self.hide_linkage()
+            # hide optimization problem
+            self.hide_optimization_problem()
             # show error message
             self.model_animation.itemconfigure(self.model_animation.invalid_text, state='normal')
             return
