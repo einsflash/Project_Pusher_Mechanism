@@ -267,7 +267,7 @@ class FourBarLinkage:
     def calculate_C_Position(self):
         # calculate vectors BD, BA, BC
         BD_vector = self.D - self.B
-        BD_length = np.linalg.norm(BD_vector)
+        BD_length = np.linalg.norm(BD_vector
         BA_vector = self.A - self.B
         BC_vector = self.C - self.B
         # if BD_length is zero, unit vector is also zero

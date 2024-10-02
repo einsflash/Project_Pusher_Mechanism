@@ -6,9 +6,21 @@
   <component name="ChangeListManager">
     <list default="true" id="54b9ac63-d43c-4049-9fc8-62cc497044f8" name="更改" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/talk_october/Arseniy+Zhu/slides.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/talk_october/Arseniy+Zhu/slides.pdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/talk_october/Arseniy+Zhu/slides.tex" beforeDir="false" afterPath="$PROJECT_DIR$/talk_october/Arseniy+Zhu/slides.tex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/four_bar_linkage.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/four_bar_linkage.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/talk_october/Arseniy+Zhu/GUI_screen.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/talk_october/Arseniy+Zhu/Makefile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/talk_october/Arseniy+Zhu/doc_four_bar_linkage.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/talk_october/Arseniy+Zhu/doc_gui.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/talk_october/Arseniy+Zhu/motion_classification.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/talk_october/Arseniy+Zhu/optimization_problem.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/talk_october/Arseniy+Zhu/optimization_problem_solution.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/talk_october/Arseniy+Zhu/rwth_i12_softw-werkz_en_rgb.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/talk_october/Arseniy+Zhu/slides.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/talk_october/Arseniy+Zhu/slides.tex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/talk_october/Arseniy+Zhu/stce-beamer-template.tex" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/talk_october/Arseniy/slides.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/talk_october/Arseniy/slides.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/talk_october/Arseniy/slides.tex" beforeDir="false" afterPath="$PROJECT_DIR$/talk_october/Arseniy/slides.tex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/talk_october/Arseniy/slides.vrb" beforeDir="false" afterPath="$PROJECT_DIR$/talk_october/Arseniy/slides.vrb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -104,7 +116,8 @@
       <workItem from="1727279270325" duration="2013000" />
       <workItem from="1727749448252" duration="484000" />
       <workItem from="1727750253178" duration="463000" />
-      <workItem from="1727750730398" duration="6711000" />
+      <workItem from="1727750730398" duration="7404000" />
+      <workItem from="1727896691472" duration="5606000" />
     </task>
     <servers />
   </component>
