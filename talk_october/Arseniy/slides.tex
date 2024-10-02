@@ -3,6 +3,7 @@
 \usepackage{multicol}
 \usepackage{caption}
 \usepackage{subcaption}
+\usepackage{moresize}
 
 \begin{document}
 \title[{\tt info@stce.rwth-aachen.de}]{\textcolor{rwth-blue}{Software Lab Computational Engineering Science} \vspace{.2cm} \\ {\small Group 12, Pusher Mechanism}}
@@ -18,7 +19,8 @@
 
 \begin{frame}
 	\frametitle{Contents}
-\tableofcontents
+	\vspace*{2mm}
+	\tableofcontents
 \end{frame}
 
 \section{Preface}
@@ -180,9 +182,78 @@
 
 \subsection{GUI}
 
-\begin{frame}
+\begin{frame}[fragile]
 \frametitle{Implementation \\
-	\small \color{rwth-blue} GUI}
+	\small \color{rwth-blue} GUI, Tkinter Intro}
+	\begin{center}
+		\vspace*{-1mm}
+		\includegraphics[width=0.78\linewidth]{./Figures/Implementation/GUI/tkinter_grid.pdf}
+		\begin{itemize}
+			\item Initiate all tkinter objects inside GUI class and generate app window:
+		\end{itemize}
+		\begin{lstlisting}
+			GUI().tk.mainloop()
+		\end{lstlisting}
+	\end{center}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Implementation \\
+	\small \color{rwth-blue} GUI, Animation}
+	\vspace*{-0.7mm}
+	\begin{itemize}
+		\item Update objects in \lstinline|tk.Canvas| every animation step using \lstinline|coords| and/or \lstinline|itemconfigure| for optimization
+	\end{itemize}
+	\vspace*{-1.8mm}
+	\begin{lstlisting}[basicstyle=\ssmall]
+		class GUI:
+			def __init__(self):
+				...
+				self.init_toolbar()
+				...
+			def init_toolbar(self):
+				...
+				self.enable_animation = tk.IntVar()
+				self.animation_button = tk.Checkbutton(self.toolbar_frame, text="animation", 
+				                                      variable=self.enable_animation,
+				                                      onvalue=1, offvalue=0, command=self.animation)
+				self.animation_button.grid(sticky="W", row=10, column=2)
+				...
+			def refresh(self):
+				...
+				self.linkage.run()
+				...
+				self.update_linkage_display()
+			def animation(self):
+				self.run_animation()
+			def run_animation(self):
+				if self.enable_animation.get():
+					self.linkage.animation_alpha() # alpha = alpha + d_alpha
+					self.refresh()
+					self.tk.after(25, self.run_animation)
+			def update_linkage_display(self):
+				...
+				self.model_animation.coords(self.model_animation.AB_line, [A_x, A_y, B_x, B_y])
+				...			
+	\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Implementation \\
+	\small \color{rwth-blue} GUI, Show and hide objects}
+	\begin{itemize}
+		\item To display different modes, some objects have to be hidden or shown.
+		\item For objects in \lstinline|tk.Canvas| use \lstinline|itemconfigure|:
+		\begin{itemize}
+			\item Hide: \lstinline|self.model_animation.itemconfigure(self.model_animation.AB_line, state='hidden')|
+			\item Show: \lstinline|self.model_animation.itemconfigure(self.model_animation.AB_line, state='normal')|
+		\end{itemize}
+		\item For widgets like \lstinline|tk.Scale| or \lstinline|tk.Text|:
+		\begin{itemize}
+			\item Hide: \lstinline|self.slider_T1.grid_remove()|
+			\item Show: \lstinline|self.slider_T1.grid()|
+		\end{itemize}
+	\end{itemize}
 \end{frame}
 
 \section{Results}

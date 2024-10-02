@@ -1,0 +1,15 @@
+\frametitle{Implementation \\
+	\small \color{rwth-blue} GUI, Show and hide objects}
+	\begin{itemize}
+		\item To display different modes, some objects have to be hidden or shown.
+		\item For objects in \lstinline|tk.Canvas| use \lstinline|itemconfigure|:
+		\begin{itemize}
+			\item Hide: \lstinline|self.model_animation.itemconfigure(self.model_animation.AB_line, state='hidden')|
+			\item Show: \lstinline|self.model_animation.itemconfigure(self.model_animation.AB_line, state='normal')|
+		\end{itemize}
+		\item For widgets like \lstinline|tk.Scale| or \lstinline|tk.Text|:
+		\begin{itemize}
+			\item Hide: \lstinline|self.slider_T1.grid_remove()|
+			\item Show: \lstinline|self.slider_T1.grid()|
+		\end{itemize}
+	\end{itemize}
