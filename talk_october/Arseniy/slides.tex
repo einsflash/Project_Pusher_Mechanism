@@ -242,10 +242,20 @@
 \subsection{Software Tests}
 
 \begin{frame}
-	\frametitle{Implementation \\
-		\small \color{rwth-blue} Software Tests}
+    \frametitle{Implementation \\
+    \small \color{rwth-blue} Software Tests}
+    
+    \begin{itemize}
+        \item Tests classify motion of four-bar linkage based on values \( T_1 \), \( T_2 \), and \( T_3 \)
+        \item Verifies correct behavior for Crank, Rocker, and intermediate states
+        \item Covers all possible combinations of positive, negative, and zero values
+        \item Ensures accurate classification of input and output links
+        \item Test cases include Crank-Rocker, Double Crank, Double Rocker, and Rocker-Crank scenarios
+        \item Each test checks specific link motion configurations
+        \item Automated with \texttt{unittest} framework for reproducibility and consistency
+    \end{itemize}
+    
 \end{frame}
-
 \subsection{GUI}
 
 \begin{frame}[fragile]
