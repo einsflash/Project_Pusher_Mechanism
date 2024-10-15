@@ -35,32 +35,36 @@
 
 \subsection{Introduction}
 
-\begin{frame}
-\frametitle{Introduction \\
-    \small \color{rwth-blue} Degree of freedom}
 
-    \begin{itemize}
-        \item \textbf{Formular:}
-        \[
-        M = 3(N - 1 - j) + \sum_{i=1}^{j} f_i
-        \]
-        \begin{itemize}
-            \item \( M \): DOF
-            \item \( N \): Number of links. (4)
-            \item \( j \): Number of joints. (4 revolute joints)
-            \item \( f_i \): DOF provided by each joint \( i \), equal 1 for revolute (rotational) joints.
-        \end{itemize}
 
-        \item Calculation for the four-bar linkage:
-        \[
-        M = \sum_{i=1}^{j} f_i - 3 = 4(1) - 3 = 1
-        \]
 
-        \item Four-bar linkage has 1 degree of freedom, meaning the mechanism can be fully controlled by a single input. (We use angular velocity as input)
-    \end{itemize}
 
-    {\tiny \url{https://en.wikipedia.org/wiki/Degrees_of_freedom_(mechanics)}}
-\end{frame}
+%\begin{frame}
+%	\frametitle{Introduction \\
+	%		\small \color{rwth-blue} Degree of freedom}
+%	
+%	\begin{itemize}
+	%		\item \textbf{Formular:}
+	%		\[
+	%		M = 3(N - 1 - j) + \sum_{i=1}^{j} f_i
+	%		\]
+	%		\begin{itemize}
+		%			\item \( M \): DOF
+		%			\item \( N \): Number of links. (4)
+		%			\item \( j \): Number of joints. (4 revolute joints)
+		%			\item \( f_i \): DOF provided by each joint \( i \), equal 1 for revolute (rotational) joints.
+		%		\end{itemize}
+	
+	%		\item Calculation for the four-bar linkage:
+	%		\[
+	%		M = \sum_{i=1}^{j} f_i - 3 = 4(1) - 3 = 1
+	%		\]
+	%		
+	%		\item Four-bar linkage has 1 degree of freedom, meaning the mechanism can be fully controlled by a single input. (We use angular velocity as input)
+	%	\end{itemize}
+
+%	{\tiny \url{https://en.wikipedia.org/wiki/Degrees_of_freedom_(mechanics)}}
+%\end{frame}
 
 \begin{frame}
 \frametitle{Introduction \\
@@ -183,11 +187,35 @@
 
 \section{Design}
 
-\subsection{System Requirements}
-
 \begin{frame}
-\frametitle{Design \\
-	\small \color{rwth-blue} Principal Components and Third-Party Software}
+	\frametitle{Design \\
+		\small \color{rwth-blue} Development Infrastructure}
+	\begin{itemize}
+		\item \textbf{1. Operating System:}
+		\begin{itemize}
+			\item Xubuntu/Windows
+		\end{itemize}
+		\item \textbf{2. Developing Environment:}
+		\begin{itemize}
+			\item Programming Language: Python.
+			\item IDE: Spyder/Pycharm.
+			\item Package Manager: Anaconda.
+		\end{itemize}
+		\item \textbf{3. Libraries:}
+		\begin{itemize}
+			\item Frontend: tkinter, math, numpy
+			\item Backend: math, numpy
+		\end{itemize}
+		\item \textbf{4. Version Control System:}
+		\begin{itemize}
+			\item GitHub: Remote code repositories for team collaboration, code reviews, and version control. \url{https://github.com/einsflash/Project_Pusher_Mechanism}
+		\end{itemize}
+		\item \textbf{5. Frameworks:}
+		\begin{itemize}
+			\item Pdoc: Used for generating project documentation, helping the team understand and maintain the code better.
+			\item Makefile: For build management.
+		\end{itemize}
+	\end{itemize}
 \end{frame}
 
 \subsection{Class Model(s)}
@@ -195,42 +223,23 @@
 \begin{frame}
 \frametitle{Design \\
 	\small \color{rwth-blue} Class Model(s)}
+	\begin{figure}
+		\centering
+		\begin{subfigure}[b]{0.495\textwidth}
+			\centering
+			\includegraphics[width=\textwidth]{./Figures/class_model/doc_gui.png}
+		\end{subfigure}
+		\hfill
+		\begin{subfigure}[b]{0.495\textwidth}
+			\centering
+			\includegraphics[width=\textwidth]{./Figures/class_model/doc_four_bar_linkage.png}
+		\end{subfigure}
+	\end{figure}
 \end{frame}
 
 \section{Implementation}
 
 \subsection{Development Infrastructure}
-
-\begin{frame}
-\frametitle{Implementation \\
-    \small \color{rwth-blue} Development Infrastructure}
-    \begin{itemize}
-        \item \textbf{1. Operating System:}
-            \begin{itemize}
-                \item Xubuntu/Windows
-            \end{itemize}
-        \item \textbf{2. Developing Environment:}
-            \begin{itemize}
-                \item Programming Language: Python.
-                \item IDE: Spyder/Pycharm.
-                \item Package Manager: Anaconda.
-            \end{itemize}
-        \item \textbf{3. Libraries:}
-            \begin{itemize}
-                \item Frontend: tkinter, math, numpy
-                \item Backend: math, numpy
-            \end{itemize}
-        \item \textbf{4. Version Control System:}
-            \begin{itemize}
-                \item GitHub: Remote code repositories for team collaboration, code reviews, and version control. \url{https://github.com/einsflash/Project_Pusher_Mechanism}
-            \end{itemize}
-        \item \textbf{5. Frameworks:}
-            \begin{itemize}
-                \item Pdoc: Used for generating project documentation, helping the team understand and maintain the code better.
-                \item Makefile: For build management.
-            \end{itemize}
-    \end{itemize}
-\end{frame}
 
 \subsection{Four-Bar Linkage Model}
 
@@ -424,14 +433,14 @@
 
 \begin{frame}
 \frametitle{Documentation for Frontend(GUI)}
-\centering
-\includegraphics[height=0.65\textwidth]{./Figures/documentation/doc_gui.png}
+	\centering
+	%\includegraphics[height=0.65\textwidth]{./Figures/class_model/doc_gui.png}
 \end{frame}
 
 \begin{frame}
 \frametitle{Documentation for Backend}
-\centering
-\includegraphics[height=0.65\textwidth]{./Figures/documentation/doc_four_bar_linkage.png}
+	\centering
+	%\includegraphics[height=0.65\textwidth]{./Figures/class_model/doc_four_bar_linkage.png}
 \end{frame}
 
 \section{Project Management}
@@ -475,7 +484,7 @@
 	\small \color{rwth-blue} Gantt Chart}
 
 	\begin{center}
-		\includegraphics[width=\textwidth]{./figures/project management 10-18.png}
+		\includegraphics[width=\textwidth]{./Figures/project management 10-18.png}
 	\end{center}
 \end{frame}
 
@@ -484,7 +493,7 @@
 	\small \color{rwth-blue} Task Assignment}
 
 	\begin{flushleft}
-		\includegraphics[height=\textheight,keepaspectratio]{./figures/project management 10-18.png}
+		\includegraphics[height=\textheight,keepaspectratio]{./Figures/project management 10-18.png}
 	\end{flushleft}
 \end{frame}
 
