@@ -32,13 +32,6 @@
 		\includegraphics[width=\linewidth]{./Figures/GUI_screen.png}
 	\end{center}
 \end{frame}
-
-\subsection{Introduction}
-
-
-
-
-
 %\begin{frame}
 %	\frametitle{Introduction \\
 	%		\small \color{rwth-blue} Degree of freedom}
@@ -65,17 +58,6 @@
 
 %	{\tiny \url{https://en.wikipedia.org/wiki/Degrees_of_freedom_(mechanics)}}
 %\end{frame}
-
-\begin{frame}
-\frametitle{Introduction \\
-    \small \color{rwth-blue} Grashof's Theorem}
-
-    \begin{center}
-        \includegraphics[width=\linewidth]{./Figures/introduction/introduction_classification.png}
-    \end{center}
-
-    {\tiny \url{https://www.cs.cmu.edu/~rapidproto/mechanisms/chpt5.html}}
-\end{frame}
 
 \section{Analysis}
 
@@ -137,8 +119,8 @@
 \subsection{System Requirements}
 
 \begin{frame}
-	\frametitle{System Requirements \\
-		\small \color{rwth-blue} Functional}
+	\frametitle{Analysis \\
+		\small \color{rwth-blue} System Requirements: Functional}
 	\begin{itemize}
 		\item \textbf{Four-bar linkage model}:
 		\begin{itemize}
@@ -168,8 +150,8 @@
 \end{frame}
 
 \begin{frame}
-	\frametitle{System Requirements \\
-		\small \color{rwth-blue} Non-Functional}
+	\frametitle{Analysis \\
+		\small \color{rwth-blue} System Requirements: Non-Functional}
 	\begin{itemize}
 		\item \textbf{Performance}:
 		\begin{itemize}
@@ -183,6 +165,36 @@
 			\item GUI source code is well documented.
 		\end{itemize}
 	\end{itemize}
+\end{frame}
+
+\subsection{Theory Base}
+
+\begin{frame}
+\frametitle{Analysis \\
+	\small \color{rwth-blue} Theory Base: Grashof's Theorem}
+	
+	\begin{center}
+		\includegraphics[width=\linewidth]{./Figures/introduction/introduction_classification.png}
+	\end{center}
+	
+	{\tiny \url{https://www.cs.cmu.edu/~rapidproto/mechanisms/chpt5.html}}
+\end{frame}
+
+\begin{frame}
+\frametitle{Analysis\\
+	\small \color{rwth-blue} Theory Base: Geometric or Dynamic Simulation}
+	\begin{minipage}{0.4\linewidth}
+		\begin{itemize}
+			\item The right figure is our kinematic analysis of the four-bar linkage.
+			\item Ultimately, we chose the geometric simulation as it is more convenient to implement.
+		\end{itemize}
+	\end{minipage}
+	\hspace{0.02\linewidth} % Adding small horizontal space between text and image
+	\begin{minipage}{0.5\linewidth}
+		\begin{center}
+			\includegraphics[width=\linewidth]{./Figures/dynamic_analysis_1.jpg}
+		\end{center}
+	\end{minipage}
 \end{frame}
 
 \section{Design}
@@ -213,7 +225,6 @@
 		\item \textbf{5. Frameworks:}
 		\begin{itemize}
 			\item Pdoc: Used for generating project documentation, helping the team understand and maintain the code better.
-			\item Makefile: For build management.
 		\end{itemize}
 	\end{itemize}
 \end{frame}
@@ -239,42 +250,34 @@
 
 \section{Implementation}
 
-\subsection{Development Infrastructure}
-
 \subsection{Backend}
 
-\begin{frame}
-\frametitle{Implementation \\
-	\small \color{rwth-blue} Four-Bar Linkage Model}
-\end{frame}
+%\begin{frame}
+%    \frametitle{Backend \\ \small \color{rwth-blue} Overview}
+%    \begin{itemize}
+%        \item \textbf{1. Class Definition (FourBarLinkage)}
+%        \item \textbf{2. Initialization (\_\_init\_\_)}
+%        \item \textbf{3. Geometry Parameter Check:}
+%        \begin{itemize}
+%            \item Geometric Validity (check\_Parameter)
+%            \item Linkage Type Identification (find\_Linkage\_Type)
+%        \end{itemize}
+%        \begin{itemize}
+%            \item Position Calculation (run): Update parameters at each iteration or operation.
+%            \item Angle Limits (calculate\_alpha\_lims)
+%            \item Point Position Calculation (calculate\_Point\_Position)
+%            \item Intersection Point Selection (calculate\_C\_Position)
+%        \end{itemize}
+%        \item \textbf{5. Animation Control:}
+%        \begin{itemize}
+%            \item Angle Update (animation\_alpha): Update input angle `alpha` for animation.
+%            \item State Switching (switch\_C2\_C1)
+%        \end{itemize}
+%    \end{itemize}
+%\end{frame}
 
 \begin{frame}
-    \frametitle{Backend \\ \small \color{rwth-blue} 1.1 Overview}
-    \begin{itemize}
-        \item \textbf{1. Class Definition (FourBarLinkage)}
-        \item \textbf{2. Initialization (\_\_init\_\_)}
-        \item \textbf{3. Geometry Parameter Check:}
-        \begin{itemize}
-            \item Geometric Validity (check\_Parameter)
-            \item Linkage Type Identification (find\_Linkage\_Type)
-        \end{itemize}
-        \item \textbf{4. Position and Angle Calculation:}
-        \begin{itemize}
-            \item Position Calculation (run): Update parameters at each iteration or operation.
-            \item Angle Limits (calculate\_alpha\_lims)
-            \item Point Position Calculation (calculate\_Point\_Position)
-            \item Intersection Point Selection (calculate\_C\_Position)
-        \end{itemize}
-        \item \textbf{5. Animation Control:}
-        \begin{itemize}
-            \item Angle Update (animation\_alpha): Update input angle `alpha` for animation.
-            \item State Switching (switch\_C2\_C1)
-        \end{itemize}
-    \end{itemize}
-\end{frame}
-
-\begin{frame}
-    \frametitle{Backend \\ \small \color{rwth-blue} 1.2 Introduction}
+    \frametitle{Backend \\ \small \color{rwth-blue} Introduction}
     \textbf{a. Elements in Class}
     \begin{itemize}
         \item \textbf{1. Input Parameters:}
@@ -310,7 +313,7 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{Backend \\ \small \color{rwth-blue} 1.2 Introduction}
+    \frametitle{Backend \\ \small \color{rwth-blue} Introduction}
     \textbf{b. Two Modes for User Parameters}
     \begin{itemize}
         \item \texttt{calculate\_Classification\_Value(self)}
@@ -349,29 +352,14 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{Backend \\ \small \color{rwth-blue} 2. Geometric or Dynamic Simulation}
-    \begin{minipage}{0.4\linewidth}
-        \begin{itemize}
-            \item The right figure is our kinematic analysis of the four-bar linkage.
-            \item Ultimately, we chose the geometric simulation as it is more convenient to implement.
-        \end{itemize}
-    \end{minipage}
-    \hspace{0.02\linewidth} % Adding small horizontal space between text and image
-    \begin{minipage}{0.5\linewidth}
-        \begin{center}
-            \includegraphics[width=\linewidth]{./Figures/dynamic_analysis_1.jpg}
-        \end{center}
-    \end{minipage}
-\end{frame}
-
-\begin{frame}
-    \frametitle{Backend \\ \small \color{rwth-blue} 3. Calculating Point Positions}
+    \frametitle{Backend \\ \small \color{rwth-blue} Calculating Point Positions}
     \begin{minipage}{0.48\linewidth} % Adjusted width to 0.48 to allow both minipages to fit in one line
         \begin{itemize}
             \item A and B are fixed points.
             \item D can be determined using angle \texttt{alpha} and length \texttt{AD}.
-            \item Given positions of B and D, and all side lengths of triangle BCD, point C has two possible locations.
-            \item Calculating point C.
+            \item Given positions of B and D, and all side lengths of triangle BCD, point C has two possible locations $C_1$ and $C_2$.
+            \item Calculating point $C_1$ and $C_2$.
+            \item Choose C as $C_2$ per default and switch to $C_1$ if needed.
         \end{itemize}
     \end{minipage}
     \hspace{0.02\linewidth} % Added small horizontal space to separate the text and image
@@ -385,19 +373,18 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{Backend \\ \small \color{rwth-blue} 4. Alpha Limit Values}
+    \frametitle{Backend \\ \small \color{rwth-blue} Alpha Limit Values}
     \begin{minipage}{0.5\linewidth}
         \begin{itemize}
             \item \textbf{Cosine Law Formula:}
             \begin{itemize}
-                \item \[
-                    \cos(\alpha_{\text{lims1}}) = \frac{b^2 + c^2 - a_1^2}{2bc}
-                \]
+                \item $ \cos(\alpha_{\text{lims1}}) = \frac{b^2 + c^2 - a_1^2}{2bc}$ 
+                \item $\cos(\alpha_{\text{lims2}}) = \frac{b^2 + c^2 - a_2^2}{2bc}$
             \end{itemize}
-            \item Determine whether to switch point C to ensure animation continuity based on limits and thresholds:
+            \item Determine whether to switch between $C_1$ and $C_2$ to ensure animation continuity:
             \begin{itemize}
-                \item \texttt{self.switch\_C2\_C1\_180}
-                \item \texttt{self.switch\_C2\_C1\_360}
+            	\item Switch when $\alpha$ reaches its limits.
+            	\item Switch in special cases, when $\alpha$ limits are exactly $0$°, $360$° and/or $180$°.
             \end{itemize}
         \end{itemize}
     \end{minipage}
@@ -410,13 +397,13 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{Backend \\ \small \color{rwth-blue} 5. Animation}
+    \frametitle{Backend \\ \small \color{rwth-blue} Animation}
     \begin{itemize}
         \item \textbf{Basic Concept:}
         \begin{itemize}
             \item Change \texttt{alpha} according to the defined limits.
             \item Reverse direction at boundaries.
-            \item Switch between configurations (\texttt{C1}, \texttt{C2}) to ensure continuity.
+            \item Switch between configurations ($C_1$ and $C_2$) to ensure continuity.
         \end{itemize}
 
         \item \textbf{Direction Control:}
@@ -431,68 +418,65 @@
             \item Reverse direction when reaching limit values.
         \end{itemize}
 
-        \item \textbf{Special Switching Conditions:}
+        \item \textbf{Switching Between $C_1$ and $C_2$:}
         \begin{itemize}
-            \item Switch at \textbf{180°} and \textbf{360°} based on specific conditions:
-            \begin{itemize}
-                \item \texttt{self.switch\_C2\_C1\_180}
-                \item \texttt{self.switch\_C2\_C1\_360}
-            \end{itemize}
+        	\item Switch at $\alpha$ limits.
+            \item Switch at $0$°, $360$° and/or $180$° if it corresponds to $\alpha$ limits.
             \item Handle floating-point precision issues (\(10^{-12}\)).
         \end{itemize}
 
         \item \textbf{Configuration Tracking:}
         \begin{itemize}
-            \item Avoid redundant switching between \texttt{C1} and \texttt{C2}.
+            \item Avoid redundant switching between $C_1$ and $C_2$.
         \end{itemize}
     \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]
-\frametitle{Backend \\
-	\small \color{rwth-blue} 5. Animation}
-	\begin{lstlisting}[basicstyle=\ssmall]
-		def animation_alpha(self):
-			# Update alpha based on direction
-			if self.direction == 0:  # Increasing alpha
-				self.alpha += self.alpha_velocity * self.t
-			elif self.direction == 1:  # Decreasing alpha
-				self.alpha -= self.alpha_velocity * self.t
-			...
-			self.alpha_rad = math.radians(self.alpha)
-			...
-			# Handle alpha limits when limited
-			if self.alpha_limited:
-				if self.alpha >= self.alpha_lims[1]:
-					self.alpha = self.alpha_lims[1]
-					self.alpha_rad = self.alpha_rad_lims[1]
-					self.direction = 1
-					self._switch_C2_C1_if_needed()
-				elif self.alpha <= self.alpha_lims[0]:
-					self.alpha = self.alpha_lims[0]
-					self.alpha_rad = self.alpha_rad_lims[0]
-					self.direction = 0
-					self._switch_C2_C1_if_needed()
-			...
-			# Handle switch at 180 degrees and 360 degrees
-			self._handle_special_switches()
-			...
-			# Maintain alpha between 0 and 360 if not limited
-			if not self.alpha_limited:
-				self.alpha %= 360.0
-				self.alpha_rad = math.radians(self.alpha)
-			...
-			# Reset switch status if not switched this time
-			if C2_C1_switched_pre_last_time:
-				self.C2_C1_switched_last_time = False
-	\end{lstlisting}
-\end{frame}
+%\begin{frame}[fragile]
+%\frametitle{Backend \\
+%	\small \color{rwth-blue} Animation}
+%	\begin{lstlisting}[basicstyle=\ssmall]
+%		def animation_alpha(self):
+%			# Update alpha based on direction
+%			if self.direction == 0:  # Increasing alpha
+%				self.alpha += self.alpha_velocity * self.t
+%			elif self.direction == 1:  # Decreasing alpha
+%				self.alpha -= self.alpha_velocity * self.t
+%			...
+%			self.alpha_rad = math.radians(self.alpha)
+%			...
+%			# Handle alpha limits when limited
+%			if self.alpha_limited:
+%				if self.alpha >= self.alpha_lims[1]:
+%					self.alpha = self.alpha_lims[1]
+%					self.alpha_rad = self.alpha_rad_lims[1]
+%					self.direction = 1
+%					self._switch_C2_C1_if_needed()
+%				elif self.alpha <= self.alpha_lims[0]:
+%					self.alpha = self.alpha_lims[0]
+%					self.alpha_rad = self.alpha_rad_lims[0]
+%					self.direction = 0
+%					self._switch_C2_C1_if_needed()
+%			...
+%			# Handle switch at 180 degrees and 360 degrees
+%			self._handle_special_switches()
+%			...
+%			# Maintain alpha between 0 and 360 if not limited
+%			if not self.alpha_limited:
+%				self.alpha %= 360.0
+%				self.alpha_rad = math.radians(self.alpha)
+%			...
+%			# Reset switch status if not switched this time
+%			if C2_C1_switched_pre_last_time:
+%				self.C2_C1_switched_last_time = False
+%	\end{lstlisting}
+%\end{frame}
 
 \subsection{Software Tests}
 
 \begin{frame}
-    \frametitle{Implementation \\
-    \small \color{rwth-blue} Software Tests}
+    \frametitle{Software Tests \\
+    \small \color{rwth-blue} Backend}
     
     \begin{itemize}
         \item Tests classify motion of four-bar linkage based on values \( T_1 \), \( T_2 \), and \( T_3 \)
@@ -506,10 +490,10 @@
     
 \end{frame}
 
-\subsection{GUI}
+\subsection{Frontend}
 
 \begin{frame}[fragile]
-\frametitle{Implementation \\
+\frametitle{Frontend \\
 	\small \color{rwth-blue} GUI, Tkinter Intro}
 	\begin{center}
 		\vspace*{-1mm}
@@ -523,49 +507,49 @@
 	\end{center}
 \end{frame}
 
-\begin{frame}[fragile]
-\frametitle{Implementation \\
-	\small \color{rwth-blue} GUI, Animation}
-	\vspace*{-0.7mm}
-	\begin{itemize}
-		\item Update objects in \lstinline|tk.Canvas| every animation step using \lstinline|coords| and/or \lstinline|itemconfigure| for optimization
-	\end{itemize}
-	\vspace*{-1.8mm}
-	\begin{lstlisting}[basicstyle=\ssmall]
-		class GUI:
-			def __init__(self):
-				...
-				self.init_toolbar()
-				...
-			def init_toolbar(self):
-				...
-				self.enable_animation = tk.IntVar()
-				self.animation_button = tk.Checkbutton(self.toolbar_frame, text="animation", 
-				                                      variable=self.enable_animation,
-				                                      onvalue=1, offvalue=0, command=self.animation)
-				self.animation_button.grid(sticky="W", row=10, column=2)
-				...
-			def refresh(self):
-				...
-				self.linkage.run()
-				...
-				self.update_linkage_display()
-			def animation(self):
-				self.run_animation()
-			def run_animation(self):
-				if self.enable_animation.get():
-					self.linkage.animation_alpha() # alpha = alpha + d_alpha
-					self.refresh()
-					self.tk.after(25, self.run_animation)
-			def update_linkage_display(self):
-				...
-				self.model_animation.coords(self.model_animation.AB_line, [A_x, A_y, B_x, B_y])
-				...			
-	\end{lstlisting}
-\end{frame}
+%\begin{frame}[fragile]
+%\frametitle{Frontend \\
+%	\small \color{rwth-blue} GUI, Animation}
+%	\vspace*{-0.7mm}
+%	\begin{itemize}
+%		\item Update objects in \lstinline|tk.Canvas| every animation step using \lstinline|coords| and/or \lstinline|itemconfigure| for optimization
+%	\end{itemize}
+%	\vspace*{-1.8mm}
+%	\begin{lstlisting}[basicstyle=\ssmall]
+%		class GUI:
+%			def __init__(self):
+%				...
+%				self.init_toolbar()
+%				...
+%			def init_toolbar(self):
+%				...
+%				self.enable_animation = tk.IntVar()
+%				self.animation_button = tk.Checkbutton(self.toolbar_frame, text="animation", 
+%				                                      variable=self.enable_animation,
+%				                                      onvalue=1, offvalue=0, command=self.animation)
+%				self.animation_button.grid(sticky="W", row=10, column=2)
+%				...
+%			def refresh(self):
+%				...
+%				self.linkage.run()
+%				...
+%				self.update_linkage_display()
+%			def animation(self):
+%				self.run_animation()
+%			def run_animation(self):
+%				if self.enable_animation.get():
+%					self.linkage.animation_alpha() # alpha = alpha + d_alpha
+%					self.refresh()
+%					self.tk.after(25, self.run_animation)
+%			def update_linkage_display(self):
+%				...
+%				self.model_animation.coords(self.model_animation.AB_line, [A_x, A_y, B_x, B_y])
+%				...			
+%	\end{lstlisting}
+%\end{frame}
 
 \begin{frame}[fragile]
-\frametitle{Implementation \\
+\frametitle{Frontend \\
 	\small \color{rwth-blue} GUI, Show and hide objects}
 	\begin{itemize}
 		\item To display different modes, some objects have to be hidden or shown.
@@ -583,45 +567,49 @@
 \end{frame}
 
 \begin{frame}[fragile]
-\frametitle{Implementation \\
+\frametitle{Frontend \\
 	\small \color{rwth-blue} GUI, Invalid Setup Handling}
+	\begin{itemize}
+		\item In Backend check if parameters are valid: $V = l - s - p - q \leq 0$
+		\item If $V > 0$:
+	\end{itemize}
 	\begin{center}
-		\includegraphics[width=\linewidth]{./Figures/Implementation/invalid_setup.png}
+		\includegraphics[width=0.95\linewidth]{./Figures/Implementation/invalid_setup.png}
 	\end{center}
 \end{frame}
 
-\begin{frame}[fragile]
-\frametitle{Implementation \\
-	\small \color{rwth-blue} GUI, Invalid Setup Handling}
-	\begin{lstlisting}[basicstyle=\ssmall]
-		class GUI:
-			def __init__(self):
-				...
-				self.init_linkage_display()
-				...
-			...
-			def init_linkage_display(self):
-				self.model_animation.invalid_text = self.model_animation.create_text(round(self.model_animation.width/2),
-				                                                              round(self.model_animation.height/2),
-				                                                              text="Invalid setup, change geometrical values",
-				                                                              fill="black", font=('Helvetica 11 bold'))
-				self.model_animation.itemconfigure(self.model_animation.invalid_text, state='hidden')
-				...
-			...
-			def update_linkage_display(self):
-				if self.linkage.geometric_Validity:
-					self.show_linkage()
-					if self.enable_optimization_problem.get():
-						self.show_optimization_problem()
-					self.model_animation.itemconfigure(self.model_animation.invalid_text, state='hidden')
-				else:
-					self.hide_linkage()
-					self.hide_optimization_problem()
-					self.model_animation.itemconfigure(self.model_animation.invalid_text, state='normal')
-					return
-				...
-	\end{lstlisting}
-\end{frame}
+%\begin{frame}[fragile]
+%\frametitle{Frontend \\
+%	\small \color{rwth-blue} GUI, Invalid Setup Handling}
+%	\begin{lstlisting}[basicstyle=\ssmall]
+%		class GUI:
+%			def __init__(self):
+%				...
+%				self.init_linkage_display()
+%				...
+%			...
+%			def init_linkage_display(self):
+%				self.model_animation.invalid_text = self.model_animation.create_text(round(self.model_animation.width/2),
+%				                                                              round(self.model_animation.height/2),
+%				                                                              text="Invalid setup, change geometrical values",
+%				                                                              fill="black", font=('Helvetica 11 bold'))
+%				self.model_animation.itemconfigure(self.model_animation.invalid_text, state='hidden')
+%				...
+%			...
+%			def update_linkage_display(self):
+%				if self.linkage.geometric_Validity:
+%					self.show_linkage()
+%					if self.enable_optimization_problem.get():
+%						self.show_optimization_problem()
+%					self.model_animation.itemconfigure(self.model_animation.invalid_text, state='hidden')
+%				else:
+%					self.hide_linkage()
+%					self.hide_optimization_problem()
+%					self.model_animation.itemconfigure(self.model_animation.invalid_text, state='normal')
+%					return
+%				...
+%	\end{lstlisting}
+%\end{frame}
 
 \section{Results}
 
@@ -670,18 +658,42 @@
 	\end{itemize}
 \end{frame}
 
+\section{Live Software Demo}
+
+\begin{frame}
+\frametitle{Live Software Demo}
+
+\begin{enumerate}
+	\item Changing the input of slidebar.
+	\item Start the animation.
+	\item Test different motion types.
+	\item Enable points tracing.
+	\item Solve the optimization problem.
+\end{enumerate}
+
+\end{frame}
+
 \section{Documentation}
 
 \begin{frame}
-\frametitle{Documentation for Frontend(GUI)}
-	\centering
-	%\includegraphics[height=0.65\textwidth]{./Figures/class_model/doc_gui.png}
-\end{frame}
-
-\begin{frame}
-\frametitle{Documentation for Backend}
-	\centering
-	%\includegraphics[height=0.65\textwidth]{./Figures/class_model/doc_four_bar_linkage.png}
+\frametitle{Documentation}
+	\begin{figure}
+		\centering
+		\begin{subfigure}[b]{0.45\textwidth}
+			\centering
+			\includegraphics[width=\textwidth]{./Figures/Docs/four_bar_linkage.png}
+		\end{subfigure}
+		\hfill
+		\begin{subfigure}[b]{0.45\textwidth}
+			\centering
+			\includegraphics[width=\textwidth]{./Figures/Docs/GUI.png}
+		\end{subfigure}
+		\vfill
+		\begin{subfigure}[b]{0.45\textwidth}
+			\centering
+			\includegraphics[width=\textwidth]{./Figures/Docs/Test.png}
+		\end{subfigure}
+	\end{figure}
 \end{frame}
 
 \section{Project Management}
@@ -738,25 +750,36 @@
 	\end{flushleft}
 \end{frame}
 
-\section{Live Software Demo}
-
-\begin{frame}
-\frametitle{Live Software Demo}
-
-    \begin{enumerate}
-        \item Changing the input of slidebar.
-        \item Start the animation.
-        \item Test different motion types.
-        \item Enable points tracing.
-        \item Solve the optimization problem.
-    \end{enumerate}
-
-\end{frame}
-
 \section{Summary and Conclusion}
 
 \begin{frame}
 \frametitle{Summary and Conclusion}
+	\begin{itemize}
+		\item Analysis:
+		\begin{itemize}
+			\item User requirements
+			\item System requirement
+			\item Theory base
+		\end{itemize}
+		\item Design:
+		\begin{itemize}
+			\item Development infrastructure: Python and Tkinter
+			\item Class models
+		\end{itemize}
+		\item Implementation:
+		\begin{itemize}
+			\item Backend: four bar linkage geometry
+			\item Frontend: GUI
+			\item Unittest
+		\end{itemize}
+		\item Results:
+		\begin{itemize}
+			\item 27 movement cases
+			\item Optimization problem solution
+		\end{itemize}
+		\item Documentation
+		\item Project management: Gantt Chart.
+	\end{itemize}
 \end{frame}
 
 \begin{frame}

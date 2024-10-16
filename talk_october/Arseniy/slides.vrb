@@ -1,30 +1,9 @@
-\frametitle{Implementation \\
+\frametitle{Frontend \\
 	\small \color{rwth-blue} GUI, Invalid Setup Handling}
-	\begin{lstlisting}[basicstyle=\ssmall]
-		class GUI:
-			def __init__(self):
-				...
-				self.init_linkage_display()
-				...
-			...
-			def init_linkage_display(self):
-				self.model_animation.invalid_text = self.model_animation.create_text(round(self.model_animation.width/2),
-				                                                              round(self.model_animation.height/2),
-				                                                              text="Invalid setup, change geometrical values",
-				                                                              fill="black", font=('Helvetica 11 bold'))
-				self.model_animation.itemconfigure(self.model_animation.invalid_text, state='hidden')
-				...
-			...
-			def update_linkage_display(self):
-				if self.linkage.geometric_Validity:
-					self.show_linkage()
-					if self.enable_optimization_problem.get():
-						self.show_optimization_problem()
-					self.model_animation.itemconfigure(self.model_animation.invalid_text, state='hidden')
-				else:
-					self.hide_linkage()
-					self.hide_optimization_problem()
-					self.model_animation.itemconfigure(self.model_animation.invalid_text, state='normal')
-					return
-				...
-	\end{lstlisting}
+	\begin{itemize}
+		\item In Backend check if parameters are valid: $V = l - s - p - q \leq 0$
+		\item If $V > 0$:
+	\end{itemize}
+	\begin{center}
+		\includegraphics[width=0.95\linewidth]{./Figures/Implementation/invalid_setup.png}
+	\end{center}
