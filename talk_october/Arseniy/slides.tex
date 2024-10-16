@@ -241,11 +241,251 @@
 
 \subsection{Development Infrastructure}
 
-\subsection{Four-Bar Linkage Model}
+\subsection{Backend}
 
 \begin{frame}
 \frametitle{Implementation \\
 	\small \color{rwth-blue} Four-Bar Linkage Model}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Backend \\ \small \color{rwth-blue} 1.1 Overview}
+    \begin{itemize}
+        \item \textbf{1. Class Definition (FourBarLinkage)}
+        \item \textbf{2. Initialization (\_\_init\_\_)}
+        \item \textbf{3. Geometry Parameter Check:}
+        \begin{itemize}
+            \item Geometric Validity (check\_Parameter)
+            \item Linkage Type Identification (find\_Linkage\_Type)
+        \end{itemize}
+        \item \textbf{4. Position and Angle Calculation:}
+        \begin{itemize}
+            \item Position Calculation (run): Update parameters at each iteration or operation.
+            \item Angle Limits (calculate\_alpha\_lims)
+            \item Point Position Calculation (calculate\_Point\_Position)
+            \item Intersection Point Selection (calculate\_C\_Position)
+        \end{itemize}
+        \item \textbf{5. Animation Control:}
+        \begin{itemize}
+            \item Angle Update (animation\_alpha): Update input angle `alpha` for animation.
+            \item State Switching (switch\_C2\_C1)
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Backend \\ \small \color{rwth-blue} 1.2 Introduction}
+    \textbf{a. Elements in Class}
+    \begin{itemize}
+        \item \textbf{1. Input Parameters:}
+        \begin{itemize}
+            \item \texttt{AB}, \texttt{BC}, \texttt{CD}, \texttt{DA}
+            \item \texttt{alpha}, \texttt{theta}, \texttt{alpha\_rad}, \texttt{theta\_rad}
+            \item \texttt{coupler\_position}, \texttt{coupler\_offset}
+            \item \texttt{t}, \texttt{alpha\_velocity}, \texttt{C\_mode}
+        \end{itemize}
+        \item \textbf{2. Animation-Related Attributes:}
+        \begin{itemize}
+            \item \texttt{switch\_C2\_C1\_180}, \texttt{switch\_C2\_C1\_360}
+            \item \texttt{C2\_C1\_switched\_last\_time}, \texttt{direction}
+        \end{itemize}
+        \item \textbf{3. Geometry Validity \& Type Check:}
+        \begin{itemize}
+            \item \texttt{Linkage\_Type}, \texttt{geometric\_Validity}
+            \item \texttt{Input\_Link\_Type}, \texttt{Output\_Link\_Type}
+        \end{itemize}
+        \item \textbf{4. Angle Limits:}
+        \begin{itemize}
+            \item \texttt{alpha\_lims}, \texttt{alpha\_rad\_lims}, \texttt{alpha\_limited}
+        \end{itemize}
+        \item \textbf{5. Position of Points:}
+        \begin{itemize}
+            \item \texttt{A}, \texttt{B}, \texttt{C}, \texttt{C1}, \texttt{C2}, \texttt{D}, \texttt{P}
+        \end{itemize}
+        \item \textbf{6. Classification Values:}
+        \begin{itemize}
+            \item \texttt{T1}, \texttt{T2}, \texttt{T3}, \texttt{L}
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Backend \\ \small \color{rwth-blue} 1.2 Introduction}
+    \textbf{b. Two Modes for User Parameters}
+    \begin{itemize}
+        \item \texttt{calculate\_Classification\_Value(self)}
+        \item \texttt{calculate\_Edge\_Value(self)}
+    \end{itemize}
+
+    \textbf{c. Display Linkage Motion Type}
+    \begin{itemize}
+        \item \texttt{find\_Linkage\_Type(self)}
+        \begin{itemize}
+            \item Use a Python dictionary to store the type data.
+        \end{itemize}
+    \end{itemize}
+
+    \textbf{d. Check Parameter}
+    \begin{itemize}
+        \item \texttt{check\_Parameter(self)}
+        \begin{itemize}
+            \item Check linkage type.
+            \item \texttt{geometric\_Validity}
+        \end{itemize}
+    \end{itemize}
+
+    \textbf{e. Update Parameters Every Run}
+    \begin{itemize}
+        \item \texttt{run(self)}
+        \begin{itemize}
+            \item \texttt{self.calculate\_Classification\_Value()}
+            \item \texttt{self.check\_Parameter()}
+            \item If \texttt{geometric\_Validity} is \texttt{False}, exit.
+            \item \texttt{self.find\_Linkage\_Type()}
+            \item \texttt{self.calculate\_alpha\_lims()}
+            \item \texttt{self.calculate\_Point\_Position()}
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Backend \\ \small \color{rwth-blue} 2. Geometric or Dynamic Simulation}
+    \begin{minipage}{0.4\linewidth}
+        \begin{itemize}
+            \item The right figure is our kinematic analysis of the four-bar linkage.
+            \item Ultimately, we chose the geometric simulation as it is more convenient to implement.
+        \end{itemize}
+    \end{minipage}
+    \hspace{0.02\linewidth} % Adding small horizontal space between text and image
+    \begin{minipage}{0.5\linewidth}
+        \begin{center}
+            \includegraphics[width=\linewidth]{./Figures/dynamic_analysis_1.jpg}
+        \end{center}
+    \end{minipage}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Backend \\ \small \color{rwth-blue} 3. Calculating Point Positions}
+    \begin{minipage}{0.48\linewidth} % Adjusted width to 0.48 to allow both minipages to fit in one line
+        \begin{itemize}
+            \item A and B are fixed points.
+            \item D can be determined using angle \texttt{alpha} and length \texttt{AD}.
+            \item Given positions of B and D, and all side lengths of triangle BCD, point C has two possible locations.
+            \item Calculating point C.
+        \end{itemize}
+    \end{minipage}
+    \hspace{0.02\linewidth} % Added small horizontal space to separate the text and image
+    \begin{minipage}{0.48\linewidth} % Adjusted width to 0.48
+        \begin{center}
+            \includegraphics[width=\linewidth]{./Figures/test_for_calculating_point_C.png}
+            \vspace{0.5em}
+            {\tiny Picture from "test for calculating point C.py"}
+        \end{center}
+    \end{minipage}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Backend \\ \small \color{rwth-blue} 4. Alpha Limit Values}
+    \begin{minipage}{0.5\linewidth}
+        \begin{itemize}
+            \item \textbf{Cosine Law Formula:}
+            \begin{itemize}
+                \item \[
+                    \cos(\alpha_{\text{lims1}}) = \frac{b^2 + c^2 - a_1^2}{2bc}
+                \]
+            \end{itemize}
+            \item Determine whether to switch point C to ensure animation continuity based on limits and thresholds:
+            \begin{itemize}
+                \item \texttt{self.switch\_C2\_C1\_180}
+                \item \texttt{self.switch\_C2\_C1\_360}
+            \end{itemize}
+        \end{itemize}
+    \end{minipage}
+    \hspace{0.02\linewidth} % Adding small horizontal space between text and image
+    \begin{minipage}{0.45\linewidth}
+        \begin{center}
+            \includegraphics[width=\linewidth]{./Figures/alpha_lim.png}
+        \end{center}
+    \end{minipage}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Backend \\ \small \color{rwth-blue} 5. Animation}
+    \begin{itemize}
+        \item \textbf{Basic Concept:}
+        \begin{itemize}
+            \item Change \texttt{alpha} according to the defined limits.
+            \item Reverse direction at boundaries.
+            \item Switch between configurations (\texttt{C1}, \texttt{C2}) to ensure continuity.
+        \end{itemize}
+
+        \item \textbf{Direction Control:}
+        \begin{itemize}
+            \item \texttt{direction = 0}: \textit{Increasing \texttt{alpha}}
+            \item \texttt{direction = 1}: \textit{Decreasing \texttt{alpha}}
+        \end{itemize}
+
+        \item \textbf{Updating \texttt{alpha}:}
+        \begin{itemize}
+            \item Update by \texttt{alpha\_velocity * t}.
+            \item Reverse direction when reaching limit values.
+        \end{itemize}
+
+        \item \textbf{Special Switching Conditions:}
+        \begin{itemize}
+            \item Switch at \textbf{180°} and \textbf{360°} based on specific conditions:
+            \begin{itemize}
+                \item \texttt{self.switch\_C2\_C1\_180}
+                \item \texttt{self.switch\_C2\_C1\_360}
+            \end{itemize}
+            \item Handle floating-point precision issues (\(10^{-12}\)).
+        \end{itemize}
+
+        \item \textbf{Configuration Tracking:}
+        \begin{itemize}
+            \item Avoid redundant switching between \texttt{C1} and \texttt{C2}.
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Backend \\
+	\small \color{rwth-blue} 5. Animation}
+	\begin{lstlisting}[basicstyle=\ssmall]
+		def animation_alpha(self):
+			# Update alpha based on direction
+			if self.direction == 0:  # Increasing alpha
+				self.alpha += self.alpha_velocity * self.t
+			elif self.direction == 1:  # Decreasing alpha
+				self.alpha -= self.alpha_velocity * self.t
+			...
+			self.alpha_rad = math.radians(self.alpha)
+			...
+			# Handle alpha limits when limited
+			if self.alpha_limited:
+				if self.alpha >= self.alpha_lims[1]:
+					self.alpha = self.alpha_lims[1]
+					self.alpha_rad = self.alpha_rad_lims[1]
+					self.direction = 1
+					self._switch_C2_C1_if_needed()
+				elif self.alpha <= self.alpha_lims[0]:
+					self.alpha = self.alpha_lims[0]
+					self.alpha_rad = self.alpha_rad_lims[0]
+					self.direction = 0
+					self._switch_C2_C1_if_needed()
+			...
+			# Handle switch at 180 degrees and 360 degrees
+			self._handle_special_switches()
+			...
+			# Maintain alpha between 0 and 360 if not limited
+			if not self.alpha_limited:
+				self.alpha %= 360.0
+				self.alpha_rad = math.radians(self.alpha)
+			...
+			# Reset switch status if not switched this time
+			if C2_C1_switched_pre_last_time:
+				self.C2_C1_switched_last_time = False
+	\end{lstlisting}
 \end{frame}
 
 \subsection{Software Tests}
@@ -265,6 +505,7 @@
     \end{itemize}
     
 \end{frame}
+
 \subsection{GUI}
 
 \begin{frame}[fragile]
