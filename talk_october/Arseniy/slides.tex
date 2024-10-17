@@ -432,45 +432,43 @@
     \end{itemize}
 \end{frame}
 
-%\begin{frame}[fragile]
-%\frametitle{Backend \\
-%	\small \color{rwth-blue} Animation}
-%	\begin{lstlisting}[basicstyle=\ssmall]
-%		def animation_alpha(self):
-%			# Update alpha based on direction
-%			if self.direction == 0:  # Increasing alpha
-%				self.alpha += self.alpha_velocity * self.t
-%			elif self.direction == 1:  # Decreasing alpha
-%				self.alpha -= self.alpha_velocity * self.t
-%			...
-%			self.alpha_rad = math.radians(self.alpha)
-%			...
-%			# Handle alpha limits when limited
-%			if self.alpha_limited:
-%				if self.alpha >= self.alpha_lims[1]:
-%					self.alpha = self.alpha_lims[1]
-%					self.alpha_rad = self.alpha_rad_lims[1]
-%					self.direction = 1
-%					self._switch_C2_C1_if_needed()
-%				elif self.alpha <= self.alpha_lims[0]:
-%					self.alpha = self.alpha_lims[0]
-%					self.alpha_rad = self.alpha_rad_lims[0]
-%					self.direction = 0
-%					self._switch_C2_C1_if_needed()
-%			...
-%			# Handle switch at 180 degrees and 360 degrees
-%			self._handle_special_switches()
-%			...
-%			# Maintain alpha between 0 and 360 if not limited
-%			if not self.alpha_limited:
-%				self.alpha %= 360.0
-%				self.alpha_rad = math.radians(self.alpha)
-%			...
-%			# Reset switch status if not switched this time
-%			if C2_C1_switched_pre_last_time:
-%				self.C2_C1_switched_last_time = False
-%	\end{lstlisting}
-%\end{frame}
+\begin{frame}[fragile]
+\frametitle{Backend \\
+	\small \color{rwth-blue} Animation}
+	\begin{lstlisting}[basicstyle=\ssmall]
+        # Update alpha based on current direction
+        if self.direction == 0:  # Increasing alpha
+            self.alpha += self.alpha_velocity * self.t
+            self.alpha_rad = math.radians(self.alpha)
+
+            # Check if alpha exceeds the upper limit
+            if self.alpha_limited and self.alpha >= self.alpha_lims[1]:
+                # Set alpha to the upper limit
+                self.alpha = self.alpha_lims[1]
+                self.alpha_rad = self.alpha_rad_lims[1]
+                # Switch direction to decreasing
+                self.direction = 1
+                # switch C1 and C2 if didnt switch last time
+                if not self.C2_C1_switched_last_time:
+                    self.switch_C2_C1()
+                    self.C2_C1_switched_last_time = True
+
+            # switch by 0 and 360 degrees if needed
+            if self.switch_C2_C1_360 and ((self.alpha - self.theta >= -10**-12 and \
+                                           self.alpha - self.theta - self.alpha_velocity * self.t <= 10**-12) or \
+                                          (self.alpha - self.theta >= 360.0 and \
+                                           self.alpha - self.theta - self.alpha_velocity * self.t <= 360.0)):
+                # switch C1 and C2 if didnt switch last time
+                if not self.C2_C1_switched_last_time:
+                    self.switch_C2_C1()
+                    self.C2_C1_switched_last_time = True
+            # same for switch by 180 degrees if needed
+            # alpha is not limited values have to stay from 0 to 360
+            if not self.alpha_limited and self.alpha >= 360.0:
+                self.alpha = self.alpha - 360.0
+                self.alpha_rad = math.radians(self.alpha)
+	\end{lstlisting}
+\end{frame}
 
 \subsection{Software Tests}
 
