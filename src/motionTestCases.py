@@ -21,10 +21,10 @@ class TestFourBarLinkageCases(unittest.TestCase):
 
     def test_double_crank(self):
         # Case where T1 > 0, T2 = 0, T3 > 0 -> Double Crank
-        self.linkage.AB = 1.5
-        self.linkage.BC = 1.5
-        self.linkage.CD = 1.5
-        self.linkage.DA = 1.5
+        self.linkage.AB = 2.5
+        self.linkage.BC = 2.5
+        self.linkage.CD = 3.0
+        self.linkage.DA = 2.0
         self.linkage.run()
         self.assertGreater(self.linkage.T1, 0)
         self.assertEqual(self.linkage.T2, 0)
@@ -33,10 +33,10 @@ class TestFourBarLinkageCases(unittest.TestCase):
 
     def test_double_rocker(self):
         # Case where T1 < 0, T2 < 0, T3 < 0 -> Double Rocker
-        self.linkage.AB = 2.0
-        self.linkage.BC = 3.5
-        self.linkage.CD = 2.0
-        self.linkage.DA = 3.5
+        self.linkage.AB = 2.25
+        self.linkage.BC = 2.25
+        self.linkage.CD = 2.25
+        self.linkage.DA = 3.25
         self.linkage.run()
         self.assertLess(self.linkage.T1, 0)
         self.assertLess(self.linkage.T2, 0)
@@ -44,15 +44,15 @@ class TestFourBarLinkageCases(unittest.TestCase):
         print("Double Rocker test passed.")
 
     def test_rocker_crank(self):
-        # Case where T1 < 0, T2 > 0, T3 > 0 -> Rocker-Crank
-        self.linkage.AB = 2.0
-        self.linkage.BC = 1.0
-        self.linkage.CD = 3.0
-        self.linkage.DA = 2.0
+        # Case where T1 > 0, T2 < 0, T3 < 0 -> Rocker-Crank
+        self.linkage.AB = 2.75
+        self.linkage.BC = 1.75
+        self.linkage.CD = 2.75
+        self.linkage.DA = 2.75
         self.linkage.run()
-        self.assertLess(self.linkage.T1, 0)
-        self.assertGreater(self.linkage.T2, 0)
-        self.assertGreater(self.linkage.T3, 0)
+        self.assertGreater(self.linkage.T1, 0)
+        self.assertLess(self.linkage.T2, 0)
+        self.assertLess(self.linkage.T3, 0)
         print("Rocker-Crank test passed.")
 
 if __name__ == '__main__':
