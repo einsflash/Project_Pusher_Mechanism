@@ -142,49 +142,69 @@ The following list presents all the user requirements provided by our supervisor
 \end{itemize}
 
 \subsection{System Requirements}
-Functional
+
+After reviewing and analyzing the user requirements, which provide a high-level perspective of the problem and its solution, we need to derive more detailed technical requirements and specifications for the software. The system requirements are categorized into two types: \textit{functional requirements}, which define what the software must do, and \textit{non-functional requirements}, which outline how the system should operate and perform.
+
+We begin with the functional requirements, organized into several subtopics and accompanied by brief explanations for each.
+
 \begin{itemize}
-	\item \textbf{Four-bar linkage model}:
+	\item \textit{Four-bar linkage model:}
 	\begin{itemize}
-		\item System simulates all 27 motion types of the four-bar linkage with coupler.
-		\item System does not crash with any parameter input.
-		\item System validates input data.
+		\item The model implements the geometry of the four-bar linkage, calculating joint coordinates based on input parameters.
+		\item It simulates all 27 motion types of the four-bar linkage with a coupler.
+		\item It ensures stable operation without crashes, regardless of the input parameters.
+		\item It validates input data and sends error messages to the GUI for user feedback.
 	\end{itemize}
-	\item \textbf{Tests}:
+	
+	The four-bar linkage model acts as the backend of the system, accurately implementing the geometry and all motion types of the linkage. Its primary role is to provide reliable data for visualization in the GUI while ensuring error-free operation. By validating input parameters and communicating issues through the GUI, the system allows users to address errors efficiently without needing to restart.
+	
+	\item \textit{Tests:}
 	\begin{itemize}
-		\item Implement test cases to cover all motion cases.
-		\item Provide reference data to compare results with.
+		\item Implement test cases to cover all motion types of the four-bar linkage.
+		\item Provide reference data for result comparison.
 	\end{itemize}
-	\item \textbf{Graphical User Interface}:
+	
+	To ensure the backend's accuracy, test cases must be implemented for each motion type, supported by reference data to validate the results.
+	
+	\item \textit{Graphical User Interface (GUI):}
 	\begin{itemize}
-		\item GUI is coupled with the four-bar linkage model to use implemented motion cases for animation. 
-		\item GUI provides the four-bar linkage visualization.
-		\item GUI has slide bars to input geometrical data.
-		\item GUI reacts to new input data by changing the four-bar linkage visualization accordingly.
-		\item GUI provides animation of the four-bar linkage motion.
-		\item GUI provides tracing of the coupler to show its trajectory.
+		\item The GUI incorporates the four-bar linkage model (backend), utilizing its geometry and motion cases for visualization and animation.
+		\item It provides a visualization of the four-bar linkage.
+		\item It contains sliders to allow users to input and adjust geometric parameters.
+		\item It updates the visualization in real-time when new geometric parameters are provided.
+		\item It includes an animation mode for smooth motion visualization of the four-bar linkage.
+		\item It provides coupler tracing to display coupler's trajectory.
 	\end{itemize}
-	\item \textbf{Optimization problem}:
+	
+	The GUI serves as the user’s primary interaction point (frontend), incorporating all functionalities relevant to user needs. Its main purpose is to visually represent the four-bar linkage using joint coordinates obtained from the backend. Users can adjust geometric parameters via sliders, with the visualization updating instantly to reflect changes. The GUI also includes an animation mode, ensuring smooth movement of the linkage. Additionally, the tracing of the coupler $P$ during animation is crucial for solving the optimization problem, providing valuable insights into its trajectory.
+	
+	\item \textit{Documentation}
 	\begin{itemize}
-		\item GUI visualizes the solution.
+		\item The four-bar linkage model, tests, and GUI are detailed documented.
 	\end{itemize}
-\end{itemize}
-Non-functional
-\begin{itemize}
-	\item \textbf{Performance}:
-	\begin{itemize}
-		\item The four-bar linkage model is fast enough to provide smooth GUI animations.
-		\item GUI animations are not slower than 30 frames per second.
-	\end{itemize}
-	\item \textbf{Usability}:
-	\begin{itemize}
-		\item GUI and four bar linkage implementation are well-documented.
-	\end{itemize}
+	
+	Clear and comprehensive documentation is essential for maintaining software. To ensure the system remains reusable for future developers, we document all components in detail.
 \end{itemize}
 
-\subsection{Theory}
+After discussing the functional system requirements, which outline what the system must do, we now turn to the non-functional requirements, which describe how the system should do it.
 
-explain geometry
+\begin{itemize}
+	\item \textit{Performance:}
+	\begin{itemize}
+		\item The four-bar linkage model must provide smooth animations.
+		\item The GUI animations should run at a minimum of 30 frames per second. 
+	\end{itemize}
+	
+	Performance is a critical factor for usability, as users expect quick responses without noticeable delays. To meet this requirement, the four-bar linkage model and GUI should be optimized to ensure smooth animations at 30 frames per second on standard computers (e.g., with an AMD Ryzen 4500U chip). This ensures that the system remains free of lag, providing a smooth user experience.
+\end{itemize}
+
+\subsection{Geometry}
+
+After analyzing the user requirements and deriving system ones, we focus at the geometry of the given linkage, that will be implemented as a part of four-bar linkage model and used to create visualization and animation later in the GUI.
+
+
+
+\subsection{Animation}
 
 \section{Design} \label{ch:design}
 
@@ -228,6 +248,10 @@ e.g, googletest\footnote{\tt https://github.com/google/googletest}
 \section{Project Management} \label{ch:projectmanagement}
 
 who did what, when, and why; organization of collaboration, i.e. [online] meetings, software version control (e.g, git\footnote{\tt https://git.rwth-aachen.de}
+
+\section{Acknowledgment}
+
+Use of ChatGPT for grammatical correctness.
 
 \bibliographystyle{plain}
 \bibliography{literature}
