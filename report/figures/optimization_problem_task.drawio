@@ -10,7 +10,7 @@
             <mxPoint x="470" y="280" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="071c9aJxDS3kiMfwyO00-2" value="Labelling machine" style="rounded=0;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=11;" vertex="1" parent="1">
+        <mxCell id="071c9aJxDS3kiMfwyO00-2" value="Labeling machine" style="rounded=0;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=11;" vertex="1" parent="1">
           <mxGeometry x="80" y="170" width="200" height="40" as="geometry" />
         </mxCell>
         <mxCell id="071c9aJxDS3kiMfwyO00-5" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=2;" edge="1" parent="1">

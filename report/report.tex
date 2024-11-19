@@ -111,7 +111,7 @@ The following list presents all the user requirements provided by our supervisor
 	
 	\item \textit{Requirement: Implement a graphical user interface (GUI) to display four-bar linkage animation and customize its geometric parameters.}
 	
-	The GUI should enable users to visualize the linkage, provide smooth animations, and adjust various geometric parameters of the system. We have identified eight key parameters (degrees of freedom) that the GUI should support:
+	The GUI should enable users to visualize the linkage, provide smooth animations, and adjust various geometric parameters of the system. We have identified eight key parameters (degrees of freedom, shown in Figure \ref{fig:linkage-2}) that the GUI should support:
 	\begin{itemize}
 		\item The lengths of the four bars ($AB$, $BC$, $CD$, $AD$).
 		\item The angle $\theta$ between the fixed bar $AB$ and the horizontal line.
@@ -122,12 +122,23 @@ The following list presents all the user requirements provided by our supervisor
 	
 	Additionally, while the position of point $A$ could be considered an independent parameter (technically two parameters in 2D), for simplicity, we assume it is fixed at $(0, 0)$ during geometric analysis. If point $A$ needs to be positioned elsewhere, the entire linkage can simply be translated accordingly. This fixed-point assumption will simplify the design phase but can be revisited for solving optimization problems later.
 	
-	\item Find and provide suitable parameters for the pusher mechanism to meet requirements of the following optimization problem:
+	\item \textit{Requirement: Determine suitable parameters for the four-bar linkage to solve the following optimization problem:}
 	\begin{itemize}
 		\item Push box with size $80\times60$ from $x=220$ to $x=0$
 		\item Do not cross the area of the labeling machine (Area with $x<80$ and $y>70$).
 		\item Pass above points $(120, 80)$ and $(220, 80)$
 	\end{itemize}
+	
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.7\textwidth]{./figures/optimization_problem_task.pdf}
+		\caption{Optimization problem}
+		\label{fig:optimization_problem}
+	\end{figure}
+	
+	The optimization problem is illustrated in Figure  \ref{fig:optimization_problem}, which shows a conveyor line with the box to be moved by the coupler $P$ while avoiding the forbidden areas. The coupler $P$ must move the box, following a trajectory such as the dotted curve depicted in the figure. After pushing the box to the desired location, the coupler should return to its starting position, navigating around obstacles to repeat the task.
+	
+	At a minimum, the problem can be addressed manually by experimenting with different parameters to find a feasible solution. Ideally, however, an algorithm could be developed to automate the optimization process and identify the best parameters efficiently.
 \end{itemize}
 
 \subsection{System Requirements}
