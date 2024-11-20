@@ -37,10 +37,6 @@
 
 \clearpage
 
-\tableofcontents
-
-\clearpage
-
 \section*{Preface}
 
 The topic "Pusher Mechanism" was assigned as a final project by the Department of Informatik 12: Software and Tools for Computational Engineering, RWTH Aachen University, for the Software Lab course in the Computational Engineering Science B.Sc. program. This work was carried out under the supervision of Dr. rer. nat. Markus Towara.
@@ -200,81 +196,94 @@ After discussing the functional system requirements, which outline what the syst
 	Performance is a critical factor for usability, as users expect quick responses without noticeable delays. To meet this requirement, the four-bar linkage model and GUI should be optimized to ensure smooth animations at 30 frames per second on standard computers (e.g., with an AMD Ryzen 4500U chip). This ensures that the system remains free of lag, providing a smooth user experience.
 \end{itemize}
 
-\todo{all below should be corrected using LLM}
+\todo{all above needs to be redacted without chatgpt}
 
 \subsection{Geometry}
 
-After analyzing the user requirements and deriving system ones, we focus at the geometry of the given linkage, that will be implemented as a part of four-bar linkage model and used to create visualization and animation later in the GUI.
+After analyzing the user requirements and deriving system requirements, we focus on the geometry of the given linkage. This will be implemented as part of the four-bar linkage model and used to create visualization and animation later in the GUI.
 
-Now our aim is to calculate the positions of all the joints based on the input parameters, namely lengths of main four bars $AB$, $BC$, $CD$, $AD$, that we denoted as $g$, $b$, $h$, $a$, input angle $\alpha$, angle $\theta$ between the horizontal line and $AB$, and the position of coupler $P$ defined with respect to middle point of $CD$ and denoted as $P_{pos}$ and $P_{offset}$, note that these two values can be also negative, take a look at the direction of corresponding arrows at the picture. All the input parameters are depicted in Figure \ref{fig:four-bar_linakge_analysis}.
+To visualize the linkage, we need to calculate the positions of all the joints based on the input parameters. The input parameters are:
+\begin{itemize}
+ \item The lengths of main four bars $AB$, $BC$, $CD$, $AD$, that we denoted as $g$, $b$, $h$, $a$.
+ \item The input angle $\alpha$.
+ \item The angle $\theta$ between the horizontal line and $AB$.
+ \item The position of coupler $P$ defined with respect to midpoint of $CD$ and denoted as $P_{pos}$ and $P_{offset}$. 
+ 
+ Note that these two values also can be negative, take a look at the direction of corresponding arrows in Figure \ref{fig:four-bar_linakge_analysis}.
+\end{itemize}
 
+All the mentioned parameters are depicted in Figure \ref{fig:four-bar_linakge_analysis}.
 
 \begin{figure}[h]
 	\begin{center}
-		\includegraphics[width=0.4\textwidth]{./figures/four-bar_linkage+coupler_analysis.pdf}
+		\includegraphics[width=0.5\textwidth]{./figures/four-bar_linkage+coupler_analysis.pdf}
 	\end{center}
 	\caption{Planar four-bar linkage with coupler $P$}
 	\label{fig:four-bar_linakge_analysis}
 \end{figure}
  
- After recalling all the input parameters we can use to find out the positions of the joints, we start one by one consider them.
+ After recalling all the input parameters we use them to find out the positions of the joints one by one.
  
  \begin{itemize}
  	\item Joint $A$.
  	
- 	As was already mentioned for simplicity we put joint $A$ in the point $(0, 0)$. If for some reasons it should be placed in another place, the whole linkage should be just translated, by simply adding to each joint coordinates the coordinates of $A$.
+ 	As previously mentioned, we position joint $A$ at $(0, 0)$ for simplicity. To place it at different coordinates, the whole linkage should be translated by adding the new coordinates of $A$ to each joint's coordinates.
  	
  	\item Joint $B$.
  	
- 	Position of the joint $B$ can be defined only using $g$,length of bar $AB$, and angle $\theta$: $B_x = g \cdot cos(\theta)$, $B_y = g \cdot sin(\theta)$.
+ 	The position of joint $B$ can be defined using $g$, the length of bar $AB$, and angle $\theta$: $B_x = g  \cos(\theta)$, $B_y = g \sin(\theta)$.
  	
  	\item Joint $D$.
  	
- 	The position of $D$ is also easy determinable using $a$, length of $AD$, and input angle $\alpha$: $D_x = a \cdot cos(\alpha)$, $D_y = a \cdot sin(\alpha)$.
+ 	The position of joint $D$ is also easy to determine using $a$, the length of $AD$, and input angle $\alpha$: $D_x = a \cos(\alpha)$, $D_y = a \sin(\alpha)$.
  	
  	\item Joint $C$.
  	
- 	The most difficult geometrical problem is to determine the position of joint $C$. For this purpose we consider a triangle $\triangle BCD$. The main idea is to derive position of $C$ by looking at the area of the triangle using different approaches.
+ 	The most complex problem is to determine the position of joint $C$. The main idea is to derive the position of $C$ by considering the area of triangle $\triangle BCD$ using different methods.
  	
- 	Define a vector $\overrightarrow{BD} = (BD_x, BD_y) = \overrightarrow{D} - \overrightarrow{B} = (D_x - B_x, D_y - B_y)$. Assume firstly that this vector is not zero-vector with length $|\overrightarrow{BD}| = \sqrt{(BD_x)^2+(BD_y)^2}$. 
+ 	To determine the position of $C$, we consider new basis vectors.
  	
- 	Then a unit vector along $\overrightarrow{BD}$ is $\overrightarrow{e}_{BD} = (e_{BD_-x}, e_{BD_-y}) = \overrightarrow{BD} / |\overrightarrow{BD}|$.
+ 	Define a vector $\overrightarrow{BD} = (BD_x, BD_y) = \overrightarrow{D} - \overrightarrow{B} = (D_x - B_x, D_y - B_y)$. Assume first that this vector has non-zero length $|\overrightarrow{BD}| = \sqrt{(BD_x)^2+(BD_y)^2}$. 
  	
- 	The corresponding orthogonal direction is defined by a unite vector $\overrightarrow{n}_{BD} = (-e_{BD_-y}, e_{BD_-x})$.
+ 	The corresponding unit vector along $\overrightarrow{BD}$ is $\overrightarrow{e}_{BD} = (e_{BD_-x}, e_{BD_-y}) = \frac{\overrightarrow{BD}}{|\overrightarrow{BD}|}$.
  	
- 	The area of $\triangle BCD$ can be determined by Heron's formula:
+ 	The orthogonal direction is defined by a unit vector $\overrightarrow{n}_{BD} = (-e_{BD_-y}, e_{BD_-x})$.
  	
- 	$A_{\triangle BCD} = \sqrt{p \cdot (p-b) \cdot (p-h) \cdot (p-|\overrightarrow{BD}|)}$, where $p = (b + h + |\overrightarrow{BD}|)/2$ is a half-perimeter.
+ 	We use the vectors $\overrightarrow{e}_{BD}$ and $\overrightarrow{n}_{BD}$ as a new orthonormal basis.
  	
- 	At the other hand the area of $\triangle BCD$ can be determined using length of $BD$ and the distance from $C$ to $BD$ denoted as $C_{offset}$: $A_{\triangle BCD} = |\overrightarrow{BD}| \cdot C_{offset} / 2$. So we can determine $C_{offset} = 2 \cdot A_{\triangle BCD}/ |\overrightarrow{BD}|$
+ 	To determine the area of $\triangle BCD$ we use Heron's formula:
  	
- 	Now we now the distance of joint $C$ to $BD$ along $\overrightarrow{n}_{BD}$. But we want to determine the position of $C$ with respect to $B$. For this purpose we need also to determine the distance in the orthogonal direction $\overrightarrow{e}_{BD}$, to do that we project $\overrightarrow{BC}$ onto $\overrightarrow{BD}$. The projection length is $|C_{pos}| = \sqrt{b^2 - C_{offset}^2}$. The question is which sign do $C_{pos}$ have. It can be determined using angle $\angle CBD$. With cosine rule: 
+ 	$A_{\triangle BCD} = \sqrt{p (p-b) (p-h) (p-|\overrightarrow{BD}|)}$, where $p = \frac{b + h + |\overrightarrow{BD}|}{2}$ is a semi-perimeter of $\triangle BCD$.
  	
- 	$cos(\angle CBD) = \frac{h^2 - b^2 - |\overrightarrow{BD}|^2}{b \cdot |\overrightarrow{BD}|}$
+ 	On the other hand the area of $\triangle BCD$ can be determined using length of $BD$ and the perpendicular from $C$ to $BD$ denoted by $C_{offset}$ (see Figure \ref{fig:four-bar_linakge_analysis}): $A_{\triangle BCD} = \frac{|\overrightarrow{BD}| C_{offset}}{2}$. So we can determine $C_{offset} = 2 \frac{A_{\triangle BCD}}{ |\overrightarrow{BD}|}$
  	
- 	Then the projection of $\overrightarrow{BC}$ onto $\overrightarrow{BD}$ is $C_{pos} = sign(cos(\angle CBD)) \cdot \sqrt{b^2 - C_{offset}^2}$
+ 	At this point, we know the distance from joint $C$ to $BD$ along $\overrightarrow{n}_{BD}$. To determine the position of $C$ with respect to $B$, we also need the distance from $C$ to $B$ along $\overrightarrow{e}_{BD}$. The projection length of $\overrightarrow{BC}$ onto direction of $\overrightarrow{e}_{BD}$ is given by $|C_{pos}| = \sqrt{b^2 - C_{offset}^2}$ using Pythagorean theorem. The remaining question is to determine sign of this projection. This can be done using angle $\angle CBD$ and the Law of Cosines: 
  	
- 	As long as $C_{pos}$ and $C_{offset}$ are determined in the orthogonal directions, we can find out the position of the $C$ with respect to $B$ just summing it up multiplied by the corresponding unite vectors. The problem arises, when trying to find the position of the $C$, because in contrast to vector $\overrightarrow{e}_{BD}$, that is uniquely defined, vector $\overrightarrow{n}_{BD}$ could be also with the opposite direction $-\overrightarrow{n}_{BD}$, which implies two possible positions of $C$, that are symmetric with respect to $BD$:
+ 	$\cos(\angle CBD) = \frac{h^2 - b^2 - |\overrightarrow{BD}|^2}{b |\overrightarrow{BD}|}$
  	
- 	$\overrightarrow{C}_1 = (C_{1_-x}, C_{1_-y}) = \overrightarrow{B} + C_{pos} \cdot \overrightarrow{e}_{BD} + C_{offset} \cdot \overrightarrow{n}_{BD}$ 
+ 	Then the projection of $\overrightarrow{BC}$ onto direction of $\overrightarrow{e}_{BD}$ is given by $C_{pos} = sign(\cos(\angle CBD)) \sqrt{b^2 - C_{offset}^2}$
  	
- 	$\overrightarrow{C}_2 = (C_{2_-x}, C_{2_-y}) = \overrightarrow{B} + C_{pos} \cdot \overrightarrow{e}_{BD} - C_{offset} \cdot \overrightarrow{n}_{BD}$
+ 	After determining $C_{pos}$ and $C_{offset}$, we can find the possible positions of $C$:
  	
- 	The question is how to choose between $C_1$ and $C_2$. For the static case it does not play a role, because both positions are possible, so we decided to take $C = C_2$ as a default one. For the animation, that is discussed a bit later, the selection between $C_1$ and $C_2$ is not so straight forward.
+ 	$\overrightarrow{C}_1 = (C_{1_-x}, C_{1_-y}) = \overrightarrow{B} + C_{pos} \overrightarrow{e}_{BD} + C_{offset} \overrightarrow{n}_{BD}$ 
  	
- 	In the discussion above we made an assumption, that $|\overrightarrow{BD}|$ is not zero, but it can be the case, when $b = h$ and specific input angle $\alpha$ is given. In this case joints $A$, $B$, $C$, $D$ are at the same line, so we define a unite vector $\overrightarrow{e} = sign(<\overrightarrow{BA}, \overrightarrow{BC}>) \cdot \overrightarrow{BA} / g$, where $<\cdot, \cdot>$ is a scalar multiplication. Then position of $C$ is determined uniquely by $\overrightarrow{C} = \overrightarrow{B} + b \cdot \overrightarrow{e}$
+ 	$\overrightarrow{C}_2 = (C_{2_-x}, C_{2_-y}) = \overrightarrow{B} + C_{pos} \overrightarrow{e}_{BD} - C_{offset} \overrightarrow{n}_{BD}$
+ 	
+ 	There are two possible positions of $C$, because the normal vector to $\overrightarrow{BD}$ is not unique and can also have the opposite direction. For a static structure, we can choose any of them, so we take $C = C_2$ as the default. For the animation case, that will be discussed later, there are rules for choosing between $C_1$ and $C_2$.
+ 	
+ 	In the discussion above we made the assumption that the length of $\overrightarrow{BD}$ is not zero. However, for $b = h$ and a specific value of input angle $\alpha$, the length can become zero. In this case, the joints $A$, $B$, $C$, $D$ are on the same line, so we define a unit vector $\overrightarrow{e} = sign(\overrightarrow{BA} \cdot \overrightarrow{BC})\frac{\overrightarrow{BA}}{g}$, where $\cdot$ is a scalar product. Then, the position of $C$ is determined uniquely by $\overrightarrow{C} = \overrightarrow{B} + b \overrightarrow{e}$
  	
  	\item Coupler $P$.
  	
- 	As long as we know the positions of $C$ and $D$, it is trivial to determine the position of $P$.
+ 	Since we know the positions of $C$ and $D$, it is easy to determine the position of $P$.
  	
- 	Determine the middle point of $CD$ as $\overrightarrow{Q} = (\overrightarrow{C} + \overrightarrow{D})/2$.
+ 	Define the midpoint of $CD$ as $\overrightarrow{Q} = \frac{\overrightarrow{C} + \overrightarrow{D}}{2}$.
  	
- 	The unite vector along $DC$ is $\overrightarrow{e}_{DC} = (e_{DC_-x}, e_{DC_-y}) = (\overrightarrow{C} - \overrightarrow{D} / h$. The corresponding normal vector is $\overrightarrow{n}_{DC} = (-e_{DC_-y}, e_{DC_-x})$.
+ 	The unit vector along $DC$ is given by $\overrightarrow{e}_{DC} = (e_{DC_-x}, e_{DC_-y}) = \frac{\overrightarrow{C} - \overrightarrow{D}}{h}$. The corresponding normal vector is $\overrightarrow{n}_{DC} = (-e_{DC_-y}, e_{DC_-x})$.
  	
- 	Then the position of the coupler $P$ is determined by $\overrightarrow{P} = \overrightarrow{Q} + P_{pos} \cdot \overrightarrow{e}_{DC} + P_{offset} \cdot \overrightarrow{n}_{DC}$.
+ 	Then, the position of the coupler $P$ is determined by $\overrightarrow{P} = \overrightarrow{Q} + P_{pos} \overrightarrow{e}_{DC} + P_{offset} \overrightarrow{n}_{DC}$.
  	
- 	One could say, that like for the case of joint $C$, here is also two different positions of $P$, because $\overrightarrow{n}_{DC}$ can be determined in the opposite direction, but the difference is, that unlike $C_{offset}$, $P_{offset}$ can be specified negative by user, so the problem of the opposite direction of the normal vector is not a problem any more.
+ 	Unlike the position of $C$, the position of $P$ is determined uniquely, because $P_{offset}$ can be specified as negative by the user, automatically changing the direction of $\overrightarrow{n}_{DC}$.
  \end{itemize}
 
 
@@ -324,10 +333,6 @@ e.g, googletest\footnote{\tt https://github.com/google/googletest}
 \section{Project Management} \label{ch:projectmanagement}
 
 who did what, when, and why; organization of collaboration, i.e. [online] meetings, software version control (e.g, git\footnote{\tt https://git.rwth-aachen.de}
-
-\section{Acknowledgment}
-
-Use of ChatGPT for grammatical correctness.
 
 \bibliographystyle{plain}
 \bibliography{literature}
