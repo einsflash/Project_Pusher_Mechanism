@@ -8,6 +8,7 @@
 \usepackage{subcaption}
 \usepackage{wrapfig}
 \usepackage{todonotes}
+\usepackage{url}
 \usepackage[margin=1.2in]{geometry}
 
 \newcommand{\refchapter}[1]{Chapter~\ref{#1}}
@@ -287,7 +288,11 @@ All the mentioned parameters are depicted in Figure \ref{fig:four-bar_linakge_an
  \end{itemize}
 
 
-
+ \subsection{Classification}
+ crank, rocker
+ 
+ \subsection{27 movement cases}
+ 
 
  \subsection{Animation}
 
@@ -324,30 +329,62 @@ All the mentioned parameters are depicted in Figure \ref{fig:four-bar_linakge_an
 
 	 \item \textit{Floating Point Precision:}
 	 To avoid issues caused by floating point inaccuracies when checking if the cosine value of $\alpha$ approaches $-1$ or $1$, we use floating point tolerance of $10^{-10}$.
-	 When the angle between $AD$ and $AB$ is very close to $0^\circ$, $180^\circ$, or $360^\circ$, the programm needs to switch between $C_1$ and $C_2$ for continuity of animation.
+	 When the angle between $AD$ and $AB$ is very close to $0^\circ$, $180^\circ$, or $360^\circ$, the program needs to switch between $C_1$ and $C_2$ for continuity of animation.
  \end{itemize}
-
 
 
 \section{Design} \label{ch:design}
 
-\subsection{Principal Components and Third-Party Software}
+After completing the analysis part we begin to design the software that will be implemented later. Our design section consists of two parts, the selection of development infrastructure and the creation of class diagrams to be a basis for implementation.
 
-libraries that you built on explained briefly and references to further information
+\subsection{Third-Party Software and Development Infrastructure}
+
+Since we now understand the problem that we need to solve, we can choose an implementation environment.
+
+We decided to implement our project using Python. This decision is based on several key factors:
+\begin{itemize}
+	\item Python has a numpy\footnote{\label{fn:numpy} https://numpy.org/} library that deals well with vector operations. The four-bar linkage model requires solving geometrical problem, so the built-in vector and matrix operations are highly desired to simplify the code.
+	\item Python has a standard GUI library tkinter\footnote{\label{fn:tkinter} https://docs.python.org/3/library/tkinter.html}.
+	\item Most of the team members have more experience with Python than with C++.
+\end{itemize}
+
+There is a list of the software and tools we used for implementation:
+\begin{itemize}
+	\item Operating systems: Xubuntu and Windows.
+	\item Programming language: Python.
+	\item Integrated development environment (IDE): Spyder\footnote{https://www.spyder-ide.org/} and PyCharm\footnote{https://www.jetbrains.com/pycharm/}.
+	\item Package manager: Anaconda\footnote{https://www.anaconda.com/}.
+	\item Libraries: tkinter\textsuperscript{\ref{fn:tkinter}}, numpy\textsuperscript{\ref{fn:numpy}}, math\footnote{https://docs.python.org/3/library/math.html}, unittest\footnote{https://docs.python.org/3/library/unittest.html}.
+	\item Version control system: GitHub repository\footnote{\url{https://github.com/einsflash/Project_Pusher_Mechanism}}.
+	\item Documentation: Pdoc\footnote{https://pdoc.dev/docs/pdoc.html}
+\end{itemize}
 
 \subsection{Class Models}
 
-UML Class diagram(s) and description; should link into overall design through
-reference of application programming interfaces (API) of third-party software
+In the project we need to store a large amount of variables for geometric representation and visualization of the four-bar linkage, as well as for corresponding tools like buttons und sliders. The number of variables is too large to pass it into different functions as arguments. Therefore, we decided to implement the four-bar linkage model and the GUI as two separate classes, so every member function will have an access to the data stored in the class without passing it as an argument.
+
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[width=0.65\textwidth]{./figures/class_diagram.pdf}
+	\end{center}
+	\caption{UML class diagram}
+	\label{fig:class diagram}
+\end{figure}
+
+Figure \ref{fig:class diagram} shows a shortened version of the class diagram. This diagram illustrates all the relationships between classes and the most important attributes. The actual number of attributes is too high to include it in this document, the comprehensive class diagram can be found in our GitHub repository\footnote{\url{https://github.com/einsflash/Project_Pusher_Mechanism/blob/main/src/class_diagram.pdf}}.
+
+The backend class \texttt{FourBarLinkage} implements the geometry and animation of the four-bar linkage with a coupler. The number of member variables is large, but the most important for visualization are the coordinates of joints $A$, $B$, $C$, $D$, and $P$. There are also member variables used for classification (\texttt{Linkage\_Type}, \texttt{Input\_Link\_Type}, \texttt{Output\_Link\_Type}) and for input validation (\texttt{geometric\_Validity}) to notify GUI about invalid parameters. The main member functions are the constructor \texttt{\_\_init\_\_} to set geometrical parameters, \texttt{run} to compute the joints' coordinates, \texttt{check\_Parameter} to validate user input, and \texttt{find\_Linkage\_Type} to classify the linkage. There are many other attributes used for internal purposes, but they are less important for a general overview.
+
+The frontend class \texttt{GUI} is used to create the graphical user interface to visualize linkage, provide its animation and get geometrical parameters from the user. This class has also a large number of attributes, but only several of them are important for an overview. The member variables include an instance of the \texttt{FourBarLinkage} class, which is used to obtain joint coordinates for visualization and animation. The \texttt{GUI} class also contains an instance of \texttt{tkinter.Tk}, the basic class for creating GUI using tkinter. The main member functions are the constructor \texttt{\_\_init\_\_} to initiate the GUI, \texttt{display\_toolbar} to set up the toolbar of buttons, sliders, and other elements, and \texttt{initiate\_linkage\_display} to set up the visualization of the linkage.
+
+The test class \texttt{TestFourBarLinkage27Cases} inherits from \texttt{unittest.TestCase} and is used to test all motion types of the linkage. This class has only member functions that implement test cases for each motion types.
 
 \section{Implementation} \label{ch:implementation}
 
-\subsection{Development Infrastructure}
+\subsection{Backend}
+e.g. validation of input parameters
 
-programming language, compiler, run time libraries, target platform
-(hardware, operating system)
-
-\subsection{Source Code}
+\subsection{Frontend}
 
 overview of source code structure (file names, directories); build instructions; references into source code documentation e.g, doxygen\footnote{\tt https://github.com/doxygen/doxygen}; short (!) code listings
 \begin{lstlisting}
