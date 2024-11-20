@@ -289,7 +289,45 @@ All the mentioned parameters are depicted in Figure \ref{fig:four-bar_linakge_an
 
 
 
-\subsection{Animation}
+ \subsection{Animation}
+
+ At the beginning of the animation, we start with a static state of linkage. By default we set $C_2$ as the chosen position for joint $C$.
+ The animation is implemented as a discrete process, using the following key variables:
+ \begin{itemize}
+	 \item \texttt{[t]}: Time interval of the animation.
+	 \item \texttt{[alpha\_velocity]}: Angular velocity of the input angle $\alpha$.
+ \end{itemize}
+
+ This is our basic idea of iterative animation:
+ \begin{itemize}
+	 \item \textit{Basic Idea:}
+	 \begin{enumerate}
+		 \item Calculate the limit values of $\alpha$ based on the geometry.
+		 \item Incrementally update $\alpha$ using the following formula:
+		 \[
+		 \alpha = \alpha \pm \texttt{alpha\_velocity} \times \texttt{t}
+		 \]
+		 The sign here depends on the \texttt{[direction]} parameter. It determines whether $\alpha$ changes clockwise (\texttt{direction = 1}) or counterclockwise (\texttt{direction = 0}).
+		 \item Use the updated $\alpha$ value to calculate other parameters, such as the positions of the joints. Ensure that $\alpha$ always remains within the range $[0^\circ, 360^\circ]$. If it exceeds $360^\circ$ or falls below $0^\circ$, we will reset it to the corresponding boundary value.
+		 \item Implement a switching algorithm to choose point $C$ between $C_1$ and $C_2$ when necessary. This can ensure continuity of animation.
+	 \end{enumerate}
+
+	 \item \textit{Animation Parameters:}
+	 We design these parameters for animation:
+	 \begin{itemize}
+		 \item \texttt{[direction]}: Indicates whether $\alpha$ changes clockwise (\texttt{1}) or counterclockwise (\texttt{0}).
+		 \item \texttt{[C\_mode]}: Determines which $C$ ($C_1$ or $C_2$) is chosen for the animation.
+		 \item \texttt{[C2\_C1\_switched\_last\_time]}: This avoids redundant switching of point $C$ during updates.
+		 \item \texttt{[switch\_C2\_C1\_360]} and \texttt{[switch\_C2\_C1\_180]}: These two parameters are responsible for situations when $\alpha$ reaches its limit values (close to $0^\circ$, $180^\circ$, or $360^\circ$). Switching point $C$ at these values ensures continuity in the animation. Because the limit values often correspond to collinear configurations of points $B$, $C$, and $D$.
+		 \item \texttt{[alpha\_limited]}: Indicates whether $\alpha$ is restricted or not.
+	 \end{itemize}
+
+	 \item \textit{Floating Point Precision:}
+	 To avoid issues caused by floating point inaccuracies when checking if the cosine value of $\alpha$ approaches $-1$ or $1$, we use floating point tolerance of $10^{-10}$.
+	 When the angle between $AD$ and $AB$ is very close to $0^\circ$, $180^\circ$, or $360^\circ$, the programm needs to switch between $C_1$ and $C_2$ for continuity of animation.
+ \end{itemize}
+
+
 
 \section{Design} \label{ch:design}
 
