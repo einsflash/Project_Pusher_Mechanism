@@ -140,52 +140,54 @@ The following list presents all the user requirements provided by our supervisor
 	At a minimum, the problem can be addressed manually by experimenting with different parameters to find a feasible solution. Ideally, however, an algorithm could be developed to automate the optimization process and identify the best parameters efficiently.
 \end{itemize}
 
+\todo{all above needs to be redacted without chatgpt}
+
 \subsection{System Requirements}
 
-After reviewing and analyzing the user requirements, which provide a high-level perspective of the problem and its solution, we need to derive more detailed technical requirements and specifications for the software. The system requirements are categorized into two types: \textit{functional requirements}, which define what the software must do, and \textit{non-functional requirements}, which outline how the system should operate and perform.
+After discussing the user requirements, which provide only a high-level overview of the software, we need to derive more technical system requirements. The system requirements are subdivided into functional requirements, which describe what system should do, and non-functional requirements, which specify how the system should meet the functional requirements.
 
-We begin with the functional requirements, organized into several subtopics and accompanied by brief explanations for each.
+We begin with the functional requirements.
 
 \begin{itemize}
 	\item \textit{Four-bar linkage model:}
 	\begin{itemize}
-		\item The model implements the geometry of the four-bar linkage, calculating joint coordinates based on input parameters.
-		\item It simulates all 27 motion types of the four-bar linkage with a coupler.
-		\item It ensures stable operation without crashes, regardless of the input parameters.
-		\item It validates input data and sends error messages to the GUI for user feedback.
+		\item The model calculates joints' coordinates based on the input parameters.
+		\item It implements all 27 motion types of the four-bar linkage with a coupler.
+		\item It validates the user's input.
+		\item It ensures stable operation without crashes.
 	\end{itemize}
 	
-	The four-bar linkage model acts as the backend of the system, accurately implementing the geometry and all motion types of the linkage. Its primary role is to provide reliable data for visualization in the GUI while ensuring error-free operation. By validating input parameters and communicating issues through the GUI, the system allows users to address errors efficiently without needing to restart.
+	The four-bar linkage model is a backend part of the software, which implements the geometry and all motion types of the four-bar linkage. Its role is to provide correct data for visualization and animation of the linkage in the GUI. The model validates the input data and notifies the GUI, prompting the user to change an invalid input.
 	
 	\item \textit{Tests:}
 	\begin{itemize}
-		\item Implement test cases to cover all motion types of the four-bar linkage.
-		\item Provide reference data for result comparison.
+		\item Implement test cases for all motion types of the four-bar linkage.
+		\item Provide reference data.
 	\end{itemize}
 	
-	To ensure the backend's accuracy, test cases must be implemented for each motion type, supported by reference data to validate the results.
+	To guarantee the backend's accuracy, we must implement test cases for each motion type and provide appropriate reference data.
 	
 	\item \textit{Graphical User Interface (GUI):}
 	\begin{itemize}
-		\item The GUI incorporates the four-bar linkage model (backend), utilizing its geometry and motion cases for visualization and animation.
+		\item The GUI uses the four-bar linkage model (backend) to get the coordinates of the joints for visualization and animation.
 		\item It provides a visualization of the four-bar linkage.
-		\item It contains sliders to allow users to input and adjust geometric parameters.
-		\item It updates the visualization in real-time when new geometric parameters are provided.
+		\item It contains sliders for user to input geometric parameters.
+		\item It updates the visualization according to the user's input.
 		\item It includes an animation mode for smooth motion visualization of the four-bar linkage.
-		\item It provides coupler tracing to display coupler's trajectory.
+		\item It provides tracing of the trajectory for the coupler.
 	\end{itemize}
 	
-	The GUI serves as the user’s primary interaction point (frontend), incorporating all functionalities relevant to user needs. Its main purpose is to visually represent the four-bar linkage using joint coordinates obtained from the backend. Users can adjust geometric parameters via sliders, with the visualization updating instantly to reflect changes. The GUI also includes an animation mode, ensuring smooth movement of the linkage. Additionally, the tracing of the coupler $P$ during animation is crucial for solving the optimization problem, providing valuable insights into its trajectory.
+	The GUI is the frontend interface for the user to generate the visualization and animation of the linkage based on the user's input. It uses data obtained from the four-bar linkage model. Therefore, the user must be able to input parameters in the GUI. To solve the optimization problem, we also need to trace the motion of the coupler.
 	
 	\item \textit{Documentation}
 	\begin{itemize}
-		\item The four-bar linkage model, tests, and GUI are detailed documented.
+		\item The four-bar linkage model, tests, and GUI are documented in detail.
 	\end{itemize}
 	
-	Clear and comprehensive documentation is essential for maintaining software. To ensure the system remains reusable for future developers, we document all components in detail.
+	High-quality documentation is essential for code to be reusable and maintainable.
 \end{itemize}
 
-After discussing the functional system requirements, which outline what the system must do, we now turn to the non-functional requirements, which describe how the system should do it.
+Since we have defined the functional system requirements, we define now the non-functional system requirements.
 
 \begin{itemize}
 	\item \textit{Performance:}
@@ -194,10 +196,8 @@ After discussing the functional system requirements, which outline what the syst
 		\item The GUI animations should run at a minimum of 30 frames per second. 
 	\end{itemize}
 	
-	Performance is a critical factor for usability, as users expect quick responses without noticeable delays. To meet this requirement, the four-bar linkage model and GUI should be optimized to ensure smooth animations at 30 frames per second on standard computers (e.g., with an AMD Ryzen 4500U chip). This ensures that the system remains free of lag, providing a smooth user experience.
+	The crucial factor for usability of the software is its performance. In our case, performance is measured by the number of frames per second (fps) during the animation. This criterion also depends on the machine used to run the code, so we assess the fps using a standard laptop with an AMD Ryzen 5 4500U chip.   
 \end{itemize}
-
-\todo{all above needs to be redacted without chatgpt}
 
 \subsection{Geometry}
 
