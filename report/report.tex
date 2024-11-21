@@ -260,7 +260,7 @@ All the mentioned parameters are depicted in Figure \ref{fig:four-bar_linakge_an
  	
  	At this point, we know the distance from joint $C$ to $BD$ along $\overrightarrow{n}_{BD}$. To determine the position of $C$ with respect to $B$, we also need the distance from $C$ to $B$ along $\overrightarrow{e}_{BD}$. The projection length of $\overrightarrow{BC}$ onto direction of $\overrightarrow{e}_{BD}$ is given by $|C_{pos}| = \sqrt{b^2 - C_{offset}^2}$ using Pythagorean theorem. The remaining question is to determine sign of this projection. This can be done using angle $\angle CBD$ and the Law of Cosines: 
  	
- 	$\cos(\angle CBD) = \frac{h^2 - b^2 - |\overrightarrow{BD}|^2}{b |\overrightarrow{BD}|}$
+ 	$\cos(\angle CBD) = \frac{b^2 + |\overrightarrow{BD}|^2 - h^2}{2 b |\overrightarrow{BD}|}$
  	
  	Then the projection of $\overrightarrow{BC}$ onto direction of $\overrightarrow{e}_{BD}$ is given by $C_{pos} = sign(\cos(\angle CBD)) \sqrt{b^2 - C_{offset}^2}$
  	
@@ -287,50 +287,128 @@ All the mentioned parameters are depicted in Figure \ref{fig:four-bar_linakge_an
  	Unlike the position of $C$, the position of $P$ is determined uniquely, because $P_{offset}$ can be specified as negative by the user, automatically changing the direction of $\overrightarrow{n}_{DC}$.
  \end{itemize}
 
+ \subsection{Parameter Validation}
+ 
+ Not every set of the input parameters is feasible. In this section we will derive constraints on the input angle $\alpha$ and the links' lengths to ensure that the linkage exists.
+ 
+ \begin{figure}[h]
+ 	\centering
+ 	\begin{subfigure}{0.3\textwidth}
+ 		\centering
+ 		\includegraphics[width=\linewidth]{./figures/linkage_input_angle_limits_1.pdf}
+ 		\caption{Maximum input angle $\alpha$.}
+ 		\label{fig:max_alpha}
+ 	\end{subfigure}
+ 	\hfill
+ 	\begin{subfigure}{0.3\textwidth}
+ 		\centering
+ 		\includegraphics[width=\linewidth]{./figures/linkage_input_angle_limits_2.pdf}
+ 		\caption{Minimum input angle $\alpha$.}
+ 		\label{fig::min_alpha-1}
+ 	\end{subfigure}
+ 	\hfill
+ 	\begin{subfigure}{0.3\textwidth}
+ 	\centering
+ 	\includegraphics[width=\linewidth]{./figures/linkage_input_angle_limits_3.pdf}
+ 	\caption{Minimum input angle $\alpha$.}
+ 	\label{fig::min_alpha-2}
+ 	\end{subfigure}
+ 	\caption{Constraints on the input angle $\alpha$.}
+ \end{figure}
+ 
+ Figures \ref{fig:max_alpha}, \ref{fig::min_alpha-1}, \ref{fig::min_alpha-2} illustrate the cases of the maximum and minimum input angle $\alpha$. The coupler $P$ has no influence on the limits of the input angle therefore it is not shown in the figures. The limits of $\alpha$ are defined by the cases when the four-bar linkage folds into a triangle.
+ 
+ \begin{itemize}
+ \item Maximum input angle $\alpha$.
+ 
+ Figure \ref{fig:max_alpha} displays the upper limit of the angle $\alpha$, that can be derived using the Law of Cosine for triangle $\triangle ABD$: $(h+b)^2 = a^2 + g^2 - 2 a g \cos(\alpha_{max}-\theta)$.
+ 
+ If this cosine $\cos(\alpha_{max}-\theta) = \frac{a^2 + g^2 - (h+b)^2}{2 a g}$ has an absolute value less than one, there exists an upper limit for the input angle $\alpha$: $\alpha_{max} = \arccos(\frac{a^2 + g^2 - (h+b)^2}{2 a g}) + \theta$.
+ 
+ \item Minimum input angle $\alpha$.
+ 
+ Figures \ref{fig::min_alpha-1}, \ref{fig::min_alpha-2} show two different cases for minimum input angle $\alpha$. The both cases could be described using the Law of Cosine for triangle $\triangle ADB$: $(h-b)^2 = a^2 + g^2 - 2 a g \cos(\alpha_{min}-\theta)$.
+ 
+ If this cosine $\cos(\alpha_{min}-\theta) = \frac{a^2 + g^2 - (h-b)^2}{2 a g}$ has an absolute value less than one, there exists a lower limit of the input angle $\alpha$: $\alpha_{min} = \arccos(\frac{a^2 + g^2 - (h-b)^2}{2 a g}) + \theta$.
+ 
+ \item Special cases.
+ 
+ If both cosines $\cos(\alpha_{min}-\theta)$ and $\cos(\alpha_{max}-\theta)$ have an absolute value greater or equal one, then there is no limits to the input angle $\alpha$.
+ 
+ If only the maximum limit exists, then the input angle $\alpha$ also has a lower boundary, that is symmetric with respect to the ground link $AB$: $\alpha \in [\alpha_{max}, 2 \theta - \alpha_{max}]$.
+ 
+ In the opposite case, when only the minimum input angle $\alpha$ exists, then the input angle is also bounded from above symmetrically with respect to the ground link $AB$: $\alpha \in [2 \theta + 2 \pi - \alpha_{min}, \alpha_{min}]$.
+ \end{itemize}
+ 
+ We decided that the GUI will display a slider for input angle $\alpha$, ensuring that only valid values within the boundaries can be entered by the user. A similar limitation can be derived for the output angle $\angle ABC$.
+ 
+ There is also a case when the four-bar linkage does not exist for any input angle $\alpha$. This occurs when one of the bars is longer than the sum of other three, so that the quadrilateral $\square ABCD$ does not exist. Denote the longest bar as $l = \max(a, b, g, h)$, the shortest bar as $s = \min(a, b, g, h)$, and two remaining bars as $p$, $l$. Then the condition for linkage to exist is $l-p-q-s \le 0$. This condition will be checked by the four-bar linkage model, which will notify the user through the GUI in case of a problem.
+ 
 
  \subsection{Classification}
- crank, rocker
  
- \subsection{27 movement cases}
+ After deriving the expressions for constraints on the input angle $\alpha$, we can classify the motion of four-bar linkage.
+ 
+ Depending on the constraints on the input angle $\alpha$ and the output angle $\angle ABC$, the input link $AD$ and the output link $BC$ can be classified into four types according to \cite{inproceedings}.
+ 
+ \begin{itemize}
+ 	\item \textit{Crank}.
+ 	
+ 	The link can rotate fully, with neither a minimum, nor a maximum for the input angle $\alpha$ (or the output angle $\angle ABC$).
+ 	
+ 	\item \textit{Rocker}.
+ 	
+ 	The link can rotate partially, with both a minimum and a maximum for the input angle $\alpha$ (or the output angle $\angle ABC$).
+ 	
+ 	\item \textit{0-rocker}.
+ 	
+ 	The link can rotate partially, with no minimum but with maximum for the input angle $\alpha$ (or the output angle $\angle ABC$).
+ 	
+ 	\item \textit{$\pi$-rocker}.
+ 	
+ 	The link can rotate partially, with no maximum but with minimum for the input angle $\alpha$ (or the output angle $\angle ABC$).
+ \end{itemize}
+ 
+ \subsection{27 Movement Cases}
+ 
+ The classification of the input and output links implies, that there are different linkage types. For example, the input and output can independently be classified as cranks or rockers, leading to different linkage types. The study in \cite{inproceedings} identifies $27$ different combinations. These combinations can be described by signs of characteristic values: $T_1 = g + h - a - b$, $T_2 = b + g - h - a$ and $T_3 = b + h - g - a$. Since each characteristic value can be positive, negative, or zero, there are $27$ possible combinations and motion types respectively.
+ 
+ Initially, we discussed to analyze the motion in each of $27$ cases separately. However, we decided to implement the general algorithms that handles all cases.
  
 
  \subsection{Animation}
 
- At the beginning of the animation, we start with a static state of linkage. By default we set $C_2$ as the chosen position for joint $C$.
- The animation is implemented as a discrete process, using the following key variables:
+ At the beginning of the animation, we start with a static state of the linkage. By default we set $C_2$ as the chosen position for joint $C$.
+ The animation is implemented as a discrete process by gradually incrementing the input angle using the following key variables:
  \begin{itemize}
-	 \item \texttt{[t]}: Time interval of the animation.
-	 \item \texttt{[alpha\_velocity]}: Angular velocity of the input angle $\alpha$.
+ 	\item $dt$: Time interval of the animation.
+ 	\item $\dot{\alpha}$: constant angular velocity of the input angle $\alpha$.
  \end{itemize}
 
- This is our basic idea of iterative animation:
- \begin{itemize}
-	 \item \textit{Basic Idea:}
-	 \begin{enumerate}
-		 \item Calculate the limit values of $\alpha$ based on the geometry.
-		 \item Incrementally update $\alpha$ using the following formula:
-		 \[
-		 \alpha = \alpha \pm \texttt{alpha\_velocity} \times \texttt{t}
-		 \]
-		 The sign here depends on the \texttt{[direction]} parameter. It determines whether $\alpha$ changes clockwise (\texttt{direction = 1}) or counterclockwise (\texttt{direction = 0}).
-		 \item Use the updated $\alpha$ value to calculate other parameters, such as the positions of the joints. Ensure that $\alpha$ always remains within the range $[0^\circ, 360^\circ]$. If it exceeds $360^\circ$ or falls below $0^\circ$, we will reset it to the corresponding boundary value.
-		 \item Implement a switching algorithm to choose point $C$ between $C_1$ and $C_2$ when necessary. This can ensure continuity of animation.
-	 \end{enumerate}
+This is our basic idea of iterative animation:
+\begin{itemize}
+	\item Calculate the limit values of $\alpha$ described above.
+	
+	\item Update $\alpha$ using the following formula: $\alpha = \alpha \pm \dot{\alpha} dt$.
+		 
+	The sign here depends on the \texttt{direction} parameter. It determines whether $\alpha$ changes clockwise (\texttt{direction = 1}) or counterclockwise (\texttt{direction = 0}).
+	 
+	\item Use the updated $\alpha$ value to calculate other parameters, such as the positions of the joints.
+		 
+	\item If the input angle $\alpha$ is limited, then change the \texttt{direction} parameter at the limits to rotate the input link backwards.
+		 
+	\item If the input angle is not bounded, ensure that $\alpha$ always remains within the range $[0^\circ, 360^\circ]$. If the input angle exceeds $360^\circ$ or falls below $0^\circ$, we will reset it to the corresponding boundary value.
+		 
+	\item Switch between $C_1$ and $C_2$ to ensure continuity of animation.
+	
+	As we mentioned earlier, for the static configuration, we choose $C_2$ as the default position for joint $C$. However, during the motion, we need to switch between $C_1$ and $C_2$ to maintain continuous velocity due to the principle of inertia. This means that at every limit of the input angle we switch between $C_1$ and $C_2$.
+	
+	Note, that we need to switch even at the boundary cases, when the absolute values of $\cos(\alpha_{max}-\theta)$ or $\cos(\alpha_{min}-\theta)$ are equal to one, indicating that the input angle has reached its extreme positions.
 
-	 \item \textit{Animation Parameters:}
-	 We design these parameters for animation:
-	 \begin{itemize}
-		 \item \texttt{[direction]}: Indicates whether $\alpha$ changes clockwise (\texttt{1}) or counterclockwise (\texttt{0}).
-		 \item \texttt{[C\_mode]}: Determines which $C$ ($C_1$ or $C_2$) is chosen for the animation.
-		 \item \texttt{[C2\_C1\_switched\_last\_time]}: This avoids redundant switching of point $C$ during updates.
-		 \item \texttt{[switch\_C2\_C1\_360]} and \texttt{[switch\_C2\_C1\_180]}: These two parameters are responsible for situations when $\alpha$ reaches its limit values (close to $0^\circ$, $180^\circ$, or $360^\circ$). Switching point $C$ at these values ensures continuity in the animation. Because the limit values often correspond to collinear configurations of points $B$, $C$, and $D$.
-		 \item \texttt{[alpha\_limited]}: Indicates whether $\alpha$ is restricted or not.
-	 \end{itemize}
-
-	 \item \textit{Floating Point Precision:}
-	 To avoid issues caused by floating point inaccuracies when checking if the cosine value of $\alpha$ approaches $-1$ or $1$, we use floating point tolerance of $10^{-10}$.
-	 When the angle between $AD$ and $AB$ is very close to $0^\circ$, $180^\circ$, or $360^\circ$, the program needs to switch between $C_1$ and $C_2$ for continuity of animation.
- \end{itemize}
+	\item Consider floating point precision.
+	
+	To avoid issues caused by floating point inaccuracies when checking if the cosine value of $\alpha$ approaches $-1$ or $1$, we incorporate floating point tolerance of $10^{-10}$.
+\end{itemize}
 
 
 \section{Design} \label{ch:design}
