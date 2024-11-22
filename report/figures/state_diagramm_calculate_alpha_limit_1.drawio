@@ -1,0 +1,156 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36 Edg/130.0.0.0" version="24.8.8">
+  <diagram name="第 1 页" id="jrF5zFQDNn2nYCn13cS5">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="TnAGgWMmuGsIOL8tjMPp-2" value="State Diagramm for calculating Limit Value of Alpha" style="shape=umlFrame;whiteSpace=wrap;html=1;rounded=1;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=13;align=center;width=360;height=40;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" vertex="1" parent="1">
+          <mxGeometry x="-710" y="120" width="1320" height="780" as="geometry" />
+        </mxCell>
+        <mxCell id="TnAGgWMmuGsIOL8tjMPp-3" value="" style="ellipse;html=1;shape=startState;rounded=1;shadow=0;comic=0;labelBackgroundColor=none;fontFamily=Verdana;fontSize=13;align=center;direction=south;fillColor=#000000;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="-250.63" y="130" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="TnAGgWMmuGsIOL8tjMPp-54" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fillColor=#ffe6cc;strokeColor=#d79b00;fontFamily=Verdana;fontSize=13;" edge="1" parent="1" source="TnAGgWMmuGsIOL8tjMPp-7" target="TnAGgWMmuGsIOL8tjMPp-49">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TnAGgWMmuGsIOL8tjMPp-7" value="upper limit checked" style="rounded=1;whiteSpace=wrap;html=1;arcSize=24;shadow=0;comic=0;labelBackgroundColor=none;fontFamily=Verdana;fontSize=13;align=center;" vertex="1" parent="1">
+          <mxGeometry x="-510" y="255" width="140" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="TnAGgWMmuGsIOL8tjMPp-8" style="edgeStyle=orthogonalEdgeStyle;html=1;labelBackgroundColor=none;endArrow=open;endSize=8;fontFamily=Verdana;fontSize=13;align=left;" edge="1" parent="1" source="TnAGgWMmuGsIOL8tjMPp-3" target="TnAGgWMmuGsIOL8tjMPp-13">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-280" y="205" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TnAGgWMmuGsIOL8tjMPp-9" value="&lt;font&gt;[ |cos(alpha upper limit)| &amp;lt; 1 - 1e-10 == True]&lt;/font&gt;&lt;div&gt;&lt;font&gt;/alpha_limited = True, set alpha_lims&lt;/font&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Verdana;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="-650" y="190" width="318.75" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="TnAGgWMmuGsIOL8tjMPp-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;fontFamily=Verdana;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=13;" edge="1" parent="1" source="TnAGgWMmuGsIOL8tjMPp-13" target="TnAGgWMmuGsIOL8tjMPp-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TnAGgWMmuGsIOL8tjMPp-13" value="&lt;div&gt;switch_C2_C1_180 = False&lt;/div&gt;&lt;div&gt;switch_C2_C1_360 = False&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=24;shadow=0;comic=0;labelBackgroundColor=none;fontFamily=Verdana;fontSize=13;align=center;" vertex="1" parent="1">
+          <mxGeometry x="-331.25" y="205" width="191.25" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="TnAGgWMmuGsIOL8tjMPp-14" value="Start" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Verdana;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="-230.62" y="130" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="TnAGgWMmuGsIOL8tjMPp-25" value="" style="ellipse;html=1;shape=startState;rounded=1;shadow=0;comic=0;labelBackgroundColor=none;fontFamily=Verdana;fontSize=13;align=center;direction=south;fillColor=#000000;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="-20" y="50" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="TnAGgWMmuGsIOL8tjMPp-35" value="" style="ellipse;html=1;shape=endState;rounded=1;shadow=0;comic=0;labelBackgroundColor=none;fontFamily=Verdana;fontSize=13;align=center;" vertex="1" parent="1">
+          <mxGeometry x="-90" y="810" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="TnAGgWMmuGsIOL8tjMPp-38" value="End" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Verdana;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="-105" y="840" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="TnAGgWMmuGsIOL8tjMPp-66" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fillColor=#ffe6cc;strokeColor=#d79b00;fontFamily=Verdana;fontSize=13;" edge="1" parent="1" source="TnAGgWMmuGsIOL8tjMPp-49" target="TnAGgWMmuGsIOL8tjMPp-35">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TnAGgWMmuGsIOL8tjMPp-49" value="lower limit checked" style="rounded=1;whiteSpace=wrap;html=1;arcSize=24;shadow=0;comic=0;labelBackgroundColor=none;fontFamily=Verdana;fontSize=13;align=center;" vertex="1" parent="1">
+          <mxGeometry x="-640" y="370" width="190" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="TnAGgWMmuGsIOL8tjMPp-51" value="&lt;font&gt;[ |cos(alpha lower limit)| &amp;lt; 1 - 1e-10&amp;nbsp;== True]&lt;/font&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;font&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;/update&amp;nbsp;&lt;/font&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;alpha_lims[0]&lt;/span&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Verdana;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="-710" y="300" width="330" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="TnAGgWMmuGsIOL8tjMPp-55" value="&lt;font&gt;[ |cos(alpha lower limit)| &amp;lt; 1 - 1e-10&amp;nbsp;== False]&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Verdana;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="-468.12" y="330" width="322.5" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="TnAGgWMmuGsIOL8tjMPp-61" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fillColor=#ffe6cc;strokeColor=#d79b00;fontFamily=Verdana;fontSize=13;" edge="1" parent="1" source="TnAGgWMmuGsIOL8tjMPp-56" target="TnAGgWMmuGsIOL8tjMPp-59">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TnAGgWMmuGsIOL8tjMPp-56" value="lower limit checked" style="rounded=1;whiteSpace=wrap;html=1;arcSize=24;shadow=0;comic=0;labelBackgroundColor=none;fontFamily=Verdana;fontSize=13;align=center;" vertex="1" parent="1">
+          <mxGeometry x="-370" y="370" width="190" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="TnAGgWMmuGsIOL8tjMPp-57" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.531;entryY=0.07;entryDx=0;entryDy=0;entryPerimeter=0;fillColor=#ffe6cc;strokeColor=#d79b00;fontFamily=Verdana;fontSize=13;" edge="1" parent="1" source="TnAGgWMmuGsIOL8tjMPp-7" target="TnAGgWMmuGsIOL8tjMPp-56">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TnAGgWMmuGsIOL8tjMPp-97" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;fillColor=#ffe6cc;strokeColor=#d79b00;fontFamily=Verdana;fontSize=13;" edge="1" parent="1" source="TnAGgWMmuGsIOL8tjMPp-59">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-80" y="810" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TnAGgWMmuGsIOL8tjMPp-59" value="lower limit again checked" style="rounded=1;whiteSpace=wrap;html=1;arcSize=24;shadow=0;comic=0;labelBackgroundColor=none;fontFamily=Verdana;fontSize=13;align=center;" vertex="1" parent="1">
+          <mxGeometry x="-370" y="490" width="190" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="TnAGgWMmuGsIOL8tjMPp-62" value="&lt;font&gt;[ ||cos(alpha lower limit)| - 1 | &amp;lt; 1e-10&amp;nbsp;== True]&lt;/font&gt;&lt;div&gt;&lt;font&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp;/&lt;/font&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;switch_C2_C1_360 = True&lt;/span&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Verdana;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="-480" y="440" width="350" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="TnAGgWMmuGsIOL8tjMPp-98" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fillColor=#ffe6cc;strokeColor=#d79b00;fontFamily=Verdana;fontSize=13;" edge="1" parent="1" source="TnAGgWMmuGsIOL8tjMPp-65" target="TnAGgWMmuGsIOL8tjMPp-70">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TnAGgWMmuGsIOL8tjMPp-65" value="upper limit checked" style="rounded=1;whiteSpace=wrap;html=1;arcSize=24;shadow=0;comic=0;labelBackgroundColor=none;fontFamily=Verdana;fontSize=13;align=center;" vertex="1" parent="1">
+          <mxGeometry y="250" width="130" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="TnAGgWMmuGsIOL8tjMPp-68" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.566;entryY=0.017;entryDx=0;entryDy=0;entryPerimeter=0;fillColor=#ffe6cc;strokeColor=#d79b00;fontFamily=Verdana;fontSize=13;" edge="1" parent="1" source="TnAGgWMmuGsIOL8tjMPp-13" target="TnAGgWMmuGsIOL8tjMPp-65">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TnAGgWMmuGsIOL8tjMPp-69" value="&lt;font&gt;[ |cos(alpha upper limit)| &amp;lt; 1 - 1e-10 == False]&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Verdana;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="-130" y="190" width="318.75" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="TnAGgWMmuGsIOL8tjMPp-96" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fillColor=#ffe6cc;strokeColor=#d79b00;fontFamily=Verdana;fontSize=13;" edge="1" parent="1" source="TnAGgWMmuGsIOL8tjMPp-70" target="TnAGgWMmuGsIOL8tjMPp-35">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TnAGgWMmuGsIOL8tjMPp-70" value="upper limit again checked" style="rounded=1;whiteSpace=wrap;html=1;arcSize=24;shadow=0;comic=0;labelBackgroundColor=none;fontFamily=Verdana;fontSize=13;align=center;" vertex="1" parent="1">
+          <mxGeometry x="-105" y="360" width="175" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="TnAGgWMmuGsIOL8tjMPp-90" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;fillColor=#ffe6cc;strokeColor=#d79b00;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontFamily=Verdana;fontSize=13;" edge="1" parent="1" source="TnAGgWMmuGsIOL8tjMPp-73" target="TnAGgWMmuGsIOL8tjMPp-84">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="420" y="580" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TnAGgWMmuGsIOL8tjMPp-92" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;fillColor=#ffe6cc;strokeColor=#d79b00;fontFamily=Verdana;fontSize=13;" edge="1" parent="1" source="TnAGgWMmuGsIOL8tjMPp-73" target="TnAGgWMmuGsIOL8tjMPp-35">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="820" y="600" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TnAGgWMmuGsIOL8tjMPp-73" value="lower limit checked" style="rounded=1;whiteSpace=wrap;html=1;arcSize=24;shadow=0;comic=0;labelBackgroundColor=none;fontFamily=Verdana;fontSize=13;align=center;" vertex="1" parent="1">
+          <mxGeometry x="414" y="420" width="130" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="TnAGgWMmuGsIOL8tjMPp-81" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;fillColor=#ffe6cc;strokeColor=#d79b00;fontFamily=Verdana;fontSize=13;" edge="1" parent="1" source="TnAGgWMmuGsIOL8tjMPp-74" target="TnAGgWMmuGsIOL8tjMPp-73">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TnAGgWMmuGsIOL8tjMPp-82" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fillColor=#ffe6cc;strokeColor=#d79b00;fontFamily=Verdana;fontSize=13;" edge="1" parent="1" source="TnAGgWMmuGsIOL8tjMPp-74" target="TnAGgWMmuGsIOL8tjMPp-80">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TnAGgWMmuGsIOL8tjMPp-74" value="upper limit again checked" style="rounded=1;whiteSpace=wrap;html=1;arcSize=24;shadow=0;comic=0;labelBackgroundColor=none;fontFamily=Verdana;fontSize=13;align=center;" vertex="1" parent="1">
+          <mxGeometry x="161.25" y="360" width="178.75" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="TnAGgWMmuGsIOL8tjMPp-75" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fillColor=#ffe6cc;strokeColor=#d79b00;fontFamily=Verdana;fontSize=13;" edge="1" parent="1" source="TnAGgWMmuGsIOL8tjMPp-65" target="TnAGgWMmuGsIOL8tjMPp-74">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TnAGgWMmuGsIOL8tjMPp-76" value="&lt;font&gt;[ ||cos(alpha upper limit)| - 1 | &amp;lt; 1e-10&amp;nbsp;== False]&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Verdana;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="120" y="240" width="350" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="TnAGgWMmuGsIOL8tjMPp-78" value="&lt;font&gt;[ |cos(alpha lower limit)| &amp;lt; 1 - 1e-10&amp;nbsp;== False]&lt;/font&gt;&lt;div&gt;&lt;font&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; /alpha_limited = False, set alpha_lims&lt;/font&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Verdana;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="280" y="340" width="322.5" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="TnAGgWMmuGsIOL8tjMPp-79" value="&lt;font&gt;[ |cos(alpha lower limit)| &amp;lt; 1 - 1e-10&amp;nbsp;== True]&lt;/font&gt;&lt;div&gt;&lt;span&gt;/alpha_limited = True, set alpha_lims&lt;/span&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Verdana;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry y="440" width="322.5" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="TnAGgWMmuGsIOL8tjMPp-94" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;fillColor=#ffe6cc;strokeColor=#d79b00;fontFamily=Verdana;fontSize=13;" edge="1" parent="1" source="TnAGgWMmuGsIOL8tjMPp-80" target="TnAGgWMmuGsIOL8tjMPp-35">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TnAGgWMmuGsIOL8tjMPp-80" value="lower limit checked" style="rounded=1;whiteSpace=wrap;html=1;arcSize=24;shadow=0;comic=0;labelBackgroundColor=none;fontFamily=Verdana;fontSize=13;align=center;" vertex="1" parent="1">
+          <mxGeometry x="40" y="520" width="130" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="TnAGgWMmuGsIOL8tjMPp-83" value="&lt;font&gt;[ ||cos(alpha lower limit)| - 1 | &amp;lt; 1e-10&amp;nbsp;== True]&lt;/font&gt;&lt;div&gt;&lt;font&gt;&lt;span&gt;/switch_C2_C1_360 = True&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Verdana;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="188.75" y="555" width="350" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="TnAGgWMmuGsIOL8tjMPp-110" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;fillColor=#ffe6cc;strokeColor=#d79b00;" edge="1" parent="1" source="TnAGgWMmuGsIOL8tjMPp-84" target="TnAGgWMmuGsIOL8tjMPp-35">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TnAGgWMmuGsIOL8tjMPp-84" value="lower limit again checked" style="rounded=1;whiteSpace=wrap;html=1;arcSize=24;shadow=0;comic=0;labelBackgroundColor=none;fontFamily=Verdana;fontSize=13;align=center;" vertex="1" parent="1">
+          <mxGeometry x="260" y="610" width="170" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="TnAGgWMmuGsIOL8tjMPp-91" value="&lt;font&gt;[ ||cos(alpha lower limit)| - 1 | &amp;lt; 1e-10&amp;nbsp;== False]&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Verdana;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="215" y="800" width="350" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="TnAGgWMmuGsIOL8tjMPp-72" value="&lt;font&gt;[ ||cos(alpha upper limit)| - 1 | &amp;lt; 1e-10&amp;nbsp;== True]&lt;/font&gt;&lt;div&gt;&lt;font&gt;/switch_C2_C1_180 = True&lt;/font&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Verdana;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="-180" y="300" width="350" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="TnAGgWMmuGsIOL8tjMPp-113" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.534;entryY=0.001;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="TnAGgWMmuGsIOL8tjMPp-25" target="TnAGgWMmuGsIOL8tjMPp-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
