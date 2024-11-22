@@ -412,32 +412,35 @@ This is our basic idea of iterative animation:
 	\item Consider floating point precision.
 	
 	To avoid issues caused by floating point inaccuracies when checking if the cosine value of $\alpha$ approaches $-1$ or $1$, we incorporate floating point tolerance of $10^{-10}$.
+\end{itemize}
 
-	\begin{figure}[h]
-		\centering
-		\includegraphics[width=\textwidth]{./figures/animation_state_diagramm_1.pdf}
-		\caption{State Diagramm for Animation}
-		\label{fig:state_diagramm_of_animation_alpha}
-	\end{figure}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{./figures/animation_state_diagramm_1.pdf}
+    \caption{State Diagramm for Animation}
+    \label{fig:state_diagramm_of_animation_alpha}
+\end{figure}
 
-	Figure \ref{fig:state_diagramm_of_animation_alpha} shows the algorithm we designed:\\
-	Firstly, it updates the angle \(\alpha\).\\
-	Secondly, it checks whether \(\alpha\) exceeds the specified limits. If it does, \(\alpha\) is reset to the range \([0^\circ, 360^\circ]\).\\
-	Thirdly, it continues to check whether \(\alpha\) crosses special values and examines the necessity of switching \(c\) at those points.\\
-	Finally, it stores the status of whether a switch \(c\) occurred in this step.
+\textbf{Figure \ref{fig:state_diagramm_of_animation_alpha} shows the algorithm we designed:}
+\begin{itemize}
+    \item Firstly, it updates the angle \(\alpha\).
+    \item Secondly, it checks whether \(\alpha\) exceeds the specified limits. If it does, \(\alpha\) is reset to the range \([0^\circ, 360^\circ]\).
+    \item Thirdly, it continues to check whether \(\alpha\) crosses special values and examines the necessity of switching \(c\) at those points.
+    \item Finally, it stores the status of whether a switch \(c\) occurred in this step.
+\end{itemize}
 
-	\begin{figure}[h]
-		\centering
-		\includegraphics[width=\textwidth]{./figures/state_diagramm_calculate_alpha_limit_1.pdf}
-		\caption{State Diagramm for calculating Alpha Limit}
-		\label{fig:state_diagramm_calculate_alpha_limit}
-	\end{figure}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{./figures/state_diagramm_calculate_alpha_limit_1.pdf}
+    \caption{State Diagramm for calculating Alpha Limit}
+    \label{fig:state_diagramm_calculate_alpha_limit}
+\end{figure}
 
-	Figure \ref{fig:state_diagramm_calculate_alpha_limit} shows the algorithm we designed:\\
-	Firstly, it determines whether \(\alpha\) is limited (e.g., \(|\cos(\text{alpha upper limit})| < 1 - 10^{-10}\)).\\
-	Secondly, it checks whether the extreme values of \(\alpha\) are exactly \(0^\circ\), \(180^\circ\), or \(360^\circ\) (e.g., \(\bigl|\bigl| \cos(\text{alpha lower limit}) \bigr| - 1 \bigr| < 10^{-10}\)). Here, \(10^{-10}\) is the floating point tolerance that we used.\\
-	Based on this, it sets the parameters \(\text{switch\_C2\_C1\_180}\) and \(\text{switch\_C2\_C1\_360}\), which indicates whether there is a need to switch \(\alpha\) at these special values.
-
+\textbf{Figure \ref{fig:state_diagramm_calculate_alpha_limit} shows the algorithm we designed:}
+\begin{itemize}
+    \item Firstly, it determines whether \(\alpha\) is limited (e.g., \(|\cos(\text{alpha upper limit})| < 1 - 10^{-10}\)).
+    \item Secondly, it checks whether the extreme values of \(\alpha\) are exactly \(0^\circ\), \(180^\circ\), or \(360^\circ\) (e.g., \(\bigl|\bigl| \cos(\text{alpha lower limit}) \bigr| - 1 \bigr| < 10^{-10}\)). Here, \(10^{-10}\) is the floating point tolerance that we used.
+    \item Based on this, it sets the parameters \(\text{switch\_C2\_C1\_180}\) and \(\text{switch\_C2\_C1\_360}\), which indicates whether there is a need to switch \(\alpha\) at these special values.
 \end{itemize}
 
 
@@ -513,6 +516,8 @@ e.g, googletest\footnote{\tt https://github.com/google/googletest}
 
 \section{Optimization Problem}\label{ch:optimization-problem}
 
+
+
 \section{Project Management} \label{ch:projectmanagement}
 
 who did what, when, and why; organization of collaboration, i.e. [online] meetings, software version control (e.g, git\footnote{\tt https://git.rwth-aachen.de}\\
@@ -528,7 +533,7 @@ During our group meeting, we used a Gantt chart to outline the project managemen
 
 For the front-end and back-end development of the four-bar linkage, we adopted the Agile methodology Scrum, which follows an incremental and iterative approach to complete the project.\\
 
-Task Allocation:
+\textbf{Task Allocation:}
 \begin{itemize}
     \item \textbf{Arseniy Kholod}: The leader of the team, responsible for front-end development and task assignment.
     \item \textbf{Yanliang Zhu}: Responsible for back-end development.
@@ -536,7 +541,7 @@ Task Allocation:
     \item \textbf{Xinyang Song}: Responsible for code documentation.
 \end{itemize}
 
-Team Collaboration and Progress:
+\textbf{Team Collaboration and Progress:}
 \begin{itemize}
     \item We held team meetings at least once every two weeks, either online or in Audimax. 
     \item Initially, our goal was to implement a basic static visualization of the four-bar linkage. Arseniy used Tkinter to create the basic GUI system, while Zhu added functions such as parameter display and parameter validation functionality to the back end.
