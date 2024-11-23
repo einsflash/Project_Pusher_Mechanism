@@ -59,13 +59,11 @@ Furthermore, detailed documentation of the software and project management proce
 
 \clearpage
 
+\todo{all above needs to be redacted without chatgpt}
+
 \section{Introduction}
 
-The industrial revolution in the 18th and 19th centuries brought about significant advancements in manufacturing processes, one of which was the challenge of transporting products efficiently between various workstations in factories. A key solution to this challenge was the development of mechanical systems like the four-bar linkage, which can be used as a pusher mechanism to move products along production lines or between different conveyor systems. Despite its simple structure, the four-bar linkage has proven to be an effective mechanism in various industrial applications. 
-
-Over time, the four-bar linkage model has expanded beyond basic conveyor systems and has found applications in more complex systems, such as pumpjacks, robotic arms, and automotive engineering. Its simplicity and efficiency continue to make it relevant in modern mechanical design.
-
-In this work, we aim to analyze the theoretical principles behind the four-bar linkage, design and implement an extended version of the mechanism with an additional joint, named coupler (see Figures \ref{fig:linkage-1} and \ref{fig:linkage-2}), and apply it to solve the problem of moving a box along a production line while avoiding obstacles. By enhancing the classic four-bar linkage, we seek to provide a more flexible solution suited to complex real-world tasks.
+The four-bar linkage is an important mechanism that has a broad application domain, for example, pumpjacks, robotic arms and automotive engineering. Another possible application for the four-bar linkage is as part of a conveyor line to move products in factories. In this work, we will implement software for the visualization and animation of the extended four-bar linkage with coupler, illustrated in Figures \ref{fig:linkage-1} and \ref{fig:linkage-2}. This implementation will be used to find a linkage to solve a real-world task, illustrated in Figure \ref{fig:optimization_problem}, which involves moving a box along a conveyor line.
 
 \begin{figure}[h]
 	\centering
@@ -85,9 +83,7 @@ In this work, we aim to analyze the theoretical principles behind the four-bar l
 	\caption{Four-bar linkage}
 \end{figure}
 
-The structure of this paper is as follows: In Section \ref{ch:analysis}, we analyze the user requirements, derive the system requirements, and provide an overview of the theoretical analysis of the mechanism’s geometry. Section \ref{ch:design} covers the selection of the implementation environment, taking into account the system requirements and the team's expertise, as well as the preparation of UML class models for the implementation phase. Section \ref{ch:implementation} describes the implementation of the four-bar linkage, the graphical user interface, and the software testing process, while Section \ref{ch:doc} provides software documentation to ensure its maintainability. In Section \ref{ch:optimization-problem}, we use the developed software to determine the appropriate mechanism parameters to move the box along the conveyor. Finally, in Sections \ref{ch:projectmanagement}, we discuss our project management.
-
-\todo{all above needs to be redacted without chatgpt}
+To provide a comprehensive overview, this report is structured as follows. In Section \ref{ch:analysis}, we discuss and analyze user requirements, derive system requirements, and provide a theory foundation for the geometry of the linkage. Section \ref{ch:design} covers the selection of implementation environment based on the task and team's expertise, followed by the design of UML class diagrams to be used during implementation. After that, in Section \ref{ch:implementation}, we implement the four-bar linkage model, the graphical user interface (GUI), and the test cases. In Section \ref{ch:validation}, we assess the correctness of the implementation by testing all possible motion types of the linkage. Section \ref{ch:optimization-problem} provides a solution to the problem of moving a box along a conveyor under certain constraints. Finally, in Sections \ref{ch:doc} and \ref{ch:projectmanagement}, we describe the software documentation and the project management.
 
 \section{Analysis} \label{ch:analysis}
 
@@ -512,9 +508,11 @@ if helpful (must come with detailed explanation)
 
 e.g, googletest\footnote{\tt https://github.com/google/googletest}
 
-\section{Documentation}\label{ch:doc}
+\section{Validation}\label{ch:validation}
 
 \section{Optimization Problem}\label{ch:optimization-problem}
+
+\section{Documentation}\label{ch:doc}
 
 
 
