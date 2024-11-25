@@ -514,6 +514,8 @@ The Appendix includes screenshots of the GUI. Figures \ref{fig:GUI_default}, \re
 
 The overview of the GUI class can be found in the documentation\footnote{\url{https://htmlpreview.github.io/?https://github.com/einsflash/Project_Pusher_Mechanism/blob/main/src/doc_for_gui/gui.html}}.
 
+The running instructions are provided in Appendix \ref{ch:user_docs}.
+
 \subsection{Software Tests}
 
 
@@ -596,20 +598,28 @@ While we are satisfied with the results, there is room for improvement. Although
 	\label{fig:state_diagramm_of_animation_alpha}
 \end{figure}
 
-\section{User Documentation} \label{ch:userdoc}
+\section{User Documentation} \label{ch:user_docs}
 
-\subsection{Building}
+\subsection{Installation}
 
-e.g, using cmake\footnote{\tt https://cmake.org/} and make\footnote{\tt https://www.gnu.org/software/make/}
-
-
-\subsection{Testing}
-
-e.g, \verb!make test!
+Install Python\footnote{https://www.python.org/downloads/} and Python's libraries: tkinter\footnote{https://docs.python.org/3/library/tkinter.html}, numpy\footnote{https://numpy.org/}, math\footnote{https://docs.python.org/3/library/math.html}, and unittest\footnote{https://docs.python.org/3/library/unittest.html}. Note that tkinter, math and unittest are pre-installed with Python, while numpy needs to be installed separately.
 
 \subsection{Running}
 
-documented sample session(s); e.g, \verb!make run!
+Download the gui.py\footnote{\url{https://github.com/einsflash/Project_Pusher_Mechanism/blob/main/src/gui.py}} and four\_bar\_linkage.py\footnote{\url{https://github.com/einsflash/Project_Pusher_Mechanism/blob/main/src/four_bar_linkage.py}} files in the same directory. Start the GUI by calling the following.
+
+\begin{lstlisting}[language=bash]
+$ python ./gui.py
+\end{lstlisting}
+
+\subsection{Testing}
+
+Download the following files in the same directory: 27Test.py\footnote{\url{https://github.com/einsflash/Project_Pusher_Mechanism/blob/main/src/27Test.py}} and motionTestCases.py\footnote{\url{https://github.com/einsflash/Project_Pusher_Mechanism/blob/main/src/motionTestCases.py}}. Test the software by calling:
+
+\begin{lstlisting}[language=bash]
+$ python ./motionTestCases.py
+$ python ./27Test.py
+\end{lstlisting}
 
 
 \section{Screenshots}
