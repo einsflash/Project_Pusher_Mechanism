@@ -77,7 +77,7 @@ To provide a comprehensive overview, this report is structured as follows. In Se
 
 \section{Analysis} \label{ch:analysis}
 
-\subsection{User Requirements}
+\subsection{User Requirements}\label{ch:user_requirements}
 
 \begin{figure}[h]
 	\centering
@@ -147,7 +147,7 @@ We begin with the functional requirements.
 		\item It ensures stable operation without crashes.
 	\end{itemize}
 	
-	The four-bar linkage model is a backend part of the software, which implements the geometry and all motion types of the four-bar linkage. Its role is to provide correct data for visualization and animation of the linkage in the GUI. The model validates the input data and notifies the GUI, prompting the user to change an invalid input.
+	The four-bar linkage model is a back-end part of the software, which implements the geometry and all motion types of the four-bar linkage. Its role is to provide correct data for visualization and animation of the linkage in the GUI. The model validates the input data and notifies the GUI, prompting the user to change an invalid input.
 	
 	\item \textit{Tests:}
 	\begin{itemize}
@@ -155,11 +155,11 @@ We begin with the functional requirements.
 		\item Provide reference data.
 	\end{itemize}
 	
-	To guarantee the backend's accuracy, we must implement test cases for each motion type and provide appropriate reference data.
+	To guarantee the back-end's accuracy, we must implement test cases for each motion type and provide appropriate reference data.
 	
 	\item \textit{Graphical User Interface (GUI):}
 	\begin{itemize}
-		\item The GUI uses the four-bar linkage model (backend) to get the coordinates of the joints for visualization and animation.
+		\item The GUI uses the four-bar linkage model (back-end) to get the coordinates of the joints for visualization and animation.
 		\item It provides a visualization of the four-bar linkage.
 		\item It contains sliders for user to input geometric parameters.
 		\item It updates the visualization according to the user's input.
@@ -167,7 +167,7 @@ We begin with the functional requirements.
 		\item It provides tracing of the trajectory for the coupler.
 	\end{itemize}
 	
-	The GUI is the frontend interface for the user to generate the visualization and animation of the linkage based on the user's input. It uses data obtained from the four-bar linkage model. Therefore, the user must be able to input parameters in the GUI. To solve the optimization problem, we also need to trace the motion of the coupler.
+	The GUI is the front-end interface for the user to generate the visualization and animation of the linkage based on the user's input. It uses data obtained from the four-bar linkage model. Therefore, the user must be able to input parameters in the GUI. To solve the optimization problem, we also need to trace the motion of the coupler.
 	
 	\item \textit{Documentation}
 	\begin{itemize}
@@ -359,7 +359,7 @@ All the mentioned parameters are depicted in Figure \ref{fig:four-bar_linakge_an
  	The link can rotate partially, with no maximum but with minimum for the input angle $\alpha$ (or the output angle $\angle ABC$).
  \end{itemize}
  
- \subsection{27 Motion Cases}\label{ch:27_motion_cases}
+ \subsection{27 Motion Types}\label{ch:27_motion_types}
  
  The classification of the input and output links implies, that there are different linkage types. For example, the input and output can independently be classified as cranks or rockers, leading to different linkage types. The study in \cite{inproceedings} identifies $27$ different combinations. These combinations can be described by signs of characteristic values: $T_1 = g + h - a - b$, $T_2 = b + g - h - a$ and $T_3 = b + h - g - a$. Since each characteristic value can be positive, negative, or zero, there are $27$ possible combinations and motion types respectively.
  
@@ -458,20 +458,20 @@ In the project we need to store a large amount of variables for geometric repres
 
 Figure \ref{fig:class diagram} shows a shortened version of the class diagram. This diagram illustrates all the relationships between classes and the most important attributes. The actual number of attributes is too high to include it in this document, the comprehensive class diagram can be found in our GitHub repository\footnote{\url{https://github.com/einsflash/Project_Pusher_Mechanism/blob/main/src/class_diagram.pdf}}.
 
-The backend class \texttt{FourBarLinkage} implements the geometry and animation of the four-bar linkage with a coupler. The number of member variables is large, but the most important for visualization are the coordinates of joints $A$, $B$, $C$, $D$, and $P$. There are also member variables used for classification (\texttt{Linkage\_Type}, \texttt{Input\_Link\_Type}, \texttt{Output\_Link\_Type}) and for input validation (\texttt{geometric\_Validity}) to notify GUI about invalid parameters. The main member functions are the constructor \texttt{\_\_init\_\_} to set geometrical parameters, \texttt{run} to compute the joints' coordinates, \texttt{check\_Parameter} to validate user input, and \texttt{find\_Linkage\_Type} to classify the linkage. There are many other attributes used for internal purposes, but they are less important for a general overview.
+The back-end class \texttt{FourBarLinkage} implements the geometry and animation of the four-bar linkage with a coupler. The number of member variables is large, but the most important for visualization are the coordinates of joints $A$, $B$, $C$, $D$, and $P$. There are also member variables used for classification (\texttt{Linkage\_Type}, \texttt{Input\_Link\_Type}, \texttt{Output\_Link\_Type}) and for input validation (\texttt{geometric\_Validity}) to notify GUI about invalid parameters. The main member functions are the constructor \texttt{\_\_init\_\_} to set geometrical parameters, \texttt{run} to compute the joints' coordinates, \texttt{check\_Parameter} to validate user input, and \texttt{find\_Linkage\_Type} to classify the linkage. There are many other attributes used for internal purposes, but they are less important for a general overview.
 
-The frontend class \texttt{GUI} is used to create the graphical user interface to visualize linkage, provide its animation and get geometrical parameters from the user. This class has also a large number of attributes, but only several of them are important for an overview. The member variables include an instance of the \texttt{FourBarLinkage} class, which is used to obtain joint coordinates for visualization and animation. The \texttt{GUI} class also contains an instance of \texttt{tkinter.Tk}, the basic class for creating GUI using tkinter. The main member functions are the constructor \texttt{\_\_init\_\_} to initiate the GUI, \texttt{display\_toolbar} to set up the toolbar of buttons, sliders, and other elements, and \texttt{initiate\_linkage\_display} to set up the visualization of the linkage.
+The front-end class \texttt{GUI} is used to create the graphical user interface to visualize linkage, provide its animation and get geometrical parameters from the user. This class has also a large number of attributes, but only several of them are important for an overview. The member variables include an instance of the \texttt{FourBarLinkage} class, which is used to obtain joint coordinates for visualization and animation. The \texttt{GUI} class also contains an instance of \texttt{tkinter.Tk}, the basic class for creating GUI using tkinter. The main member functions are the constructor \texttt{\_\_init\_\_} to initiate the GUI, \texttt{display\_toolbar} to set up the toolbar of buttons, sliders, and other elements, and \texttt{initiate\_linkage\_display} to set up the visualization of the linkage.
 
 The test class \texttt{TestFourBarLinkage27Cases} inherits from \texttt{unittest.TestCase} and is used to test all motion types of the linkage. This class has only member functions that implement test cases for each motion types.
 
 \section{Implementation} \label{ch:implementation}
 
-\subsection{Backend}
+\subsection{Back-End}
 e.g. validation of input parameters
 
-\subsection{Frontend}
+\subsection{Front-End}
 
-After considering the backend part of the software that implements the geometry of the four-bar linkage extended with a coupler, we focus on the GUI. The GUI will use the backend to visualize the linkage and simulate its animation, enabling the user to adjust geometrical parameters of the linkage. The GUI is implemented using tkinter\textsuperscript{\ref{fn:tkinter}}. We will not go into too many details about the implementation to keep the description concise.
+After considering the back-end part of the software that implements the geometry of the four-bar linkage extended with a coupler, we focus on the GUI. The GUI will use the back-end to visualize the linkage and simulate its animation, enabling the user to adjust geometrical parameters of the linkage. The GUI is implemented using tkinter\textsuperscript{\ref{fn:tkinter}}. We will not go into too many details about the implementation to keep the description concise.
 
 \begin{figure}[h]
 	\begin{center}
@@ -487,7 +487,7 @@ The GUI is divided into two parts by two \texttt{tkinter.Frame} objects. The lef
 
 To start the GUI, we call \texttt{tkinter.Tk.mainloop}.
 
-The GUI needs the coordinates of the joints to visualize the linkage on \texttt{tkinter.Canvas}. To achieve that, the GUI contains the \texttt{FourBarLinkage} object as a member variable. To calculate the joints' coordinates, the GUI calls the backend's member function \texttt{FourBarLinkage.run} and extracts the positions using the backend's member variables \texttt{FourBarLinkage.A}, \texttt{FourBarLinkage.B}, and so on. These coordinates are scaled to fit the GUI's screen resolution, and then each link of the four-bar linkage is visualized using the \texttt{tkinter.Canvas.create\_line} function.
+The GUI needs the coordinates of the joints to visualize the linkage on \texttt{tkinter.Canvas}. To achieve that, the GUI contains the \texttt{FourBarLinkage} object as a member variable. To calculate the joints' coordinates, the GUI calls the back-end's member function \texttt{FourBarLinkage.run} and extracts the positions using the back-end's member variables \texttt{FourBarLinkage.A}, \texttt{FourBarLinkage.B}, and so on. These coordinates are scaled to fit the GUI's screen resolution, and then each link of the four-bar linkage is visualized using the \texttt{tkinter.Canvas.create\_line} function.
 
 For animation, we use \texttt{tkinter.Tk.after(25, func)}, which calls the \texttt{func} function after $25$ milliseconds, allowing to update the visualization of the linkage in a loop.
 
@@ -504,9 +504,9 @@ This function reads the new value of $a$ stored in the \texttt{val} variable, an
 
 The same logic is applied to all toolbar widgets to update the visualization of the linkage based on the user's input. Note that we do not create new figures in \texttt{tkinter.Canvas} to generate new visualization, but instead update already existing figures by moving or stretching them for efficiency.
 
-Another important feature of the GUI is different input and visualization modes. The user can choose to enter classification values ($T_1$, $T_2$, $T_3$, see Section \ref{ch:27_motion_cases}) instead of the links' lengths or choose to display the optimization problem instead of the basic linkage visualization. The important building block to implement these features is to hide or show objects on the display. Common tkinter widgets can be hidden by removing them from the grid. For example, for the $a$ slider: \lstinline|self.slider_a.grid_remove()|, and shown by adding them back: \lstinline|self.slider_a.grid()|. The same is done for geometric figures in the \texttt{tkinter.Canvas} object using the \texttt{itemconfigure} function and switching the state of the figure between \texttt{normal} and \texttt{hidden}.
+Another important feature of the GUI is different input and visualization modes. The user can choose to enter classification values ($T_1$, $T_2$, $T_3$, see Section \ref{ch:27_motion_types}) instead of the links' lengths or choose to display the optimization problem instead of the basic linkage visualization. The important building block to implement these features is to hide or show objects on the display. Common tkinter widgets can be hidden by removing them from the grid. For example, for the $a$ slider: \lstinline|self.slider_a.grid_remove()|, and shown by adding them back: \lstinline|self.slider_a.grid()|. The same is done for geometric figures in the \texttt{tkinter.Canvas} object using the \texttt{itemconfigure} function and switching the state of the figure between \texttt{normal} and \texttt{hidden}.
 
-If the backend detects invalid input data, the GUI temporarily hides the linkage visualization and displays an error.
+If the back-end detects invalid input data, the GUI temporarily hides the linkage visualization and displays an error.
 
 We also decided to visualize the optimization problem, illustrated in Figure \ref{fig:optimization_problem}, and its solution within the GUI. This feature was added using \texttt{tkinter.Checkbutton}, so when the user activates it, the default visualization of the GUI is replaced with the optimization problem, showing the linkage, the box to be moved and all the obstacles.
 
@@ -520,11 +520,27 @@ e.g, googletest\footnote{\tt https://github.com/google/googletest}
 
 \section{Validation}\label{ch:validation}
 
+To validate the correctness of the implementation, we tested all $27$ possible motion types described in \cite{inproceedings}. The main aspect of interest is the absence of jumps in the coordinates and velocities of the joints, ensuring smooth animation. 
+
+Figure \ref{fig:27_motion_types} is a set of screenshots of trajectory tracing for all $27$ motion types. As described in Section \ref{ch:27_motion_types}, the motion type depends on the sign of the classification values $T_1$, $T_2$ and $T_3$. We decided to test the motion types with classification values of $-1$, $0$ and $1$. This validation method helped us to find and fix bugs in the implementation. And we can now conclude that the implementation works for all of motion types.
+
 \section{Optimization Problem}\label{ch:optimization-problem}
 
+After we implemented the four-bar linkage model, the GUI, and validated their accuracy, we proceeded to solve the optimization problem illustrated in Figure \ref{fig:optimization_problem}.
+
+To solve the problem, we implemented the optimization problem mode in the GUI, such that when the user activates the animation, the coupler $P$ moves the box along a conveyor line around all obstacles. The box is moved by the coupler only while it remains in contact along the negative x-direction. With this approach and experience with all $27$ motion types, we were able to find a suitable linkage that fulfills all the constraints described in Section \ref{ch:user_requirements}.
+
+As was discussed in Section \ref{ch:user_requirements}, the four-bar linkage with a coupler generally has ten free parameters. However, to animate the motion, the input angle $\alpha$ cannot be chosen freely anymore. This means, the optimization problem has a degree of freedom of nine. The following list contains all of the freely selectable geometrical parameters that uniquely define the linkage solving the optimization problem:
+\begin{itemize}
+	\item The four bar lengths: $|AD| = a = 124.0$ cm, $|BC| = b = 171.2$ cm, $|AB| = g = 172.1$ cm, $|CD| = h = 122.6$ cm.
+	\item The coupler position relative to $|CD| = h$: $P_{pos} = 20.0 \%$, $P_{offset} = 42.0 \%$.
+	\item The position of joint A: $A_x = 27.0$ cm, $A_y = 66.0$ cm relative to the x-y coordinate system denoted in Figure \ref{fig:optimization_problem}.
+	\item The angle between the ground link $AB$ and horizontal line: $\theta = -70.0^{\circ}$
+\end{itemize}
+
+Figure \ref{fig:GUI_optimization_problem} illustrates the solution of the optimization problem. The trajectory of coupler $P$ is denoted in the figure. Using the chosen linkage, the coupler $P$ moves the box to the target position and then returns for the next one, avoiding all obstacles.
+
 \section{Documentation}\label{ch:doc}
-
-
 
 \section{Project Management} \label{ch:projectmanagement}
 
@@ -580,14 +596,6 @@ Here is the introduction of the team collaboration and actual progress.
 	\caption{State Diagramm for Animation}
 	\label{fig:state_diagramm_of_animation_alpha}
 \end{figure}
-
-\textbf{Figure \ref{fig:state_diagramm_of_animation_alpha} shows the algorithm we designed:}
-\begin{itemize}
-	\item Firstly, it updates the angle \(\alpha\).
-	\item Secondly, it checks whether \(\alpha\) exceeds the specified limits. If it does, \(\alpha\) is reset to the range \([0^\circ, 360^\circ]\).
-	\item Thirdly, it continues to check whether \(\alpha\) crosses special values and examines the necessity of switching \(c\) at those points.
-	\item Finally, it stores the status of whether a switch \(c\) occurred in this step.
-\end{itemize}
 
 \section{User Documentation} \label{ch:userdoc}
 
@@ -795,7 +803,8 @@ documented sample session(s); e.g, \verb!make run!
 		\includegraphics[width=\linewidth, height=0.95\linewidth, keepaspectratio]{./Figures/27_motion_cases/-1-1-1.png}
 		\caption{\scalebox{0.8}{$T_{1,2,3} = -1, -1, -1$}}
 	\end{subfigure}
-	\caption{27 motion cases.}
+	\caption{27 motion types.}
+	\label{fig:27_motion_types}
 \end{figure}
 
 
