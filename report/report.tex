@@ -355,7 +355,7 @@ All the mentioned parameters are depicted in Figure \ref{fig:four-bar_linakge_an
  	The link can rotate partially, with no maximum but with minimum for the input angle $\alpha$ (or the output angle $\angle ABC$).
  \end{itemize}
  
- \subsection{27 Motion Cases}
+ \subsection{27 Motion Cases}\label{ch:27_motion_cases}
  
  The classification of the input and output links implies, that there are different linkage types. For example, the input and output can independently be classified as cranks or rockers, leading to different linkage types. The study in \cite{inproceedings} identifies $27$ different combinations. These combinations can be described by signs of characteristic values: $T_1 = g + h - a - b$, $T_2 = b + g - h - a$ and $T_3 = b + h - g - a$. Since each characteristic value can be positive, negative, or zero, there are $27$ possible combinations and motion types respectively.
  
@@ -467,45 +467,48 @@ e.g. validation of input parameters
 
 \subsection{Frontend}
 
-After considering the backend part of the software, that implements the geometry of the four-bar linkage extended with a coupler, we focus on the GUI. The GUI will use the four-bar linkage model to visualize the linkage and simulate its animation, enabling user to adjust geometrical parameters of the linkage. The GUI is implemented using tkinter\textsuperscript{\ref{fn:tkinter}} library. We will not get deep into too much details about implementation, because the most important ideas about theory of the linkage were discussed in the analysis and design part of the work and implementation part is only a realization of them. But we will explain the foundation of the tkinter GUI library.
+After considering the backend part of the software that implements the geometry of the four-bar linkage extended with a coupler, we focus on the GUI. The GUI will use the backend to visualize the linkage and simulate its animation, enabling the user to adjust geometrical parameters of the linkage. The GUI is implemented using tkinter\textsuperscript{\ref{fn:tkinter}}. We will not go into too many details about the implementation to keep the description concise.
 
 \begin{figure}[h]
 	\begin{center}
-		\includegraphics[width=0.9\textwidth]{./figures/tkinter_grid.pdf}
+		\includegraphics[width=0.7\textwidth]{./figures/tkinter_grid.pdf}
 	\end{center}
 	\caption{The main components of the GUI.}
 	\label{fig:tkinter_parts}
 \end{figure}
 
-The main components of the GUI are illustrated in Figure \ref{fig:tkinter_parts}. The components of the tkinter library are widgets, that can be displayed in the GUI. All these widgets are placed in the GUI using \texttt{tkinter.Frame} widget, that creates a grid, so that the position of the widgets can be explicitly specified. In the Figure \ref{fig:tkinter_parts} you can see, that the GUI is divided into two parts by two \texttt{tkinter.Frame} objects, the left one is used to generate the visualization of the linkage. It holds a singe widgets named \texttt{tkinter.Canvas}, which can display all the basic geometric figures, e.g. oval, rectangle, line, arc, and text. The positions of these object in the \texttt{tkinter.Canvas} is specified pixel-wise using x-y coordinates. The right \texttt{tkinter.Frame} is used to display the toolbar. The widget's position in the toolbar is specified using creed, highlighted using green color in the Figure \ref{fig:tkinter_parts}. The toolbar is used to let the user enter new geometrical parameters using slidebars, implemented as \texttt{tkinter.Scale} object, an change the visualization mode, enabling animation or tracing, using \texttt{tkinter.Button} and \texttt{tkinter.Checkbutton} objects. Thee main components are used to create our GUI.
+The main components of the GUI are illustrated in Figure \ref{fig:tkinter_parts}. The components of the tkinter are widgets that can be displayed in the GUI. The basic object of the GUI is \texttt{tkinter.Tk}. All other widgets are placed in the GUI using \texttt{tkinter.Frame} widget, which creates a grid and allows the explicit specification of widget positions.
 
-After explaining the main components of the tkinter libarary, that are used to create the GUI, we need to mention how does it work together with the backend part. The GUI holds the \texttt{FourBarLinkage} object as a member variable \texttt{linkage}, that is initialized using some default geometric parameters. To create the visualization of the linkage in \texttt{tkinter.Canvas}, the GUI needs the coordinates of the joints, that can be obtained by firstly calling \texttt{FourBarLinkage.run()} function for the backend to calculate them and then to extract the positions using member variables \texttt{FourBarLinkage.A}, \texttt{FourBarLinkage.B}, and etc. These coordinates are scaled to fit screen resolution and then each link of the four-bar linkage is visualized using \texttt{tkinter.Canvas.create\_line} function. 
+The GUI is divided into two parts by two \texttt{tkinter.Frame} objects. The left one is used to generate the visualization of the linkage. It holds a singe widget, \texttt{tkinter.Canvas}, which can display all the basic geometric figures and text. The positions of these figures are specified using pixel-based x-y coordinates. The right \texttt{tkinter.Frame} is used to display the toolbar. The widget's position in the toolbar is specified using the grid. The toolbar is used to enter new geometrical parameters using the sliders \texttt{tkinter.Scale}. The toolbar also allows the user to change the visualization mode, e.g. enabling animation or tracing, using \texttt{tkinter.Button} and \texttt{tkinter.Checkbutton} objects.
 
-To react the new geometric parameters entered by user using slidebar\texttt{tkinter.Scale}, each of them has a special function, that is called after each state change of the \texttt{tkinter.Scale}. For example the slidebar for setting $a$ length is connected with function \texttt{update\_parameter\_a}: 
+To start the GUI, we call \texttt{tkinter.Tk.mainloop}.
+
+The GUI needs the coordinates of the joints to visualize the linkage on \texttt{tkinter.Canvas}. To achieve that, the GUI contains the \texttt{FourBarLinkage} object as a member variable. To calculate the joints' coordinates, the GUI calls the backend's member function \texttt{FourBarLinkage.run} and extracts the positions using the backend's member variables \texttt{FourBarLinkage.A}, \texttt{FourBarLinkage.B}, and so on. These coordinates are scaled to fit the GUI's screen resolution, and then each link of the four-bar linkage is visualized using the \texttt{tkinter.Canvas.create\_line} function.
+
+For animation, we use \texttt{tkinter.Tk.after(25, func)}, which calls the \texttt{func} function after $25$ milliseconds, allowing to update the visualization of the linkage in a loop.
+
+To respond to the new geometric parameters entered by the user using the slider \texttt{tkinter.Scale}, each slider is linked to a specific function, called after each change of the value. For example, the slider used to set $a$ is linked to the function \texttt{update\_parameter\_a}: 
 
 \begin{lstlisting}
-	def update_parameter_a(self, val):
-		self.linkage.DA = float(val)
-		self.delete_tracing()
-		self.refresh()
+def update_parameter_a(self, val):
+	self.linkage.DA = float(val)
+	self.delete_tracing()
+	self.refresh()
 \end{lstlisting}
 
-This function reads new value of $a$ stored in the \texttt{val} variable. Updates this geometric parameter in the linkage, $a$ corresponds to link $AD$, then the function call some more functions. The first of them is \texttt{delete\_tracing}, that deletes the tracing visualization for $C$, $D$, and $P$ if enabled. This must be done, because after changing link length, the trajectories of the joints are also changing. and as the last it calls \texttt{refresh} to refresh the visualization of the linkage. The \texttt{refresh} function calls \texttt{FourBarLinkage.run()} to calculate new coordinates of the joints and update the objects in the \texttt{tkinter.Canvas} to show user the updates linkage.
+This function reads the new value of $a$ stored in the \texttt{val} variable, and updates the geometric parameter $AD$ in the linkage accordingly. It also calls the \texttt{delete\_tracing} function to remove no longer relevant trajectory visualization for $C$, $D$, and $P$. Finally, the \texttt{refresh} function is called to update the linkage visualization.
 
-The same logic is applied to all toolbar's widgets to change the visualization of the linkage according to the user's input. Note, that we do not create each time new figures in \texttt{tkinter.Canvas} to generate new visualization, but update already existing for efficiency.
+The same logic is applied to all toolbar widgets to update the visualization of the linkage based on the user's input. Note that we do not create new figures in \texttt{tkinter.Canvas} to generate new visualization, but instead update already existing figures by moving or stretching them for efficiency.
 
-Another important feature of the GUI is different input and visualization modes. For example user can ask to enter classification values instead of the links' lengths or to display the optimization problem instead of basic linkage visualization. The important building block to implement these features is the ability to sometimes hide or show objects on display. The common tkinter widgets can be hidden just by removing from the grid using \texttt{grid\_remove}, e.g. for $a$ slidebar: \lstinline|self.slider_a.grid_remove()|, and shown by inserting back into grid : \lstinline|self.slider_a.grid()|. The same can be done for geometric figures in the \texttt{tkinter.Canvas} object by switching the state of the figure between \texttt{normal} and \texttt{hidden} using \texttt{itemconfigure} function.
+Another important feature of the GUI is different input and visualization modes. The user can choose to enter classification values ($T_1$, $T_2$, $T_3$, see Section \ref{ch:27_motion_cases}) instead of the links' lengths or choose to display the optimization problem instead of the basic linkage visualization. The important building block to implement these features is to hide or show objects on the display. Common tkinter widgets can be hidden by removing them from the grid. For example, for the $a$ slider: \lstinline|self.slider_a.grid_remove()|, and shown by adding them back: \lstinline|self.slider_a.grid()|. The same is done for geometric figures in the \texttt{tkinter.Canvas} object using the \texttt{itemconfigure} function and switching the state of the figure between \texttt{normal} and \texttt{hidden}.
 
-Using these functionalities the GUI can also show user an error in case of the invalid linkage parameters, namely when the backend set \texttt{FourBarLinkage.geometric\_Validity} variable to \texttt{False}. The GUI hide all the objects inside \texttt{tkinter.Canvas}, and displays the error message instead of the visualization.
+If the backend detects invalid input data, the GUI temporarily hides the linkage visualization and displays an error.
 
-We also decided to visualize the optimization problem, illustrated in Figure \ref{fig:optimization_problem}, so we can find and visualize its solution using the GUI. This feature was added using \texttt{tkinter.Checkbutton}, so when user activate it, the common visualization of the GUI gets replaced by the optimization problem, visualizing the linkage along with the box to move and all the obstacles.
+We also decided to visualize the optimization problem, illustrated in Figure \ref{fig:optimization_problem}, and its solution within the GUI. This feature was added using \texttt{tkinter.Checkbutton}, so when the user activates it, the default visualization of the GUI is replaced with the optimization problem, showing the linkage, the box to be moved and all the obstacles.
 
-It was a short description of the main builing blocks to create the GUI. Note, that the code of the GUI consists roughly of thousand lines, so we tried to explain only conceptually the most important things without making this description to complex and long.
+The Appendix includes screenshots of the GUI. Figures \ref{fig:GUI_default}, \ref{fig:GUI_invalid}, and \ref{fig:GUI_optimization_problem} illustrate the default mode, the classification values input mode with an invalid setup message, and the optimization problem visualization, respectively.
 
-To provide the GUI appearance, we pasted some screenshots in this work. The screenshots quality is bounded by the resolution of screen, due to the low resolution we placed the screenshots in the Appendix. In Figures \ref{fig:GUI_default}, \ref{fig:GUI_invalid} and \ref{fig:GUI_optimization_problem} are the default mode, the mode with classification values as the input with invalid setup message, and the optimization problem visualization are illustrated.
-
-
-docs\footnote{\url{https://htmlpreview.github.io/?https://github.com/einsflash/Project_Pusher_Mechanism/blob/main/src/doc_for_gui/gui.html}}
+The overview of the GUI class can be found in the documentation\footnote{\url{https://htmlpreview.github.io/?https://github.com/einsflash/Project_Pusher_Mechanism/blob/main/src/doc_for_gui/gui.html}}.
 
 \subsection{Software Tests}
 
