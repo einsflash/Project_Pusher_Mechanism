@@ -11,6 +11,10 @@
 \usepackage{url}
 \usepackage[hidelinks]{hyperref}
 \usepackage[margin=1.2in]{geometry}
+\usepackage{alphalph}
+\renewcommand*{\thesubfigure}{%
+	\alphalph{\value{subfigure}}%
+}%
 
 \newcommand{\refchapter}[1]{Chapter~\ref{#1}}
 \newcommand{\refsec}[1]{Section~\ref{#1}}
@@ -601,7 +605,7 @@ e.g, \verb!make test!
 documented sample session(s); e.g, \verb!make run!
 
 
-\section{GUI Screenshots}
+\section{Screenshots}
 
 \begin{figure}[h]
 	\centering
@@ -626,6 +630,172 @@ documented sample session(s); e.g, \verb!make run!
 		\label{fig:GUI_optimization_problem}
 	\end{subfigure}
 	\caption{GUI screenshots}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\begin{subfigure}{0.19\textwidth}
+		\centering
+		\includegraphics[width=\linewidth, height=0.95\linewidth, keepaspectratio]{./Figures/27_motion_cases/111.png}
+		\caption{\scalebox{0.8}{$T_{1,2,3} = 1, 1, 1$}}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}{0.19\textwidth}
+		\centering
+		\includegraphics[width=\linewidth, height=0.95\linewidth, keepaspectratio]{./Figures/27_motion_cases/011.png}
+		\caption{\scalebox{0.8}{$T_{1,2,3} = 0, 1, 1$}}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}{0.19\textwidth}
+		\centering
+		\includegraphics[width=\linewidth, height=0.95\linewidth, keepaspectratio]{./Figures/27_motion_cases/-111.png}
+		\caption{\scalebox{0.8}{$T_{1,2,3} = -1, 1, 1$}}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}{0.19\textwidth}
+		\centering
+		\includegraphics[width=\linewidth, height=0.95\linewidth, keepaspectratio]{./Figures/27_motion_cases/101.png}
+		\caption{\scalebox{0.8}{$T_{1,2,3} = 1, 0, 1$}}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}{0.19\textwidth}
+		\centering
+		\includegraphics[width=\linewidth, height=0.95\linewidth, keepaspectratio]{./Figures/27_motion_cases/001.png}
+		\caption{\scalebox{0.8}{$T_{1,2,3} = 0, 0, 1$}}
+	\end{subfigure}
+	\vfill
+	\begin{subfigure}{0.19\textwidth}
+		\centering
+		\includegraphics[width=\linewidth, height=0.95\linewidth, keepaspectratio]{./Figures/27_motion_cases/-101.png}
+		\caption{\scalebox{0.8}{$T_{1,2,3} = =1, 0, 1$}}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}{0.19\textwidth}
+		\centering
+		\includegraphics[width=\linewidth, height=0.95\linewidth, keepaspectratio]{./Figures/27_motion_cases/1-11.png}
+		\caption{\scalebox{0.8}{$T_{1,2,3} = 1, -1, 1$}}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}{0.19\textwidth}
+		\centering
+		\includegraphics[width=\linewidth, height=0.95\linewidth, keepaspectratio]{./Figures/27_motion_cases/0-11.png}
+		\caption{\scalebox{0.8}{$T_{1,2,3} = 0, -1, 1$}}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}{0.19\textwidth}
+		\centering
+		\includegraphics[width=\linewidth, height=0.95\linewidth, keepaspectratio]{./Figures/27_motion_cases/-1-11.png}
+		\caption{\scalebox{0.8}{$T_{1,2,3} = -1, -1, 1$}}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}{0.19\textwidth}
+		\centering
+		\includegraphics[width=\linewidth, height=0.95\linewidth, keepaspectratio]{./Figures/27_motion_cases/110.png}
+		\caption{\scalebox{0.8}{$T_{1,2,3} = 1, 1, 0$}}
+	\end{subfigure}
+	\vfill
+	\begin{subfigure}{0.19\textwidth}
+		\centering
+		\includegraphics[width=\linewidth, height=0.95\linewidth, keepaspectratio]{./Figures/27_motion_cases/010.png}
+		\caption{\scalebox{0.8}{$T_{1,2,3} = 0, 1, 0$}}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}{0.19\textwidth}
+		\centering
+		\includegraphics[width=\linewidth, height=0.95\linewidth, keepaspectratio]{./Figures/27_motion_cases/-110.png}
+		\caption{\scalebox{0.8}{$T_{1,2,3} = -1, 1, 0$}}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}{0.19\textwidth}
+		\centering
+		\includegraphics[width=\linewidth, height=0.95\linewidth, keepaspectratio]{./Figures/27_motion_cases/100.png}
+		\caption{\scalebox{0.8}{$T_{1,2,3} = 1, 0, 0$}}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}{0.19\textwidth}
+		\centering
+		\includegraphics[width=\linewidth, height=0.95\linewidth, keepaspectratio]{./Figures/27_motion_cases/000.png}
+		\caption{\scalebox{0.8}{$T_{1,2,3} = 0, 0, 0$}}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}{0.19\textwidth}
+		\centering
+		\includegraphics[width=\linewidth, height=0.95\linewidth, keepaspectratio]{./Figures/27_motion_cases/-100.png}
+		\caption{\scalebox{0.8}{$T_{1,2,3} = -1, 0, 0$}}
+	\end{subfigure}
+	\vfill
+	\begin{subfigure}{0.19\textwidth}
+		\centering
+		\includegraphics[width=\linewidth, height=0.95\linewidth, keepaspectratio]{./Figures/27_motion_cases/1-10.png}
+		\caption{\scalebox{0.8}{$T_{1,2,3} = 1, -1, 0$}}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}{0.19\textwidth}
+		\centering
+		\includegraphics[width=\linewidth, height=0.95\linewidth, keepaspectratio]{./Figures/27_motion_cases/0-10.png}
+		\caption{\scalebox{0.8}{$T_{1,2,3} = 0, -1, 0$}}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}{0.19\textwidth}
+		\centering
+		\includegraphics[width=\linewidth, height=0.95\linewidth, keepaspectratio]{./Figures/27_motion_cases/-1-10.png}
+		\caption{\scalebox{0.8}{$T_{1,2,3} = -1, -1, 0$}}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}{0.19\textwidth}
+		\centering
+		\includegraphics[width=\linewidth, height=0.95\linewidth, keepaspectratio]{./Figures/27_motion_cases/11-1.png}
+		\caption{\scalebox{0.8}{$T_{1,2,3} = 1, 1, -1$}}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}{0.19\textwidth}
+		\centering
+		\includegraphics[width=\linewidth, height=0.95\linewidth, keepaspectratio]{./Figures/27_motion_cases/01-1.png}
+		\caption{\scalebox{0.8}{$T_{1,2,3} = 0, 1, -1$}}
+	\end{subfigure}
+	\vfill
+	\begin{subfigure}{0.19\textwidth}
+		\centering
+		\includegraphics[width=\linewidth, height=0.95\linewidth, keepaspectratio]{./Figures/27_motion_cases/-11-1.png}
+		\caption{\scalebox{0.8}{$T_{1,2,3} = -1, 1, -1$}}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}{0.19\textwidth}
+		\centering
+		\includegraphics[width=\linewidth, height=0.95\linewidth, keepaspectratio]{./Figures/27_motion_cases/10-1.png}
+		\caption{\scalebox{0.8}{$T_{1,2,3} = 1, 0, -1$}}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}{0.19\textwidth}
+		\centering
+		\includegraphics[width=\linewidth, height=0.95\linewidth, keepaspectratio]{./Figures/27_motion_cases/00-1.png}
+		\caption{\scalebox{0.8}{$T_{1,2,3} = 0, 0, -1$}}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}{0.19\textwidth}
+		\centering
+		\includegraphics[width=\linewidth, height=0.95\linewidth, keepaspectratio]{./Figures/27_motion_cases/-10-1.png}
+		\caption{\scalebox{0.8}{$T_{1,2,3} = -1, 0, -1$}}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}{0.19\textwidth}
+		\centering
+		\includegraphics[width=\linewidth, height=0.95\linewidth, keepaspectratio]{./Figures/27_motion_cases/1-1-1.png}
+		\caption{\scalebox{0.8}{$T_{1,2,3} = 1, -1, -1$}}
+	\end{subfigure}
+	\vfill
+	\begin{subfigure}{0.19\textwidth}
+		\centering
+		\includegraphics[width=\linewidth, height=0.95\linewidth, keepaspectratio]{./Figures/27_motion_cases/0-1-1.png}
+		\caption{\scalebox{0.8}{$T_{1,2,3} = 0, -1, -1$}}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}{0.19\textwidth}
+		\centering
+		\includegraphics[width=\linewidth, height=0.95\linewidth, keepaspectratio]{./Figures/27_motion_cases/-1-1-1.png}
+		\caption{\scalebox{0.8}{$T_{1,2,3} = -1, -1, -1$}}
+	\end{subfigure}
+	\caption{27 motion cases.}
 \end{figure}
 
 
