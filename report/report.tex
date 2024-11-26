@@ -467,7 +467,15 @@ The test class \texttt{TestFourBarLinkage27Cases} inherits from \texttt{unittest
 \section{Implementation} \label{ch:implementation}
 
 \subsection{Back-End}
-e.g. validation of input parameters
+The back end is implemented using packages \texttt{numpy} and \texttt{math}, mainly for calculation. The implementation follows the design and analysis phases, where the details of the geometry analysis and algorithm design are explained.
+
+First, we implement the table from the paper as a dictionary in the function \texttt{find\_Linkage\_Type()}, and then use the current actual parameters \texttt{T1}, \texttt{T2}, and \texttt{T3} to look up the \texttt{Link\_Type}.
+
+After that, we define two functions to allow users to switch between modes, enabling them to modify either the characteristic values or the lengths of the bars in the four-bar linkage.
+
+We also create a function \texttt{run()} to integrate all the functions. This serves as an interface for parameter updates.
+
+Finally, we implement the functions for joint position calculations, alpha extreme value calculations, and the animation function, based on the previous analysis and design.
 
 \subsection{Front-End}
 
