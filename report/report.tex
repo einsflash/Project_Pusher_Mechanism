@@ -49,7 +49,7 @@ The topic "Pusher Mechanism" was issued as a final project by the Department of 
 
 The topic involves the development of software to model and visualize a planar four-bar linkage extended with a coupler, and to find a suitable linkage for moving a box along a conveyor line under certain constraints, outlined later in this work. These tasks require a foundational knowledge of planar geometry, software engineering, project management and programming. This knowledge was gained by the students of Computational Engineering Science B.Sc. program during the first four semesters of study. Therefore this project is well-suited to the study program for fifth-semester students.
 
-\clearpage
+
 
 \section{Introduction}
 
@@ -532,6 +532,8 @@ The unit tests for the Four-Bar Linkage system verify the correct classification
 	\item Test Case 10: $T_1 > 0$, $T_2 > 0$, $T_3 = 0$ $\rightarrow$ Crank (input), \(\pi\)-Rocker (output).
 \end{itemize}
 
+Descriptions of other test cases can be found in the documentation\footnote{\url{https://github.com/einsflash/Project_Pusher_Mechanism/blob/main/docs/dokumentationTest.pdf}}.
+
 \section{Validation}\label{ch:validation}
 
 To validate the correctness of the implementation, we tested all $27$ possible motion types described in \cite{inproceedings}. The main aspect of interest is the absence of jumps in the coordinates and velocities of the joints, ensuring smooth animation. 
@@ -556,6 +558,15 @@ Figure \ref{fig:GUI_optimization_problem} illustrates the solution of the optimi
 
 \section{Documentation}\label{ch:doc}
 
+We used the pdoc tool to generate the documentation of the software. This tool generates HTML-files with a list of all class member functions and member variables defined in \texttt{\_\_init\_\_} constructor. It also displays the description for all of them, so that the user can get an overview of the class components. Moreover, the source code is shown in the generated files for every function, so the user does not need to search for it in huge source files. 
+
+All member functions and variables of the \texttt{FourBarLinkage} class are documented in this file\footnote{\url{https://htmlpreview.github.io/?https://github.com/einsflash/Project_Pusher_Mechanism/blob/main/src/doc_for_four_bar_linkage/four_bar_linkage.html}}.
+
+The \texttt{GUI} class is documented in the following file\footnote{\url{https://htmlpreview.github.io/?https://github.com/einsflash/Project_Pusher_Mechanism/blob/main/src/doc_for_gui/gui.html}}. Note that only essential member variables of the GUI are documented, because some GUI member variables are initialized outside the \texttt{\_\_init\_\_} constructor.
+
+Additionally to the pdoc documentation, we created a PDF-based documentation of the \texttt{FourBarLinkage}\footnote{\url{https://github.com/einsflash/Project_Pusher_Mechanism/blob/main/docs/dokumentationProgramm.pdf}} and unit tests\footnote{\url{https://github.com/einsflash/Project_Pusher_Mechanism/blob/main/docs/dokumentationTest.pdf}}. This documentation is less detailed in documenting all of the functions and variables, but it provides a more comprehensive explanation of the motivation and functionality behind the implementation.
+
+We believe that well-documented code is essential for ensuring software to be reusable and maintainable. For this reason, we focused on creating detailed and comprehensive documentation.
 
 
 \section{Project Management} \label{ch:projectmanagement}

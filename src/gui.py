@@ -72,9 +72,9 @@ class GUI:
         """y_axis position on the screen for optimization problem"""
         # position of A in new coordinates
         self.A_x = 0.
-        """Positio of A_x"""
+        """Position of A_x"""
         self.A_y = 0.
-        """Positio of A_y"""
+        """Position of A_y"""
         # to move box in optimization problem
         self.pin_box_to_coupler = False
         """If box is moved by coupler"""
@@ -360,7 +360,7 @@ class GUI:
 
     # this function is used to make sure that the four bar linkage model fit in GUI frame
     def scaling_factor(self):
-        """Calculate saling factor to fit display resolution"""
+        """Calculate scaling factor to fit display resolution"""
         # fix scale for optimization problem
         if self.enable_optimization_problem.get():
             scale = min(float(self.model_animation.width)/400,
@@ -393,7 +393,7 @@ class GUI:
     
     # normalities to 4 linkage bars, used to display bar's names
     def calculate_normalities(self):
-        """Calcualte normalities for all bars"""
+        """Calculate normalities for all bars"""
         AB = self.linkage.B - self.linkage.A
         BC = self.linkage.C - self.linkage.B
         CD = self.linkage.D - self.linkage.C
@@ -406,77 +406,77 @@ class GUI:
 
     # functions for sliders to update parameters
     def update_parameter_a(self, val):
-        """Update parameter a"""
+        """Update parameter a according to the slider"""
         self.linkage.DA = float(val)
         self.delete_tracing()
         self.refresh()
     def update_parameter_g(self, val):
-        """Update parameter g"""
+        """Update parameter g according to the slider"""
         self.linkage.AB = float(val)
         self.delete_tracing()
         self.refresh()
     def update_parameter_b(self, val):
-        """Update parameter b"""
+        """Update parameter b according to the slider"""
         self.linkage.BC = float(val)
         self.delete_tracing()
         self.refresh()
     def update_parameter_h(self, val):
-        """Update parameter h"""
+        """Update parameter h according to the slider"""
         self.linkage.CD = float(val)
         self.delete_tracing()
         self.refresh()
     def update_parameter_p_pos(self, val):
-        """Update parameter P_pos"""
+        """Update parameter P_pos according to the slider"""
         self.linkage.coupler_position = float(val)/100
         self.delete_tracing()
         self.refresh()
     def update_parameter_p_off(self, val):
-        """Update parameter P_offset"""
+        """Update parameter P_offset according to the slider"""
         self.linkage.coupler_offset = float(val)/100
         self.delete_tracing()
         self.refresh()
     def update_parameter_alpha(self, val):
-        """Update parameter input angle alpha"""
+        """Update parameter input angle alpha according to the slider"""
         self.linkage.alpha = float(val)
         self.linkage.alpha_rad = math.radians(self.linkage.alpha)
         self.refresh()
     def update_parameter_theta(self, val):
-        """Update parameter angle to horizont theta"""
+        """Update parameter angle to horizont theta according to the slider"""
         self.linkage.theta = float(val)
         self.delete_tracing()
         self.linkage.theta_rad = math.radians(self.linkage.theta)
         self.refresh()
     def update_parameter_T1(self, val):
-        """Update parameter classification value T1"""
+        """Update parameter classification value T1 according to the slider"""
         self.linkage.T1 = float(val)
         self.delete_tracing()
         self.linkage.calculate_Edge_Value()
         self.refresh()
     def update_parameter_T2(self, val):
-        """Update parameter classification value T2"""
+        """Update parameter classification value T2 according to the slider"""
         self.linkage.T2 = float(val)
         self.delete_tracing()
         self.linkage.calculate_Edge_Value()
         self.refresh()
     def update_parameter_T3(self, val):
-        """Update parameter classification value T3"""
+        """Update parameter classification value T3 according to the slider"""
         self.linkage.T3 = float(val)
         self.delete_tracing()
         self.linkage.calculate_Edge_Value()
         self.refresh()
     def update_parameter_L(self, val):
-        """Update parameter sum of all lengths L"""
+        """Update parameter sum of all lengths L according to the slider"""
         self.linkage.L = float(val)
         self.delete_tracing()
         self.linkage.calculate_Edge_Value()
         self.refresh()
     def update_parameter_A_x(self, val):
-        """Update parameter A_x"""
+        """Update parameter A_x according to the slider"""
         self.A_x = float(val)
         self.delete_tracing()
         self.refresh()
     def update_parameter_A_y(self, val):
-        """Update parameter A_y"""
+        """Update parameter A_y according to the slider"""
         self.A_y = float(val)
         self.delete_tracing()
         self.refresh()
@@ -518,7 +518,7 @@ class GUI:
     
     # reset bars sliders + angles
     def reset_bars_sliders(self):
-        """Reset input parameters on sliders"""
+        """Reset input parameters on sliders to the current values"""
         self.slider_a.set(self.linkage.DA)
         self.slider_g.set(self.linkage.AB)
         self.slider_b.set(self.linkage.BC)
@@ -530,7 +530,7 @@ class GUI:
     
     # reset classifications sliders + angles
     def reset_classifications_sliders(self):
-        """Reset classification values on sliders"""
+        """Reset classification values on sliders to the current values"""
         self.slider_T1.set(self.linkage.T1)
         self.slider_T2.set(self.linkage.T2)
         self.slider_T3.set(self.linkage.T3)
@@ -542,7 +542,7 @@ class GUI:
         
     # reset sliders A_x and A_y
     def reset_A_x_A_y(self):
-        """Reset A_x and A_y on sliders"""
+        """Reset A_x and A_y on sliders to the current values"""
         self.slider_A_x.set(self.A_x)
         self.slider_A_y.set(self.A_y)
         
@@ -661,7 +661,7 @@ class GUI:
         
     # hide all linkage widgets
     def hide_linkage(self):
-        """Hide linkage"""
+        """Hide linkage visualization"""
         self.model_animation.itemconfigure(self.model_animation.trace_C, state='hidden')
         self.model_animation.itemconfigure(self.model_animation.trace_P, state='hidden')
         self.model_animation.itemconfigure(self.model_animation.trace_D, state='hidden')
@@ -688,7 +688,7 @@ class GUI:
         
     # show all linkage widgets
     def show_linkage(self):
-        """Show linkage"""
+        """Show linkage visualization"""
         self.model_animation.itemconfigure(self.model_animation.trace_C, state='normal')
         self.model_animation.itemconfigure(self.model_animation.trace_P, state='normal')
         self.model_animation.itemconfigure(self.model_animation.trace_D, state='normal')
@@ -734,7 +734,7 @@ class GUI:
     
     # repeated function to animate movement
     def run_animation(self):
-        """Run animation be updating joints positions in a loop"""
+        """Run animation updating joint positions in a loop"""
         if self.enable_animation.get():
             self.linkage.animation_alpha()
             self.refresh()

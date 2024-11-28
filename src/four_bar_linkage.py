@@ -207,7 +207,7 @@ class FourBarLinkage:
         return
 
     def calculate_Classification_Value(self):
-        """ calculate classification values according to given 4 link lengths"""
+        """Calculate classification values according to given 4 link lengths"""
         self.T1 = self.AB + self.CD - self.BC - self.DA
         self.T2 = self.BC + self.AB - self.CD - self.DA
         self.T3 = self.CD + self.BC - self.AB - self.DA
@@ -215,7 +215,7 @@ class FourBarLinkage:
         return
 
     def calculate_Edge_Value(self):
-        """ calculate 4 link lengths according to given classification values """
+        """Calculate 4 link lengths according to given classification values """
         self.AB = (self.L / 4) + (self.T1 / 4) + (self.T2 / 4) - (self.T3 / 4)
         self.BC = (self.L / 4) - (self.T1 / 4) + (self.T2 / 4) + (self.T3 / 4)
         self.CD = (self.L / 4) + (self.T1 / 4) - (self.T2 / 4) + (self.T3 / 4)

@@ -334,9 +334,9 @@ gui    </h1>
 </span><span id="L-72"><a href="#L-72"><span class="linenos">  72</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;y_axis position on the screen for optimization problem&quot;&quot;&quot;</span>
 </span><span id="L-73"><a href="#L-73"><span class="linenos">  73</span></a>        <span class="c1"># position of A in new coordinates</span>
 </span><span id="L-74"><a href="#L-74"><span class="linenos">  74</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">A_x</span> <span class="o">=</span> <span class="mf">0.</span>
-</span><span id="L-75"><a href="#L-75"><span class="linenos">  75</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Positio of A_x&quot;&quot;&quot;</span>
+</span><span id="L-75"><a href="#L-75"><span class="linenos">  75</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Position of A_x&quot;&quot;&quot;</span>
 </span><span id="L-76"><a href="#L-76"><span class="linenos">  76</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">A_y</span> <span class="o">=</span> <span class="mf">0.</span>
-</span><span id="L-77"><a href="#L-77"><span class="linenos">  77</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Positio of A_y&quot;&quot;&quot;</span>
+</span><span id="L-77"><a href="#L-77"><span class="linenos">  77</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Position of A_y&quot;&quot;&quot;</span>
 </span><span id="L-78"><a href="#L-78"><span class="linenos">  78</span></a>        <span class="c1"># to move box in optimization problem</span>
 </span><span id="L-79"><a href="#L-79"><span class="linenos">  79</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">pin_box_to_coupler</span> <span class="o">=</span> <span class="kc">False</span>
 </span><span id="L-80"><a href="#L-80"><span class="linenos">  80</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;If box is moved by coupler&quot;&quot;&quot;</span>
@@ -622,7 +622,7 @@ gui    </h1>
 </span><span id="L-360"><a href="#L-360"><span class="linenos"> 360</span></a>
 </span><span id="L-361"><a href="#L-361"><span class="linenos"> 361</span></a>    <span class="c1"># this function is used to make sure that the four bar linkage model fit in GUI frame</span>
 </span><span id="L-362"><a href="#L-362"><span class="linenos"> 362</span></a>    <span class="k">def</span> <span class="nf">scaling_factor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="L-363"><a href="#L-363"><span class="linenos"> 363</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate saling factor to fit display resolution&quot;&quot;&quot;</span>
+</span><span id="L-363"><a href="#L-363"><span class="linenos"> 363</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate scaling factor to fit display resolution&quot;&quot;&quot;</span>
 </span><span id="L-364"><a href="#L-364"><span class="linenos"> 364</span></a>        <span class="c1"># fix scale for optimization problem</span>
 </span><span id="L-365"><a href="#L-365"><span class="linenos"> 365</span></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">enable_optimization_problem</span><span class="o">.</span><span class="n">get</span><span class="p">():</span>
 </span><span id="L-366"><a href="#L-366"><span class="linenos"> 366</span></a>            <span class="n">scale</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_animation</span><span class="o">.</span><span class="n">width</span><span class="p">)</span><span class="o">/</span><span class="mi">400</span><span class="p">,</span>
@@ -655,7 +655,7 @@ gui    </h1>
 </span><span id="L-393"><a href="#L-393"><span class="linenos"> 393</span></a>    
 </span><span id="L-394"><a href="#L-394"><span class="linenos"> 394</span></a>    <span class="c1"># normalities to 4 linkage bars, used to display bar&#39;s names</span>
 </span><span id="L-395"><a href="#L-395"><span class="linenos"> 395</span></a>    <span class="k">def</span> <span class="nf">calculate_normalities</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="L-396"><a href="#L-396"><span class="linenos"> 396</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Calcualte normalities for all bars&quot;&quot;&quot;</span>
+</span><span id="L-396"><a href="#L-396"><span class="linenos"> 396</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate normalities for all bars&quot;&quot;&quot;</span>
 </span><span id="L-397"><a href="#L-397"><span class="linenos"> 397</span></a>        <span class="n">AB</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">B</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">A</span>
 </span><span id="L-398"><a href="#L-398"><span class="linenos"> 398</span></a>        <span class="n">BC</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">C</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">B</span>
 </span><span id="L-399"><a href="#L-399"><span class="linenos"> 399</span></a>        <span class="n">CD</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">D</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">C</span>
@@ -668,77 +668,77 @@ gui    </h1>
 </span><span id="L-406"><a href="#L-406"><span class="linenos"> 406</span></a>
 </span><span id="L-407"><a href="#L-407"><span class="linenos"> 407</span></a>    <span class="c1"># functions for sliders to update parameters</span>
 </span><span id="L-408"><a href="#L-408"><span class="linenos"> 408</span></a>    <span class="k">def</span> <span class="nf">update_parameter_a</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-</span><span id="L-409"><a href="#L-409"><span class="linenos"> 409</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter a&quot;&quot;&quot;</span>
+</span><span id="L-409"><a href="#L-409"><span class="linenos"> 409</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter a according to the slider&quot;&quot;&quot;</span>
 </span><span id="L-410"><a href="#L-410"><span class="linenos"> 410</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">DA</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
 </span><span id="L-411"><a href="#L-411"><span class="linenos"> 411</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">delete_tracing</span><span class="p">()</span>
 </span><span id="L-412"><a href="#L-412"><span class="linenos"> 412</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
 </span><span id="L-413"><a href="#L-413"><span class="linenos"> 413</span></a>    <span class="k">def</span> <span class="nf">update_parameter_g</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-</span><span id="L-414"><a href="#L-414"><span class="linenos"> 414</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter g&quot;&quot;&quot;</span>
+</span><span id="L-414"><a href="#L-414"><span class="linenos"> 414</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter g according to the slider&quot;&quot;&quot;</span>
 </span><span id="L-415"><a href="#L-415"><span class="linenos"> 415</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">AB</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
 </span><span id="L-416"><a href="#L-416"><span class="linenos"> 416</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">delete_tracing</span><span class="p">()</span>
 </span><span id="L-417"><a href="#L-417"><span class="linenos"> 417</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
 </span><span id="L-418"><a href="#L-418"><span class="linenos"> 418</span></a>    <span class="k">def</span> <span class="nf">update_parameter_b</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-</span><span id="L-419"><a href="#L-419"><span class="linenos"> 419</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter b&quot;&quot;&quot;</span>
+</span><span id="L-419"><a href="#L-419"><span class="linenos"> 419</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter b according to the slider&quot;&quot;&quot;</span>
 </span><span id="L-420"><a href="#L-420"><span class="linenos"> 420</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">BC</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
 </span><span id="L-421"><a href="#L-421"><span class="linenos"> 421</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">delete_tracing</span><span class="p">()</span>
 </span><span id="L-422"><a href="#L-422"><span class="linenos"> 422</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
 </span><span id="L-423"><a href="#L-423"><span class="linenos"> 423</span></a>    <span class="k">def</span> <span class="nf">update_parameter_h</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-</span><span id="L-424"><a href="#L-424"><span class="linenos"> 424</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter h&quot;&quot;&quot;</span>
+</span><span id="L-424"><a href="#L-424"><span class="linenos"> 424</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter h according to the slider&quot;&quot;&quot;</span>
 </span><span id="L-425"><a href="#L-425"><span class="linenos"> 425</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">CD</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
 </span><span id="L-426"><a href="#L-426"><span class="linenos"> 426</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">delete_tracing</span><span class="p">()</span>
 </span><span id="L-427"><a href="#L-427"><span class="linenos"> 427</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
 </span><span id="L-428"><a href="#L-428"><span class="linenos"> 428</span></a>    <span class="k">def</span> <span class="nf">update_parameter_p_pos</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-</span><span id="L-429"><a href="#L-429"><span class="linenos"> 429</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter P_pos&quot;&quot;&quot;</span>
+</span><span id="L-429"><a href="#L-429"><span class="linenos"> 429</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter P_pos according to the slider&quot;&quot;&quot;</span>
 </span><span id="L-430"><a href="#L-430"><span class="linenos"> 430</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">coupler_position</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">val</span><span class="p">)</span><span class="o">/</span><span class="mi">100</span>
 </span><span id="L-431"><a href="#L-431"><span class="linenos"> 431</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">delete_tracing</span><span class="p">()</span>
 </span><span id="L-432"><a href="#L-432"><span class="linenos"> 432</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
 </span><span id="L-433"><a href="#L-433"><span class="linenos"> 433</span></a>    <span class="k">def</span> <span class="nf">update_parameter_p_off</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-</span><span id="L-434"><a href="#L-434"><span class="linenos"> 434</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter P_offset&quot;&quot;&quot;</span>
+</span><span id="L-434"><a href="#L-434"><span class="linenos"> 434</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter P_offset according to the slider&quot;&quot;&quot;</span>
 </span><span id="L-435"><a href="#L-435"><span class="linenos"> 435</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">coupler_offset</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">val</span><span class="p">)</span><span class="o">/</span><span class="mi">100</span>
 </span><span id="L-436"><a href="#L-436"><span class="linenos"> 436</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">delete_tracing</span><span class="p">()</span>
 </span><span id="L-437"><a href="#L-437"><span class="linenos"> 437</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
 </span><span id="L-438"><a href="#L-438"><span class="linenos"> 438</span></a>    <span class="k">def</span> <span class="nf">update_parameter_alpha</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-</span><span id="L-439"><a href="#L-439"><span class="linenos"> 439</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter input angle alpha&quot;&quot;&quot;</span>
+</span><span id="L-439"><a href="#L-439"><span class="linenos"> 439</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter input angle alpha according to the slider&quot;&quot;&quot;</span>
 </span><span id="L-440"><a href="#L-440"><span class="linenos"> 440</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
 </span><span id="L-441"><a href="#L-441"><span class="linenos"> 441</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">alpha_rad</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">alpha</span><span class="p">)</span>
 </span><span id="L-442"><a href="#L-442"><span class="linenos"> 442</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
 </span><span id="L-443"><a href="#L-443"><span class="linenos"> 443</span></a>    <span class="k">def</span> <span class="nf">update_parameter_theta</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-</span><span id="L-444"><a href="#L-444"><span class="linenos"> 444</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter angle to horizont theta&quot;&quot;&quot;</span>
+</span><span id="L-444"><a href="#L-444"><span class="linenos"> 444</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter angle to horizont theta according to the slider&quot;&quot;&quot;</span>
 </span><span id="L-445"><a href="#L-445"><span class="linenos"> 445</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">theta</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
 </span><span id="L-446"><a href="#L-446"><span class="linenos"> 446</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">delete_tracing</span><span class="p">()</span>
 </span><span id="L-447"><a href="#L-447"><span class="linenos"> 447</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">theta_rad</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">theta</span><span class="p">)</span>
 </span><span id="L-448"><a href="#L-448"><span class="linenos"> 448</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
 </span><span id="L-449"><a href="#L-449"><span class="linenos"> 449</span></a>    <span class="k">def</span> <span class="nf">update_parameter_T1</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-</span><span id="L-450"><a href="#L-450"><span class="linenos"> 450</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter classification value T1&quot;&quot;&quot;</span>
+</span><span id="L-450"><a href="#L-450"><span class="linenos"> 450</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter classification value T1 according to the slider&quot;&quot;&quot;</span>
 </span><span id="L-451"><a href="#L-451"><span class="linenos"> 451</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">T1</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
 </span><span id="L-452"><a href="#L-452"><span class="linenos"> 452</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">delete_tracing</span><span class="p">()</span>
 </span><span id="L-453"><a href="#L-453"><span class="linenos"> 453</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">calculate_Edge_Value</span><span class="p">()</span>
 </span><span id="L-454"><a href="#L-454"><span class="linenos"> 454</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
 </span><span id="L-455"><a href="#L-455"><span class="linenos"> 455</span></a>    <span class="k">def</span> <span class="nf">update_parameter_T2</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-</span><span id="L-456"><a href="#L-456"><span class="linenos"> 456</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter classification value T2&quot;&quot;&quot;</span>
+</span><span id="L-456"><a href="#L-456"><span class="linenos"> 456</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter classification value T2 according to the slider&quot;&quot;&quot;</span>
 </span><span id="L-457"><a href="#L-457"><span class="linenos"> 457</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">T2</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
 </span><span id="L-458"><a href="#L-458"><span class="linenos"> 458</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">delete_tracing</span><span class="p">()</span>
 </span><span id="L-459"><a href="#L-459"><span class="linenos"> 459</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">calculate_Edge_Value</span><span class="p">()</span>
 </span><span id="L-460"><a href="#L-460"><span class="linenos"> 460</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
 </span><span id="L-461"><a href="#L-461"><span class="linenos"> 461</span></a>    <span class="k">def</span> <span class="nf">update_parameter_T3</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-</span><span id="L-462"><a href="#L-462"><span class="linenos"> 462</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter classification value T3&quot;&quot;&quot;</span>
+</span><span id="L-462"><a href="#L-462"><span class="linenos"> 462</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter classification value T3 according to the slider&quot;&quot;&quot;</span>
 </span><span id="L-463"><a href="#L-463"><span class="linenos"> 463</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">T3</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
 </span><span id="L-464"><a href="#L-464"><span class="linenos"> 464</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">delete_tracing</span><span class="p">()</span>
 </span><span id="L-465"><a href="#L-465"><span class="linenos"> 465</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">calculate_Edge_Value</span><span class="p">()</span>
 </span><span id="L-466"><a href="#L-466"><span class="linenos"> 466</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
 </span><span id="L-467"><a href="#L-467"><span class="linenos"> 467</span></a>    <span class="k">def</span> <span class="nf">update_parameter_L</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-</span><span id="L-468"><a href="#L-468"><span class="linenos"> 468</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter sum of all lengths L&quot;&quot;&quot;</span>
+</span><span id="L-468"><a href="#L-468"><span class="linenos"> 468</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter sum of all lengths L according to the slider&quot;&quot;&quot;</span>
 </span><span id="L-469"><a href="#L-469"><span class="linenos"> 469</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">L</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
 </span><span id="L-470"><a href="#L-470"><span class="linenos"> 470</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">delete_tracing</span><span class="p">()</span>
 </span><span id="L-471"><a href="#L-471"><span class="linenos"> 471</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">calculate_Edge_Value</span><span class="p">()</span>
 </span><span id="L-472"><a href="#L-472"><span class="linenos"> 472</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
 </span><span id="L-473"><a href="#L-473"><span class="linenos"> 473</span></a>    <span class="k">def</span> <span class="nf">update_parameter_A_x</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-</span><span id="L-474"><a href="#L-474"><span class="linenos"> 474</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter A_x&quot;&quot;&quot;</span>
+</span><span id="L-474"><a href="#L-474"><span class="linenos"> 474</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter A_x according to the slider&quot;&quot;&quot;</span>
 </span><span id="L-475"><a href="#L-475"><span class="linenos"> 475</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">A_x</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
 </span><span id="L-476"><a href="#L-476"><span class="linenos"> 476</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">delete_tracing</span><span class="p">()</span>
 </span><span id="L-477"><a href="#L-477"><span class="linenos"> 477</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
 </span><span id="L-478"><a href="#L-478"><span class="linenos"> 478</span></a>    <span class="k">def</span> <span class="nf">update_parameter_A_y</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-</span><span id="L-479"><a href="#L-479"><span class="linenos"> 479</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter A_y&quot;&quot;&quot;</span>
+</span><span id="L-479"><a href="#L-479"><span class="linenos"> 479</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter A_y according to the slider&quot;&quot;&quot;</span>
 </span><span id="L-480"><a href="#L-480"><span class="linenos"> 480</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">A_y</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
 </span><span id="L-481"><a href="#L-481"><span class="linenos"> 481</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">delete_tracing</span><span class="p">()</span>
 </span><span id="L-482"><a href="#L-482"><span class="linenos"> 482</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
@@ -780,7 +780,7 @@ gui    </h1>
 </span><span id="L-518"><a href="#L-518"><span class="linenos"> 518</span></a>    
 </span><span id="L-519"><a href="#L-519"><span class="linenos"> 519</span></a>    <span class="c1"># reset bars sliders + angles</span>
 </span><span id="L-520"><a href="#L-520"><span class="linenos"> 520</span></a>    <span class="k">def</span> <span class="nf">reset_bars_sliders</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="L-521"><a href="#L-521"><span class="linenos"> 521</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Reset input parameters on sliders&quot;&quot;&quot;</span>
+</span><span id="L-521"><a href="#L-521"><span class="linenos"> 521</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Reset input parameters on sliders to the current values&quot;&quot;&quot;</span>
 </span><span id="L-522"><a href="#L-522"><span class="linenos"> 522</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">slider_a</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">DA</span><span class="p">)</span>
 </span><span id="L-523"><a href="#L-523"><span class="linenos"> 523</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">slider_g</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">AB</span><span class="p">)</span>
 </span><span id="L-524"><a href="#L-524"><span class="linenos"> 524</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">slider_b</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">BC</span><span class="p">)</span>
@@ -792,7 +792,7 @@ gui    </h1>
 </span><span id="L-530"><a href="#L-530"><span class="linenos"> 530</span></a>    
 </span><span id="L-531"><a href="#L-531"><span class="linenos"> 531</span></a>    <span class="c1"># reset classifications sliders + angles</span>
 </span><span id="L-532"><a href="#L-532"><span class="linenos"> 532</span></a>    <span class="k">def</span> <span class="nf">reset_classifications_sliders</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="L-533"><a href="#L-533"><span class="linenos"> 533</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Reset classification values on sliders&quot;&quot;&quot;</span>
+</span><span id="L-533"><a href="#L-533"><span class="linenos"> 533</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Reset classification values on sliders to the current values&quot;&quot;&quot;</span>
 </span><span id="L-534"><a href="#L-534"><span class="linenos"> 534</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">slider_T1</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">T1</span><span class="p">)</span>
 </span><span id="L-535"><a href="#L-535"><span class="linenos"> 535</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">slider_T2</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">T2</span><span class="p">)</span>
 </span><span id="L-536"><a href="#L-536"><span class="linenos"> 536</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">slider_T3</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">T3</span><span class="p">)</span>
@@ -804,7 +804,7 @@ gui    </h1>
 </span><span id="L-542"><a href="#L-542"><span class="linenos"> 542</span></a>        
 </span><span id="L-543"><a href="#L-543"><span class="linenos"> 543</span></a>    <span class="c1"># reset sliders A_x and A_y</span>
 </span><span id="L-544"><a href="#L-544"><span class="linenos"> 544</span></a>    <span class="k">def</span> <span class="nf">reset_A_x_A_y</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="L-545"><a href="#L-545"><span class="linenos"> 545</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Reset A_x and A_y on sliders&quot;&quot;&quot;</span>
+</span><span id="L-545"><a href="#L-545"><span class="linenos"> 545</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Reset A_x and A_y on sliders to the current values&quot;&quot;&quot;</span>
 </span><span id="L-546"><a href="#L-546"><span class="linenos"> 546</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">slider_A_x</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">A_x</span><span class="p">)</span>
 </span><span id="L-547"><a href="#L-547"><span class="linenos"> 547</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">slider_A_y</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">A_y</span><span class="p">)</span>
 </span><span id="L-548"><a href="#L-548"><span class="linenos"> 548</span></a>        
@@ -923,7 +923,7 @@ gui    </h1>
 </span><span id="L-661"><a href="#L-661"><span class="linenos"> 661</span></a>        
 </span><span id="L-662"><a href="#L-662"><span class="linenos"> 662</span></a>    <span class="c1"># hide all linkage widgets</span>
 </span><span id="L-663"><a href="#L-663"><span class="linenos"> 663</span></a>    <span class="k">def</span> <span class="nf">hide_linkage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="L-664"><a href="#L-664"><span class="linenos"> 664</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Hide linkage&quot;&quot;&quot;</span>
+</span><span id="L-664"><a href="#L-664"><span class="linenos"> 664</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Hide linkage visualization&quot;&quot;&quot;</span>
 </span><span id="L-665"><a href="#L-665"><span class="linenos"> 665</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">model_animation</span><span class="o">.</span><span class="n">itemconfigure</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_animation</span><span class="o">.</span><span class="n">trace_C</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="s1">&#39;hidden&#39;</span><span class="p">)</span>
 </span><span id="L-666"><a href="#L-666"><span class="linenos"> 666</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">model_animation</span><span class="o">.</span><span class="n">itemconfigure</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_animation</span><span class="o">.</span><span class="n">trace_P</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="s1">&#39;hidden&#39;</span><span class="p">)</span>
 </span><span id="L-667"><a href="#L-667"><span class="linenos"> 667</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">model_animation</span><span class="o">.</span><span class="n">itemconfigure</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_animation</span><span class="o">.</span><span class="n">trace_D</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="s1">&#39;hidden&#39;</span><span class="p">)</span>
@@ -950,7 +950,7 @@ gui    </h1>
 </span><span id="L-688"><a href="#L-688"><span class="linenos"> 688</span></a>        
 </span><span id="L-689"><a href="#L-689"><span class="linenos"> 689</span></a>    <span class="c1"># show all linkage widgets</span>
 </span><span id="L-690"><a href="#L-690"><span class="linenos"> 690</span></a>    <span class="k">def</span> <span class="nf">show_linkage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="L-691"><a href="#L-691"><span class="linenos"> 691</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Show linkage&quot;&quot;&quot;</span>
+</span><span id="L-691"><a href="#L-691"><span class="linenos"> 691</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Show linkage visualization&quot;&quot;&quot;</span>
 </span><span id="L-692"><a href="#L-692"><span class="linenos"> 692</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">model_animation</span><span class="o">.</span><span class="n">itemconfigure</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_animation</span><span class="o">.</span><span class="n">trace_C</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="s1">&#39;normal&#39;</span><span class="p">)</span>
 </span><span id="L-693"><a href="#L-693"><span class="linenos"> 693</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">model_animation</span><span class="o">.</span><span class="n">itemconfigure</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_animation</span><span class="o">.</span><span class="n">trace_P</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="s1">&#39;normal&#39;</span><span class="p">)</span>
 </span><span id="L-694"><a href="#L-694"><span class="linenos"> 694</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">model_animation</span><span class="o">.</span><span class="n">itemconfigure</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_animation</span><span class="o">.</span><span class="n">trace_D</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="s1">&#39;normal&#39;</span><span class="p">)</span>
@@ -996,7 +996,7 @@ gui    </h1>
 </span><span id="L-734"><a href="#L-734"><span class="linenos"> 734</span></a>    
 </span><span id="L-735"><a href="#L-735"><span class="linenos"> 735</span></a>    <span class="c1"># repeated function to animate movement</span>
 </span><span id="L-736"><a href="#L-736"><span class="linenos"> 736</span></a>    <span class="k">def</span> <span class="nf">run_animation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="L-737"><a href="#L-737"><span class="linenos"> 737</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Run animation be updating joints positions in a loop&quot;&quot;&quot;</span>
+</span><span id="L-737"><a href="#L-737"><span class="linenos"> 737</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Run animation updating joint positions in a loop&quot;&quot;&quot;</span>
 </span><span id="L-738"><a href="#L-738"><span class="linenos"> 738</span></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">enable_animation</span><span class="o">.</span><span class="n">get</span><span class="p">():</span>
 </span><span id="L-739"><a href="#L-739"><span class="linenos"> 739</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">animation_alpha</span><span class="p">()</span>
 </span><span id="L-740"><a href="#L-740"><span class="linenos"> 740</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
@@ -1384,9 +1384,9 @@ gui    </h1>
 </span><span id="GUI-73"><a href="#GUI-73"><span class="linenos">  73</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;y_axis position on the screen for optimization problem&quot;&quot;&quot;</span>
 </span><span id="GUI-74"><a href="#GUI-74"><span class="linenos">  74</span></a>        <span class="c1"># position of A in new coordinates</span>
 </span><span id="GUI-75"><a href="#GUI-75"><span class="linenos">  75</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">A_x</span> <span class="o">=</span> <span class="mf">0.</span>
-</span><span id="GUI-76"><a href="#GUI-76"><span class="linenos">  76</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Positio of A_x&quot;&quot;&quot;</span>
+</span><span id="GUI-76"><a href="#GUI-76"><span class="linenos">  76</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Position of A_x&quot;&quot;&quot;</span>
 </span><span id="GUI-77"><a href="#GUI-77"><span class="linenos">  77</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">A_y</span> <span class="o">=</span> <span class="mf">0.</span>
-</span><span id="GUI-78"><a href="#GUI-78"><span class="linenos">  78</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Positio of A_y&quot;&quot;&quot;</span>
+</span><span id="GUI-78"><a href="#GUI-78"><span class="linenos">  78</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Position of A_y&quot;&quot;&quot;</span>
 </span><span id="GUI-79"><a href="#GUI-79"><span class="linenos">  79</span></a>        <span class="c1"># to move box in optimization problem</span>
 </span><span id="GUI-80"><a href="#GUI-80"><span class="linenos">  80</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">pin_box_to_coupler</span> <span class="o">=</span> <span class="kc">False</span>
 </span><span id="GUI-81"><a href="#GUI-81"><span class="linenos">  81</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;If box is moved by coupler&quot;&quot;&quot;</span>
@@ -1672,7 +1672,7 @@ gui    </h1>
 </span><span id="GUI-361"><a href="#GUI-361"><span class="linenos"> 361</span></a>
 </span><span id="GUI-362"><a href="#GUI-362"><span class="linenos"> 362</span></a>    <span class="c1"># this function is used to make sure that the four bar linkage model fit in GUI frame</span>
 </span><span id="GUI-363"><a href="#GUI-363"><span class="linenos"> 363</span></a>    <span class="k">def</span> <span class="nf">scaling_factor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="GUI-364"><a href="#GUI-364"><span class="linenos"> 364</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate saling factor to fit display resolution&quot;&quot;&quot;</span>
+</span><span id="GUI-364"><a href="#GUI-364"><span class="linenos"> 364</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate scaling factor to fit display resolution&quot;&quot;&quot;</span>
 </span><span id="GUI-365"><a href="#GUI-365"><span class="linenos"> 365</span></a>        <span class="c1"># fix scale for optimization problem</span>
 </span><span id="GUI-366"><a href="#GUI-366"><span class="linenos"> 366</span></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">enable_optimization_problem</span><span class="o">.</span><span class="n">get</span><span class="p">():</span>
 </span><span id="GUI-367"><a href="#GUI-367"><span class="linenos"> 367</span></a>            <span class="n">scale</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_animation</span><span class="o">.</span><span class="n">width</span><span class="p">)</span><span class="o">/</span><span class="mi">400</span><span class="p">,</span>
@@ -1705,7 +1705,7 @@ gui    </h1>
 </span><span id="GUI-394"><a href="#GUI-394"><span class="linenos"> 394</span></a>    
 </span><span id="GUI-395"><a href="#GUI-395"><span class="linenos"> 395</span></a>    <span class="c1"># normalities to 4 linkage bars, used to display bar&#39;s names</span>
 </span><span id="GUI-396"><a href="#GUI-396"><span class="linenos"> 396</span></a>    <span class="k">def</span> <span class="nf">calculate_normalities</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="GUI-397"><a href="#GUI-397"><span class="linenos"> 397</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Calcualte normalities for all bars&quot;&quot;&quot;</span>
+</span><span id="GUI-397"><a href="#GUI-397"><span class="linenos"> 397</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate normalities for all bars&quot;&quot;&quot;</span>
 </span><span id="GUI-398"><a href="#GUI-398"><span class="linenos"> 398</span></a>        <span class="n">AB</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">B</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">A</span>
 </span><span id="GUI-399"><a href="#GUI-399"><span class="linenos"> 399</span></a>        <span class="n">BC</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">C</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">B</span>
 </span><span id="GUI-400"><a href="#GUI-400"><span class="linenos"> 400</span></a>        <span class="n">CD</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">D</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">C</span>
@@ -1718,77 +1718,77 @@ gui    </h1>
 </span><span id="GUI-407"><a href="#GUI-407"><span class="linenos"> 407</span></a>
 </span><span id="GUI-408"><a href="#GUI-408"><span class="linenos"> 408</span></a>    <span class="c1"># functions for sliders to update parameters</span>
 </span><span id="GUI-409"><a href="#GUI-409"><span class="linenos"> 409</span></a>    <span class="k">def</span> <span class="nf">update_parameter_a</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-</span><span id="GUI-410"><a href="#GUI-410"><span class="linenos"> 410</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter a&quot;&quot;&quot;</span>
+</span><span id="GUI-410"><a href="#GUI-410"><span class="linenos"> 410</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter a according to the slider&quot;&quot;&quot;</span>
 </span><span id="GUI-411"><a href="#GUI-411"><span class="linenos"> 411</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">DA</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
 </span><span id="GUI-412"><a href="#GUI-412"><span class="linenos"> 412</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">delete_tracing</span><span class="p">()</span>
 </span><span id="GUI-413"><a href="#GUI-413"><span class="linenos"> 413</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
 </span><span id="GUI-414"><a href="#GUI-414"><span class="linenos"> 414</span></a>    <span class="k">def</span> <span class="nf">update_parameter_g</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-</span><span id="GUI-415"><a href="#GUI-415"><span class="linenos"> 415</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter g&quot;&quot;&quot;</span>
+</span><span id="GUI-415"><a href="#GUI-415"><span class="linenos"> 415</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter g according to the slider&quot;&quot;&quot;</span>
 </span><span id="GUI-416"><a href="#GUI-416"><span class="linenos"> 416</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">AB</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
 </span><span id="GUI-417"><a href="#GUI-417"><span class="linenos"> 417</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">delete_tracing</span><span class="p">()</span>
 </span><span id="GUI-418"><a href="#GUI-418"><span class="linenos"> 418</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
 </span><span id="GUI-419"><a href="#GUI-419"><span class="linenos"> 419</span></a>    <span class="k">def</span> <span class="nf">update_parameter_b</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-</span><span id="GUI-420"><a href="#GUI-420"><span class="linenos"> 420</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter b&quot;&quot;&quot;</span>
+</span><span id="GUI-420"><a href="#GUI-420"><span class="linenos"> 420</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter b according to the slider&quot;&quot;&quot;</span>
 </span><span id="GUI-421"><a href="#GUI-421"><span class="linenos"> 421</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">BC</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
 </span><span id="GUI-422"><a href="#GUI-422"><span class="linenos"> 422</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">delete_tracing</span><span class="p">()</span>
 </span><span id="GUI-423"><a href="#GUI-423"><span class="linenos"> 423</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
 </span><span id="GUI-424"><a href="#GUI-424"><span class="linenos"> 424</span></a>    <span class="k">def</span> <span class="nf">update_parameter_h</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-</span><span id="GUI-425"><a href="#GUI-425"><span class="linenos"> 425</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter h&quot;&quot;&quot;</span>
+</span><span id="GUI-425"><a href="#GUI-425"><span class="linenos"> 425</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter h according to the slider&quot;&quot;&quot;</span>
 </span><span id="GUI-426"><a href="#GUI-426"><span class="linenos"> 426</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">CD</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
 </span><span id="GUI-427"><a href="#GUI-427"><span class="linenos"> 427</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">delete_tracing</span><span class="p">()</span>
 </span><span id="GUI-428"><a href="#GUI-428"><span class="linenos"> 428</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
 </span><span id="GUI-429"><a href="#GUI-429"><span class="linenos"> 429</span></a>    <span class="k">def</span> <span class="nf">update_parameter_p_pos</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-</span><span id="GUI-430"><a href="#GUI-430"><span class="linenos"> 430</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter P_pos&quot;&quot;&quot;</span>
+</span><span id="GUI-430"><a href="#GUI-430"><span class="linenos"> 430</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter P_pos according to the slider&quot;&quot;&quot;</span>
 </span><span id="GUI-431"><a href="#GUI-431"><span class="linenos"> 431</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">coupler_position</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">val</span><span class="p">)</span><span class="o">/</span><span class="mi">100</span>
 </span><span id="GUI-432"><a href="#GUI-432"><span class="linenos"> 432</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">delete_tracing</span><span class="p">()</span>
 </span><span id="GUI-433"><a href="#GUI-433"><span class="linenos"> 433</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
 </span><span id="GUI-434"><a href="#GUI-434"><span class="linenos"> 434</span></a>    <span class="k">def</span> <span class="nf">update_parameter_p_off</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-</span><span id="GUI-435"><a href="#GUI-435"><span class="linenos"> 435</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter P_offset&quot;&quot;&quot;</span>
+</span><span id="GUI-435"><a href="#GUI-435"><span class="linenos"> 435</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter P_offset according to the slider&quot;&quot;&quot;</span>
 </span><span id="GUI-436"><a href="#GUI-436"><span class="linenos"> 436</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">coupler_offset</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">val</span><span class="p">)</span><span class="o">/</span><span class="mi">100</span>
 </span><span id="GUI-437"><a href="#GUI-437"><span class="linenos"> 437</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">delete_tracing</span><span class="p">()</span>
 </span><span id="GUI-438"><a href="#GUI-438"><span class="linenos"> 438</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
 </span><span id="GUI-439"><a href="#GUI-439"><span class="linenos"> 439</span></a>    <span class="k">def</span> <span class="nf">update_parameter_alpha</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-</span><span id="GUI-440"><a href="#GUI-440"><span class="linenos"> 440</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter input angle alpha&quot;&quot;&quot;</span>
+</span><span id="GUI-440"><a href="#GUI-440"><span class="linenos"> 440</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter input angle alpha according to the slider&quot;&quot;&quot;</span>
 </span><span id="GUI-441"><a href="#GUI-441"><span class="linenos"> 441</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
 </span><span id="GUI-442"><a href="#GUI-442"><span class="linenos"> 442</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">alpha_rad</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">alpha</span><span class="p">)</span>
 </span><span id="GUI-443"><a href="#GUI-443"><span class="linenos"> 443</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
 </span><span id="GUI-444"><a href="#GUI-444"><span class="linenos"> 444</span></a>    <span class="k">def</span> <span class="nf">update_parameter_theta</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-</span><span id="GUI-445"><a href="#GUI-445"><span class="linenos"> 445</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter angle to horizont theta&quot;&quot;&quot;</span>
+</span><span id="GUI-445"><a href="#GUI-445"><span class="linenos"> 445</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter angle to horizont theta according to the slider&quot;&quot;&quot;</span>
 </span><span id="GUI-446"><a href="#GUI-446"><span class="linenos"> 446</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">theta</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
 </span><span id="GUI-447"><a href="#GUI-447"><span class="linenos"> 447</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">delete_tracing</span><span class="p">()</span>
 </span><span id="GUI-448"><a href="#GUI-448"><span class="linenos"> 448</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">theta_rad</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">theta</span><span class="p">)</span>
 </span><span id="GUI-449"><a href="#GUI-449"><span class="linenos"> 449</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
 </span><span id="GUI-450"><a href="#GUI-450"><span class="linenos"> 450</span></a>    <span class="k">def</span> <span class="nf">update_parameter_T1</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-</span><span id="GUI-451"><a href="#GUI-451"><span class="linenos"> 451</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter classification value T1&quot;&quot;&quot;</span>
+</span><span id="GUI-451"><a href="#GUI-451"><span class="linenos"> 451</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter classification value T1 according to the slider&quot;&quot;&quot;</span>
 </span><span id="GUI-452"><a href="#GUI-452"><span class="linenos"> 452</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">T1</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
 </span><span id="GUI-453"><a href="#GUI-453"><span class="linenos"> 453</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">delete_tracing</span><span class="p">()</span>
 </span><span id="GUI-454"><a href="#GUI-454"><span class="linenos"> 454</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">calculate_Edge_Value</span><span class="p">()</span>
 </span><span id="GUI-455"><a href="#GUI-455"><span class="linenos"> 455</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
 </span><span id="GUI-456"><a href="#GUI-456"><span class="linenos"> 456</span></a>    <span class="k">def</span> <span class="nf">update_parameter_T2</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-</span><span id="GUI-457"><a href="#GUI-457"><span class="linenos"> 457</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter classification value T2&quot;&quot;&quot;</span>
+</span><span id="GUI-457"><a href="#GUI-457"><span class="linenos"> 457</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter classification value T2 according to the slider&quot;&quot;&quot;</span>
 </span><span id="GUI-458"><a href="#GUI-458"><span class="linenos"> 458</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">T2</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
 </span><span id="GUI-459"><a href="#GUI-459"><span class="linenos"> 459</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">delete_tracing</span><span class="p">()</span>
 </span><span id="GUI-460"><a href="#GUI-460"><span class="linenos"> 460</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">calculate_Edge_Value</span><span class="p">()</span>
 </span><span id="GUI-461"><a href="#GUI-461"><span class="linenos"> 461</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
 </span><span id="GUI-462"><a href="#GUI-462"><span class="linenos"> 462</span></a>    <span class="k">def</span> <span class="nf">update_parameter_T3</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-</span><span id="GUI-463"><a href="#GUI-463"><span class="linenos"> 463</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter classification value T3&quot;&quot;&quot;</span>
+</span><span id="GUI-463"><a href="#GUI-463"><span class="linenos"> 463</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter classification value T3 according to the slider&quot;&quot;&quot;</span>
 </span><span id="GUI-464"><a href="#GUI-464"><span class="linenos"> 464</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">T3</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
 </span><span id="GUI-465"><a href="#GUI-465"><span class="linenos"> 465</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">delete_tracing</span><span class="p">()</span>
 </span><span id="GUI-466"><a href="#GUI-466"><span class="linenos"> 466</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">calculate_Edge_Value</span><span class="p">()</span>
 </span><span id="GUI-467"><a href="#GUI-467"><span class="linenos"> 467</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
 </span><span id="GUI-468"><a href="#GUI-468"><span class="linenos"> 468</span></a>    <span class="k">def</span> <span class="nf">update_parameter_L</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-</span><span id="GUI-469"><a href="#GUI-469"><span class="linenos"> 469</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter sum of all lengths L&quot;&quot;&quot;</span>
+</span><span id="GUI-469"><a href="#GUI-469"><span class="linenos"> 469</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter sum of all lengths L according to the slider&quot;&quot;&quot;</span>
 </span><span id="GUI-470"><a href="#GUI-470"><span class="linenos"> 470</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">L</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
 </span><span id="GUI-471"><a href="#GUI-471"><span class="linenos"> 471</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">delete_tracing</span><span class="p">()</span>
 </span><span id="GUI-472"><a href="#GUI-472"><span class="linenos"> 472</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">calculate_Edge_Value</span><span class="p">()</span>
 </span><span id="GUI-473"><a href="#GUI-473"><span class="linenos"> 473</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
 </span><span id="GUI-474"><a href="#GUI-474"><span class="linenos"> 474</span></a>    <span class="k">def</span> <span class="nf">update_parameter_A_x</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-</span><span id="GUI-475"><a href="#GUI-475"><span class="linenos"> 475</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter A_x&quot;&quot;&quot;</span>
+</span><span id="GUI-475"><a href="#GUI-475"><span class="linenos"> 475</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter A_x according to the slider&quot;&quot;&quot;</span>
 </span><span id="GUI-476"><a href="#GUI-476"><span class="linenos"> 476</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">A_x</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
 </span><span id="GUI-477"><a href="#GUI-477"><span class="linenos"> 477</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">delete_tracing</span><span class="p">()</span>
 </span><span id="GUI-478"><a href="#GUI-478"><span class="linenos"> 478</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
 </span><span id="GUI-479"><a href="#GUI-479"><span class="linenos"> 479</span></a>    <span class="k">def</span> <span class="nf">update_parameter_A_y</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-</span><span id="GUI-480"><a href="#GUI-480"><span class="linenos"> 480</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter A_y&quot;&quot;&quot;</span>
+</span><span id="GUI-480"><a href="#GUI-480"><span class="linenos"> 480</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter A_y according to the slider&quot;&quot;&quot;</span>
 </span><span id="GUI-481"><a href="#GUI-481"><span class="linenos"> 481</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">A_y</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
 </span><span id="GUI-482"><a href="#GUI-482"><span class="linenos"> 482</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">delete_tracing</span><span class="p">()</span>
 </span><span id="GUI-483"><a href="#GUI-483"><span class="linenos"> 483</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
@@ -1830,7 +1830,7 @@ gui    </h1>
 </span><span id="GUI-519"><a href="#GUI-519"><span class="linenos"> 519</span></a>    
 </span><span id="GUI-520"><a href="#GUI-520"><span class="linenos"> 520</span></a>    <span class="c1"># reset bars sliders + angles</span>
 </span><span id="GUI-521"><a href="#GUI-521"><span class="linenos"> 521</span></a>    <span class="k">def</span> <span class="nf">reset_bars_sliders</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="GUI-522"><a href="#GUI-522"><span class="linenos"> 522</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Reset input parameters on sliders&quot;&quot;&quot;</span>
+</span><span id="GUI-522"><a href="#GUI-522"><span class="linenos"> 522</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Reset input parameters on sliders to the current values&quot;&quot;&quot;</span>
 </span><span id="GUI-523"><a href="#GUI-523"><span class="linenos"> 523</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">slider_a</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">DA</span><span class="p">)</span>
 </span><span id="GUI-524"><a href="#GUI-524"><span class="linenos"> 524</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">slider_g</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">AB</span><span class="p">)</span>
 </span><span id="GUI-525"><a href="#GUI-525"><span class="linenos"> 525</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">slider_b</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">BC</span><span class="p">)</span>
@@ -1842,7 +1842,7 @@ gui    </h1>
 </span><span id="GUI-531"><a href="#GUI-531"><span class="linenos"> 531</span></a>    
 </span><span id="GUI-532"><a href="#GUI-532"><span class="linenos"> 532</span></a>    <span class="c1"># reset classifications sliders + angles</span>
 </span><span id="GUI-533"><a href="#GUI-533"><span class="linenos"> 533</span></a>    <span class="k">def</span> <span class="nf">reset_classifications_sliders</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="GUI-534"><a href="#GUI-534"><span class="linenos"> 534</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Reset classification values on sliders&quot;&quot;&quot;</span>
+</span><span id="GUI-534"><a href="#GUI-534"><span class="linenos"> 534</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Reset classification values on sliders to the current values&quot;&quot;&quot;</span>
 </span><span id="GUI-535"><a href="#GUI-535"><span class="linenos"> 535</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">slider_T1</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">T1</span><span class="p">)</span>
 </span><span id="GUI-536"><a href="#GUI-536"><span class="linenos"> 536</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">slider_T2</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">T2</span><span class="p">)</span>
 </span><span id="GUI-537"><a href="#GUI-537"><span class="linenos"> 537</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">slider_T3</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">T3</span><span class="p">)</span>
@@ -1854,7 +1854,7 @@ gui    </h1>
 </span><span id="GUI-543"><a href="#GUI-543"><span class="linenos"> 543</span></a>        
 </span><span id="GUI-544"><a href="#GUI-544"><span class="linenos"> 544</span></a>    <span class="c1"># reset sliders A_x and A_y</span>
 </span><span id="GUI-545"><a href="#GUI-545"><span class="linenos"> 545</span></a>    <span class="k">def</span> <span class="nf">reset_A_x_A_y</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="GUI-546"><a href="#GUI-546"><span class="linenos"> 546</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Reset A_x and A_y on sliders&quot;&quot;&quot;</span>
+</span><span id="GUI-546"><a href="#GUI-546"><span class="linenos"> 546</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Reset A_x and A_y on sliders to the current values&quot;&quot;&quot;</span>
 </span><span id="GUI-547"><a href="#GUI-547"><span class="linenos"> 547</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">slider_A_x</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">A_x</span><span class="p">)</span>
 </span><span id="GUI-548"><a href="#GUI-548"><span class="linenos"> 548</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">slider_A_y</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">A_y</span><span class="p">)</span>
 </span><span id="GUI-549"><a href="#GUI-549"><span class="linenos"> 549</span></a>        
@@ -1973,7 +1973,7 @@ gui    </h1>
 </span><span id="GUI-662"><a href="#GUI-662"><span class="linenos"> 662</span></a>        
 </span><span id="GUI-663"><a href="#GUI-663"><span class="linenos"> 663</span></a>    <span class="c1"># hide all linkage widgets</span>
 </span><span id="GUI-664"><a href="#GUI-664"><span class="linenos"> 664</span></a>    <span class="k">def</span> <span class="nf">hide_linkage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="GUI-665"><a href="#GUI-665"><span class="linenos"> 665</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Hide linkage&quot;&quot;&quot;</span>
+</span><span id="GUI-665"><a href="#GUI-665"><span class="linenos"> 665</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Hide linkage visualization&quot;&quot;&quot;</span>
 </span><span id="GUI-666"><a href="#GUI-666"><span class="linenos"> 666</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">model_animation</span><span class="o">.</span><span class="n">itemconfigure</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_animation</span><span class="o">.</span><span class="n">trace_C</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="s1">&#39;hidden&#39;</span><span class="p">)</span>
 </span><span id="GUI-667"><a href="#GUI-667"><span class="linenos"> 667</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">model_animation</span><span class="o">.</span><span class="n">itemconfigure</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_animation</span><span class="o">.</span><span class="n">trace_P</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="s1">&#39;hidden&#39;</span><span class="p">)</span>
 </span><span id="GUI-668"><a href="#GUI-668"><span class="linenos"> 668</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">model_animation</span><span class="o">.</span><span class="n">itemconfigure</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_animation</span><span class="o">.</span><span class="n">trace_D</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="s1">&#39;hidden&#39;</span><span class="p">)</span>
@@ -2000,7 +2000,7 @@ gui    </h1>
 </span><span id="GUI-689"><a href="#GUI-689"><span class="linenos"> 689</span></a>        
 </span><span id="GUI-690"><a href="#GUI-690"><span class="linenos"> 690</span></a>    <span class="c1"># show all linkage widgets</span>
 </span><span id="GUI-691"><a href="#GUI-691"><span class="linenos"> 691</span></a>    <span class="k">def</span> <span class="nf">show_linkage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="GUI-692"><a href="#GUI-692"><span class="linenos"> 692</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Show linkage&quot;&quot;&quot;</span>
+</span><span id="GUI-692"><a href="#GUI-692"><span class="linenos"> 692</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Show linkage visualization&quot;&quot;&quot;</span>
 </span><span id="GUI-693"><a href="#GUI-693"><span class="linenos"> 693</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">model_animation</span><span class="o">.</span><span class="n">itemconfigure</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_animation</span><span class="o">.</span><span class="n">trace_C</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="s1">&#39;normal&#39;</span><span class="p">)</span>
 </span><span id="GUI-694"><a href="#GUI-694"><span class="linenos"> 694</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">model_animation</span><span class="o">.</span><span class="n">itemconfigure</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_animation</span><span class="o">.</span><span class="n">trace_P</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="s1">&#39;normal&#39;</span><span class="p">)</span>
 </span><span id="GUI-695"><a href="#GUI-695"><span class="linenos"> 695</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">model_animation</span><span class="o">.</span><span class="n">itemconfigure</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_animation</span><span class="o">.</span><span class="n">trace_D</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="s1">&#39;normal&#39;</span><span class="p">)</span>
@@ -2046,7 +2046,7 @@ gui    </h1>
 </span><span id="GUI-735"><a href="#GUI-735"><span class="linenos"> 735</span></a>    
 </span><span id="GUI-736"><a href="#GUI-736"><span class="linenos"> 736</span></a>    <span class="c1"># repeated function to animate movement</span>
 </span><span id="GUI-737"><a href="#GUI-737"><span class="linenos"> 737</span></a>    <span class="k">def</span> <span class="nf">run_animation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="GUI-738"><a href="#GUI-738"><span class="linenos"> 738</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Run animation be updating joints positions in a loop&quot;&quot;&quot;</span>
+</span><span id="GUI-738"><a href="#GUI-738"><span class="linenos"> 738</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Run animation updating joint positions in a loop&quot;&quot;&quot;</span>
 </span><span id="GUI-739"><a href="#GUI-739"><span class="linenos"> 739</span></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">enable_animation</span><span class="o">.</span><span class="n">get</span><span class="p">():</span>
 </span><span id="GUI-740"><a href="#GUI-740"><span class="linenos"> 740</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">animation_alpha</span><span class="p">()</span>
 </span><span id="GUI-741"><a href="#GUI-741"><span class="linenos"> 741</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
@@ -2428,9 +2428,9 @@ gui    </h1>
 </span><span id="GUI.__init__-73"><a href="#GUI.__init__-73"><span class="linenos">73</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;y_axis position on the screen for optimization problem&quot;&quot;&quot;</span>
 </span><span id="GUI.__init__-74"><a href="#GUI.__init__-74"><span class="linenos">74</span></a>        <span class="c1"># position of A in new coordinates</span>
 </span><span id="GUI.__init__-75"><a href="#GUI.__init__-75"><span class="linenos">75</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">A_x</span> <span class="o">=</span> <span class="mf">0.</span>
-</span><span id="GUI.__init__-76"><a href="#GUI.__init__-76"><span class="linenos">76</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Positio of A_x&quot;&quot;&quot;</span>
+</span><span id="GUI.__init__-76"><a href="#GUI.__init__-76"><span class="linenos">76</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Position of A_x&quot;&quot;&quot;</span>
 </span><span id="GUI.__init__-77"><a href="#GUI.__init__-77"><span class="linenos">77</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">A_y</span> <span class="o">=</span> <span class="mf">0.</span>
-</span><span id="GUI.__init__-78"><a href="#GUI.__init__-78"><span class="linenos">78</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Positio of A_y&quot;&quot;&quot;</span>
+</span><span id="GUI.__init__-78"><a href="#GUI.__init__-78"><span class="linenos">78</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Position of A_y&quot;&quot;&quot;</span>
 </span><span id="GUI.__init__-79"><a href="#GUI.__init__-79"><span class="linenos">79</span></a>        <span class="c1"># to move box in optimization problem</span>
 </span><span id="GUI.__init__-80"><a href="#GUI.__init__-80"><span class="linenos">80</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">pin_box_to_coupler</span> <span class="o">=</span> <span class="kc">False</span>
 </span><span id="GUI.__init__-81"><a href="#GUI.__init__-81"><span class="linenos">81</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;If box is moved by coupler&quot;&quot;&quot;</span>
@@ -2685,7 +2685,7 @@ gui    </h1>
     </div>
     <a class="headerlink" href="#GUI.A_x"></a>
     
-            <div class="docstring"><p>Positio of A_x</p>
+            <div class="docstring"><p>Position of A_x</p>
 </div>
 
 
@@ -2698,7 +2698,7 @@ gui    </h1>
     </div>
     <a class="headerlink" href="#GUI.A_y"></a>
     
-            <div class="docstring"><p>Positio of A_y</p>
+            <div class="docstring"><p>Position of A_y</p>
 </div>
 
 
@@ -3112,7 +3112,7 @@ gui    </h1>
     </div>
     <a class="headerlink" href="#GUI.scaling_factor"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="GUI.scaling_factor-363"><a href="#GUI.scaling_factor-363"><span class="linenos">363</span></a>    <span class="k">def</span> <span class="nf">scaling_factor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="GUI.scaling_factor-364"><a href="#GUI.scaling_factor-364"><span class="linenos">364</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate saling factor to fit display resolution&quot;&quot;&quot;</span>
+</span><span id="GUI.scaling_factor-364"><a href="#GUI.scaling_factor-364"><span class="linenos">364</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate scaling factor to fit display resolution&quot;&quot;&quot;</span>
 </span><span id="GUI.scaling_factor-365"><a href="#GUI.scaling_factor-365"><span class="linenos">365</span></a>        <span class="c1"># fix scale for optimization problem</span>
 </span><span id="GUI.scaling_factor-366"><a href="#GUI.scaling_factor-366"><span class="linenos">366</span></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">enable_optimization_problem</span><span class="o">.</span><span class="n">get</span><span class="p">():</span>
 </span><span id="GUI.scaling_factor-367"><a href="#GUI.scaling_factor-367"><span class="linenos">367</span></a>            <span class="n">scale</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_animation</span><span class="o">.</span><span class="n">width</span><span class="p">)</span><span class="o">/</span><span class="mi">400</span><span class="p">,</span>
@@ -3145,7 +3145,7 @@ gui    </h1>
 </span></pre></div>
 
 
-            <div class="docstring"><p>Calculate saling factor to fit display resolution</p>
+            <div class="docstring"><p>Calculate scaling factor to fit display resolution</p>
 </div>
 
 
@@ -3162,7 +3162,7 @@ gui    </h1>
     </div>
     <a class="headerlink" href="#GUI.calculate_normalities"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="GUI.calculate_normalities-396"><a href="#GUI.calculate_normalities-396"><span class="linenos">396</span></a>    <span class="k">def</span> <span class="nf">calculate_normalities</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="GUI.calculate_normalities-397"><a href="#GUI.calculate_normalities-397"><span class="linenos">397</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Calcualte normalities for all bars&quot;&quot;&quot;</span>
+</span><span id="GUI.calculate_normalities-397"><a href="#GUI.calculate_normalities-397"><span class="linenos">397</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate normalities for all bars&quot;&quot;&quot;</span>
 </span><span id="GUI.calculate_normalities-398"><a href="#GUI.calculate_normalities-398"><span class="linenos">398</span></a>        <span class="n">AB</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">B</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">A</span>
 </span><span id="GUI.calculate_normalities-399"><a href="#GUI.calculate_normalities-399"><span class="linenos">399</span></a>        <span class="n">BC</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">C</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">B</span>
 </span><span id="GUI.calculate_normalities-400"><a href="#GUI.calculate_normalities-400"><span class="linenos">400</span></a>        <span class="n">CD</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">D</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">C</span>
@@ -3175,7 +3175,7 @@ gui    </h1>
 </span></pre></div>
 
 
-            <div class="docstring"><p>Calcualte normalities for all bars</p>
+            <div class="docstring"><p>Calculate normalities for all bars</p>
 </div>
 
 
@@ -3192,14 +3192,14 @@ gui    </h1>
     </div>
     <a class="headerlink" href="#GUI.update_parameter_a"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="GUI.update_parameter_a-409"><a href="#GUI.update_parameter_a-409"><span class="linenos">409</span></a>    <span class="k">def</span> <span class="nf">update_parameter_a</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-</span><span id="GUI.update_parameter_a-410"><a href="#GUI.update_parameter_a-410"><span class="linenos">410</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter a&quot;&quot;&quot;</span>
+</span><span id="GUI.update_parameter_a-410"><a href="#GUI.update_parameter_a-410"><span class="linenos">410</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter a according to the slider&quot;&quot;&quot;</span>
 </span><span id="GUI.update_parameter_a-411"><a href="#GUI.update_parameter_a-411"><span class="linenos">411</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">DA</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
 </span><span id="GUI.update_parameter_a-412"><a href="#GUI.update_parameter_a-412"><span class="linenos">412</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">delete_tracing</span><span class="p">()</span>
 </span><span id="GUI.update_parameter_a-413"><a href="#GUI.update_parameter_a-413"><span class="linenos">413</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
 </span></pre></div>
 
 
-            <div class="docstring"><p>Update parameter a</p>
+            <div class="docstring"><p>Update parameter a according to the slider</p>
 </div>
 
 
@@ -3216,14 +3216,14 @@ gui    </h1>
     </div>
     <a class="headerlink" href="#GUI.update_parameter_g"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="GUI.update_parameter_g-414"><a href="#GUI.update_parameter_g-414"><span class="linenos">414</span></a>    <span class="k">def</span> <span class="nf">update_parameter_g</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-</span><span id="GUI.update_parameter_g-415"><a href="#GUI.update_parameter_g-415"><span class="linenos">415</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter g&quot;&quot;&quot;</span>
+</span><span id="GUI.update_parameter_g-415"><a href="#GUI.update_parameter_g-415"><span class="linenos">415</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter g according to the slider&quot;&quot;&quot;</span>
 </span><span id="GUI.update_parameter_g-416"><a href="#GUI.update_parameter_g-416"><span class="linenos">416</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">AB</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
 </span><span id="GUI.update_parameter_g-417"><a href="#GUI.update_parameter_g-417"><span class="linenos">417</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">delete_tracing</span><span class="p">()</span>
 </span><span id="GUI.update_parameter_g-418"><a href="#GUI.update_parameter_g-418"><span class="linenos">418</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
 </span></pre></div>
 
 
-            <div class="docstring"><p>Update parameter g</p>
+            <div class="docstring"><p>Update parameter g according to the slider</p>
 </div>
 
 
@@ -3240,14 +3240,14 @@ gui    </h1>
     </div>
     <a class="headerlink" href="#GUI.update_parameter_b"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="GUI.update_parameter_b-419"><a href="#GUI.update_parameter_b-419"><span class="linenos">419</span></a>    <span class="k">def</span> <span class="nf">update_parameter_b</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-</span><span id="GUI.update_parameter_b-420"><a href="#GUI.update_parameter_b-420"><span class="linenos">420</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter b&quot;&quot;&quot;</span>
+</span><span id="GUI.update_parameter_b-420"><a href="#GUI.update_parameter_b-420"><span class="linenos">420</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter b according to the slider&quot;&quot;&quot;</span>
 </span><span id="GUI.update_parameter_b-421"><a href="#GUI.update_parameter_b-421"><span class="linenos">421</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">BC</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
 </span><span id="GUI.update_parameter_b-422"><a href="#GUI.update_parameter_b-422"><span class="linenos">422</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">delete_tracing</span><span class="p">()</span>
 </span><span id="GUI.update_parameter_b-423"><a href="#GUI.update_parameter_b-423"><span class="linenos">423</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
 </span></pre></div>
 
 
-            <div class="docstring"><p>Update parameter b</p>
+            <div class="docstring"><p>Update parameter b according to the slider</p>
 </div>
 
 
@@ -3264,14 +3264,14 @@ gui    </h1>
     </div>
     <a class="headerlink" href="#GUI.update_parameter_h"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="GUI.update_parameter_h-424"><a href="#GUI.update_parameter_h-424"><span class="linenos">424</span></a>    <span class="k">def</span> <span class="nf">update_parameter_h</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-</span><span id="GUI.update_parameter_h-425"><a href="#GUI.update_parameter_h-425"><span class="linenos">425</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter h&quot;&quot;&quot;</span>
+</span><span id="GUI.update_parameter_h-425"><a href="#GUI.update_parameter_h-425"><span class="linenos">425</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter h according to the slider&quot;&quot;&quot;</span>
 </span><span id="GUI.update_parameter_h-426"><a href="#GUI.update_parameter_h-426"><span class="linenos">426</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">CD</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
 </span><span id="GUI.update_parameter_h-427"><a href="#GUI.update_parameter_h-427"><span class="linenos">427</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">delete_tracing</span><span class="p">()</span>
 </span><span id="GUI.update_parameter_h-428"><a href="#GUI.update_parameter_h-428"><span class="linenos">428</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
 </span></pre></div>
 
 
-            <div class="docstring"><p>Update parameter h</p>
+            <div class="docstring"><p>Update parameter h according to the slider</p>
 </div>
 
 
@@ -3288,14 +3288,14 @@ gui    </h1>
     </div>
     <a class="headerlink" href="#GUI.update_parameter_p_pos"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="GUI.update_parameter_p_pos-429"><a href="#GUI.update_parameter_p_pos-429"><span class="linenos">429</span></a>    <span class="k">def</span> <span class="nf">update_parameter_p_pos</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-</span><span id="GUI.update_parameter_p_pos-430"><a href="#GUI.update_parameter_p_pos-430"><span class="linenos">430</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter P_pos&quot;&quot;&quot;</span>
+</span><span id="GUI.update_parameter_p_pos-430"><a href="#GUI.update_parameter_p_pos-430"><span class="linenos">430</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter P_pos according to the slider&quot;&quot;&quot;</span>
 </span><span id="GUI.update_parameter_p_pos-431"><a href="#GUI.update_parameter_p_pos-431"><span class="linenos">431</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">coupler_position</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">val</span><span class="p">)</span><span class="o">/</span><span class="mi">100</span>
 </span><span id="GUI.update_parameter_p_pos-432"><a href="#GUI.update_parameter_p_pos-432"><span class="linenos">432</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">delete_tracing</span><span class="p">()</span>
 </span><span id="GUI.update_parameter_p_pos-433"><a href="#GUI.update_parameter_p_pos-433"><span class="linenos">433</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
 </span></pre></div>
 
 
-            <div class="docstring"><p>Update parameter P_pos</p>
+            <div class="docstring"><p>Update parameter P_pos according to the slider</p>
 </div>
 
 
@@ -3312,14 +3312,14 @@ gui    </h1>
     </div>
     <a class="headerlink" href="#GUI.update_parameter_p_off"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="GUI.update_parameter_p_off-434"><a href="#GUI.update_parameter_p_off-434"><span class="linenos">434</span></a>    <span class="k">def</span> <span class="nf">update_parameter_p_off</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-</span><span id="GUI.update_parameter_p_off-435"><a href="#GUI.update_parameter_p_off-435"><span class="linenos">435</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter P_offset&quot;&quot;&quot;</span>
+</span><span id="GUI.update_parameter_p_off-435"><a href="#GUI.update_parameter_p_off-435"><span class="linenos">435</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter P_offset according to the slider&quot;&quot;&quot;</span>
 </span><span id="GUI.update_parameter_p_off-436"><a href="#GUI.update_parameter_p_off-436"><span class="linenos">436</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">coupler_offset</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">val</span><span class="p">)</span><span class="o">/</span><span class="mi">100</span>
 </span><span id="GUI.update_parameter_p_off-437"><a href="#GUI.update_parameter_p_off-437"><span class="linenos">437</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">delete_tracing</span><span class="p">()</span>
 </span><span id="GUI.update_parameter_p_off-438"><a href="#GUI.update_parameter_p_off-438"><span class="linenos">438</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
 </span></pre></div>
 
 
-            <div class="docstring"><p>Update parameter P_offset</p>
+            <div class="docstring"><p>Update parameter P_offset according to the slider</p>
 </div>
 
 
@@ -3336,14 +3336,14 @@ gui    </h1>
     </div>
     <a class="headerlink" href="#GUI.update_parameter_alpha"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="GUI.update_parameter_alpha-439"><a href="#GUI.update_parameter_alpha-439"><span class="linenos">439</span></a>    <span class="k">def</span> <span class="nf">update_parameter_alpha</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-</span><span id="GUI.update_parameter_alpha-440"><a href="#GUI.update_parameter_alpha-440"><span class="linenos">440</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter input angle alpha&quot;&quot;&quot;</span>
+</span><span id="GUI.update_parameter_alpha-440"><a href="#GUI.update_parameter_alpha-440"><span class="linenos">440</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter input angle alpha according to the slider&quot;&quot;&quot;</span>
 </span><span id="GUI.update_parameter_alpha-441"><a href="#GUI.update_parameter_alpha-441"><span class="linenos">441</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
 </span><span id="GUI.update_parameter_alpha-442"><a href="#GUI.update_parameter_alpha-442"><span class="linenos">442</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">alpha_rad</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">alpha</span><span class="p">)</span>
 </span><span id="GUI.update_parameter_alpha-443"><a href="#GUI.update_parameter_alpha-443"><span class="linenos">443</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
 </span></pre></div>
 
 
-            <div class="docstring"><p>Update parameter input angle alpha</p>
+            <div class="docstring"><p>Update parameter input angle alpha according to the slider</p>
 </div>
 
 
@@ -3360,7 +3360,7 @@ gui    </h1>
     </div>
     <a class="headerlink" href="#GUI.update_parameter_theta"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="GUI.update_parameter_theta-444"><a href="#GUI.update_parameter_theta-444"><span class="linenos">444</span></a>    <span class="k">def</span> <span class="nf">update_parameter_theta</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-</span><span id="GUI.update_parameter_theta-445"><a href="#GUI.update_parameter_theta-445"><span class="linenos">445</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter angle to horizont theta&quot;&quot;&quot;</span>
+</span><span id="GUI.update_parameter_theta-445"><a href="#GUI.update_parameter_theta-445"><span class="linenos">445</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter angle to horizont theta according to the slider&quot;&quot;&quot;</span>
 </span><span id="GUI.update_parameter_theta-446"><a href="#GUI.update_parameter_theta-446"><span class="linenos">446</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">theta</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
 </span><span id="GUI.update_parameter_theta-447"><a href="#GUI.update_parameter_theta-447"><span class="linenos">447</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">delete_tracing</span><span class="p">()</span>
 </span><span id="GUI.update_parameter_theta-448"><a href="#GUI.update_parameter_theta-448"><span class="linenos">448</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">theta_rad</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">theta</span><span class="p">)</span>
@@ -3368,7 +3368,7 @@ gui    </h1>
 </span></pre></div>
 
 
-            <div class="docstring"><p>Update parameter angle to horizont theta</p>
+            <div class="docstring"><p>Update parameter angle to horizont theta according to the slider</p>
 </div>
 
 
@@ -3385,7 +3385,7 @@ gui    </h1>
     </div>
     <a class="headerlink" href="#GUI.update_parameter_T1"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="GUI.update_parameter_T1-450"><a href="#GUI.update_parameter_T1-450"><span class="linenos">450</span></a>    <span class="k">def</span> <span class="nf">update_parameter_T1</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-</span><span id="GUI.update_parameter_T1-451"><a href="#GUI.update_parameter_T1-451"><span class="linenos">451</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter classification value T1&quot;&quot;&quot;</span>
+</span><span id="GUI.update_parameter_T1-451"><a href="#GUI.update_parameter_T1-451"><span class="linenos">451</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter classification value T1 according to the slider&quot;&quot;&quot;</span>
 </span><span id="GUI.update_parameter_T1-452"><a href="#GUI.update_parameter_T1-452"><span class="linenos">452</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">T1</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
 </span><span id="GUI.update_parameter_T1-453"><a href="#GUI.update_parameter_T1-453"><span class="linenos">453</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">delete_tracing</span><span class="p">()</span>
 </span><span id="GUI.update_parameter_T1-454"><a href="#GUI.update_parameter_T1-454"><span class="linenos">454</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">calculate_Edge_Value</span><span class="p">()</span>
@@ -3393,7 +3393,7 @@ gui    </h1>
 </span></pre></div>
 
 
-            <div class="docstring"><p>Update parameter classification value T1</p>
+            <div class="docstring"><p>Update parameter classification value T1 according to the slider</p>
 </div>
 
 
@@ -3410,7 +3410,7 @@ gui    </h1>
     </div>
     <a class="headerlink" href="#GUI.update_parameter_T2"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="GUI.update_parameter_T2-456"><a href="#GUI.update_parameter_T2-456"><span class="linenos">456</span></a>    <span class="k">def</span> <span class="nf">update_parameter_T2</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-</span><span id="GUI.update_parameter_T2-457"><a href="#GUI.update_parameter_T2-457"><span class="linenos">457</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter classification value T2&quot;&quot;&quot;</span>
+</span><span id="GUI.update_parameter_T2-457"><a href="#GUI.update_parameter_T2-457"><span class="linenos">457</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter classification value T2 according to the slider&quot;&quot;&quot;</span>
 </span><span id="GUI.update_parameter_T2-458"><a href="#GUI.update_parameter_T2-458"><span class="linenos">458</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">T2</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
 </span><span id="GUI.update_parameter_T2-459"><a href="#GUI.update_parameter_T2-459"><span class="linenos">459</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">delete_tracing</span><span class="p">()</span>
 </span><span id="GUI.update_parameter_T2-460"><a href="#GUI.update_parameter_T2-460"><span class="linenos">460</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">calculate_Edge_Value</span><span class="p">()</span>
@@ -3418,7 +3418,7 @@ gui    </h1>
 </span></pre></div>
 
 
-            <div class="docstring"><p>Update parameter classification value T2</p>
+            <div class="docstring"><p>Update parameter classification value T2 according to the slider</p>
 </div>
 
 
@@ -3435,7 +3435,7 @@ gui    </h1>
     </div>
     <a class="headerlink" href="#GUI.update_parameter_T3"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="GUI.update_parameter_T3-462"><a href="#GUI.update_parameter_T3-462"><span class="linenos">462</span></a>    <span class="k">def</span> <span class="nf">update_parameter_T3</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-</span><span id="GUI.update_parameter_T3-463"><a href="#GUI.update_parameter_T3-463"><span class="linenos">463</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter classification value T3&quot;&quot;&quot;</span>
+</span><span id="GUI.update_parameter_T3-463"><a href="#GUI.update_parameter_T3-463"><span class="linenos">463</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter classification value T3 according to the slider&quot;&quot;&quot;</span>
 </span><span id="GUI.update_parameter_T3-464"><a href="#GUI.update_parameter_T3-464"><span class="linenos">464</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">T3</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
 </span><span id="GUI.update_parameter_T3-465"><a href="#GUI.update_parameter_T3-465"><span class="linenos">465</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">delete_tracing</span><span class="p">()</span>
 </span><span id="GUI.update_parameter_T3-466"><a href="#GUI.update_parameter_T3-466"><span class="linenos">466</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">calculate_Edge_Value</span><span class="p">()</span>
@@ -3443,7 +3443,7 @@ gui    </h1>
 </span></pre></div>
 
 
-            <div class="docstring"><p>Update parameter classification value T3</p>
+            <div class="docstring"><p>Update parameter classification value T3 according to the slider</p>
 </div>
 
 
@@ -3460,7 +3460,7 @@ gui    </h1>
     </div>
     <a class="headerlink" href="#GUI.update_parameter_L"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="GUI.update_parameter_L-468"><a href="#GUI.update_parameter_L-468"><span class="linenos">468</span></a>    <span class="k">def</span> <span class="nf">update_parameter_L</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-</span><span id="GUI.update_parameter_L-469"><a href="#GUI.update_parameter_L-469"><span class="linenos">469</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter sum of all lengths L&quot;&quot;&quot;</span>
+</span><span id="GUI.update_parameter_L-469"><a href="#GUI.update_parameter_L-469"><span class="linenos">469</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter sum of all lengths L according to the slider&quot;&quot;&quot;</span>
 </span><span id="GUI.update_parameter_L-470"><a href="#GUI.update_parameter_L-470"><span class="linenos">470</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">L</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
 </span><span id="GUI.update_parameter_L-471"><a href="#GUI.update_parameter_L-471"><span class="linenos">471</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">delete_tracing</span><span class="p">()</span>
 </span><span id="GUI.update_parameter_L-472"><a href="#GUI.update_parameter_L-472"><span class="linenos">472</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">calculate_Edge_Value</span><span class="p">()</span>
@@ -3468,7 +3468,7 @@ gui    </h1>
 </span></pre></div>
 
 
-            <div class="docstring"><p>Update parameter sum of all lengths L</p>
+            <div class="docstring"><p>Update parameter sum of all lengths L according to the slider</p>
 </div>
 
 
@@ -3485,14 +3485,14 @@ gui    </h1>
     </div>
     <a class="headerlink" href="#GUI.update_parameter_A_x"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="GUI.update_parameter_A_x-474"><a href="#GUI.update_parameter_A_x-474"><span class="linenos">474</span></a>    <span class="k">def</span> <span class="nf">update_parameter_A_x</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-</span><span id="GUI.update_parameter_A_x-475"><a href="#GUI.update_parameter_A_x-475"><span class="linenos">475</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter A_x&quot;&quot;&quot;</span>
+</span><span id="GUI.update_parameter_A_x-475"><a href="#GUI.update_parameter_A_x-475"><span class="linenos">475</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter A_x according to the slider&quot;&quot;&quot;</span>
 </span><span id="GUI.update_parameter_A_x-476"><a href="#GUI.update_parameter_A_x-476"><span class="linenos">476</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">A_x</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
 </span><span id="GUI.update_parameter_A_x-477"><a href="#GUI.update_parameter_A_x-477"><span class="linenos">477</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">delete_tracing</span><span class="p">()</span>
 </span><span id="GUI.update_parameter_A_x-478"><a href="#GUI.update_parameter_A_x-478"><span class="linenos">478</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
 </span></pre></div>
 
 
-            <div class="docstring"><p>Update parameter A_x</p>
+            <div class="docstring"><p>Update parameter A_x according to the slider</p>
 </div>
 
 
@@ -3509,14 +3509,14 @@ gui    </h1>
     </div>
     <a class="headerlink" href="#GUI.update_parameter_A_y"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="GUI.update_parameter_A_y-479"><a href="#GUI.update_parameter_A_y-479"><span class="linenos">479</span></a>    <span class="k">def</span> <span class="nf">update_parameter_A_y</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-</span><span id="GUI.update_parameter_A_y-480"><a href="#GUI.update_parameter_A_y-480"><span class="linenos">480</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter A_y&quot;&quot;&quot;</span>
+</span><span id="GUI.update_parameter_A_y-480"><a href="#GUI.update_parameter_A_y-480"><span class="linenos">480</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameter A_y according to the slider&quot;&quot;&quot;</span>
 </span><span id="GUI.update_parameter_A_y-481"><a href="#GUI.update_parameter_A_y-481"><span class="linenos">481</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">A_y</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
 </span><span id="GUI.update_parameter_A_y-482"><a href="#GUI.update_parameter_A_y-482"><span class="linenos">482</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">delete_tracing</span><span class="p">()</span>
 </span><span id="GUI.update_parameter_A_y-483"><a href="#GUI.update_parameter_A_y-483"><span class="linenos">483</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
 </span></pre></div>
 
 
-            <div class="docstring"><p>Update parameter A_y</p>
+            <div class="docstring"><p>Update parameter A_y according to the slider</p>
 </div>
 
 
@@ -3602,7 +3602,7 @@ gui    </h1>
     </div>
     <a class="headerlink" href="#GUI.reset_bars_sliders"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="GUI.reset_bars_sliders-521"><a href="#GUI.reset_bars_sliders-521"><span class="linenos">521</span></a>    <span class="k">def</span> <span class="nf">reset_bars_sliders</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="GUI.reset_bars_sliders-522"><a href="#GUI.reset_bars_sliders-522"><span class="linenos">522</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Reset input parameters on sliders&quot;&quot;&quot;</span>
+</span><span id="GUI.reset_bars_sliders-522"><a href="#GUI.reset_bars_sliders-522"><span class="linenos">522</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Reset input parameters on sliders to the current values&quot;&quot;&quot;</span>
 </span><span id="GUI.reset_bars_sliders-523"><a href="#GUI.reset_bars_sliders-523"><span class="linenos">523</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">slider_a</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">DA</span><span class="p">)</span>
 </span><span id="GUI.reset_bars_sliders-524"><a href="#GUI.reset_bars_sliders-524"><span class="linenos">524</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">slider_g</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">AB</span><span class="p">)</span>
 </span><span id="GUI.reset_bars_sliders-525"><a href="#GUI.reset_bars_sliders-525"><span class="linenos">525</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">slider_b</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">BC</span><span class="p">)</span>
@@ -3614,7 +3614,7 @@ gui    </h1>
 </span></pre></div>
 
 
-            <div class="docstring"><p>Reset input parameters on sliders</p>
+            <div class="docstring"><p>Reset input parameters on sliders to the current values</p>
 </div>
 
 
@@ -3631,7 +3631,7 @@ gui    </h1>
     </div>
     <a class="headerlink" href="#GUI.reset_classifications_sliders"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="GUI.reset_classifications_sliders-533"><a href="#GUI.reset_classifications_sliders-533"><span class="linenos">533</span></a>    <span class="k">def</span> <span class="nf">reset_classifications_sliders</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="GUI.reset_classifications_sliders-534"><a href="#GUI.reset_classifications_sliders-534"><span class="linenos">534</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Reset classification values on sliders&quot;&quot;&quot;</span>
+</span><span id="GUI.reset_classifications_sliders-534"><a href="#GUI.reset_classifications_sliders-534"><span class="linenos">534</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Reset classification values on sliders to the current values&quot;&quot;&quot;</span>
 </span><span id="GUI.reset_classifications_sliders-535"><a href="#GUI.reset_classifications_sliders-535"><span class="linenos">535</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">slider_T1</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">T1</span><span class="p">)</span>
 </span><span id="GUI.reset_classifications_sliders-536"><a href="#GUI.reset_classifications_sliders-536"><span class="linenos">536</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">slider_T2</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">T2</span><span class="p">)</span>
 </span><span id="GUI.reset_classifications_sliders-537"><a href="#GUI.reset_classifications_sliders-537"><span class="linenos">537</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">slider_T3</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">T3</span><span class="p">)</span>
@@ -3643,7 +3643,7 @@ gui    </h1>
 </span></pre></div>
 
 
-            <div class="docstring"><p>Reset classification values on sliders</p>
+            <div class="docstring"><p>Reset classification values on sliders to the current values</p>
 </div>
 
 
@@ -3660,13 +3660,13 @@ gui    </h1>
     </div>
     <a class="headerlink" href="#GUI.reset_A_x_A_y"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="GUI.reset_A_x_A_y-545"><a href="#GUI.reset_A_x_A_y-545"><span class="linenos">545</span></a>    <span class="k">def</span> <span class="nf">reset_A_x_A_y</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="GUI.reset_A_x_A_y-546"><a href="#GUI.reset_A_x_A_y-546"><span class="linenos">546</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Reset A_x and A_y on sliders&quot;&quot;&quot;</span>
+</span><span id="GUI.reset_A_x_A_y-546"><a href="#GUI.reset_A_x_A_y-546"><span class="linenos">546</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Reset A_x and A_y on sliders to the current values&quot;&quot;&quot;</span>
 </span><span id="GUI.reset_A_x_A_y-547"><a href="#GUI.reset_A_x_A_y-547"><span class="linenos">547</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">slider_A_x</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">A_x</span><span class="p">)</span>
 </span><span id="GUI.reset_A_x_A_y-548"><a href="#GUI.reset_A_x_A_y-548"><span class="linenos">548</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">slider_A_y</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">A_y</span><span class="p">)</span>
 </span></pre></div>
 
 
-            <div class="docstring"><p>Reset A_x and A_y on sliders</p>
+            <div class="docstring"><p>Reset A_x and A_y on sliders to the current values</p>
 </div>
 
 
@@ -3983,7 +3983,7 @@ gui    </h1>
     </div>
     <a class="headerlink" href="#GUI.hide_linkage"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="GUI.hide_linkage-664"><a href="#GUI.hide_linkage-664"><span class="linenos">664</span></a>    <span class="k">def</span> <span class="nf">hide_linkage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="GUI.hide_linkage-665"><a href="#GUI.hide_linkage-665"><span class="linenos">665</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Hide linkage&quot;&quot;&quot;</span>
+</span><span id="GUI.hide_linkage-665"><a href="#GUI.hide_linkage-665"><span class="linenos">665</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Hide linkage visualization&quot;&quot;&quot;</span>
 </span><span id="GUI.hide_linkage-666"><a href="#GUI.hide_linkage-666"><span class="linenos">666</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">model_animation</span><span class="o">.</span><span class="n">itemconfigure</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_animation</span><span class="o">.</span><span class="n">trace_C</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="s1">&#39;hidden&#39;</span><span class="p">)</span>
 </span><span id="GUI.hide_linkage-667"><a href="#GUI.hide_linkage-667"><span class="linenos">667</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">model_animation</span><span class="o">.</span><span class="n">itemconfigure</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_animation</span><span class="o">.</span><span class="n">trace_P</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="s1">&#39;hidden&#39;</span><span class="p">)</span>
 </span><span id="GUI.hide_linkage-668"><a href="#GUI.hide_linkage-668"><span class="linenos">668</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">model_animation</span><span class="o">.</span><span class="n">itemconfigure</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_animation</span><span class="o">.</span><span class="n">trace_D</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="s1">&#39;hidden&#39;</span><span class="p">)</span>
@@ -4010,7 +4010,7 @@ gui    </h1>
 </span></pre></div>
 
 
-            <div class="docstring"><p>Hide linkage</p>
+            <div class="docstring"><p>Hide linkage visualization</p>
 </div>
 
 
@@ -4027,7 +4027,7 @@ gui    </h1>
     </div>
     <a class="headerlink" href="#GUI.show_linkage"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="GUI.show_linkage-691"><a href="#GUI.show_linkage-691"><span class="linenos">691</span></a>    <span class="k">def</span> <span class="nf">show_linkage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="GUI.show_linkage-692"><a href="#GUI.show_linkage-692"><span class="linenos">692</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Show linkage&quot;&quot;&quot;</span>
+</span><span id="GUI.show_linkage-692"><a href="#GUI.show_linkage-692"><span class="linenos">692</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Show linkage visualization&quot;&quot;&quot;</span>
 </span><span id="GUI.show_linkage-693"><a href="#GUI.show_linkage-693"><span class="linenos">693</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">model_animation</span><span class="o">.</span><span class="n">itemconfigure</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_animation</span><span class="o">.</span><span class="n">trace_C</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="s1">&#39;normal&#39;</span><span class="p">)</span>
 </span><span id="GUI.show_linkage-694"><a href="#GUI.show_linkage-694"><span class="linenos">694</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">model_animation</span><span class="o">.</span><span class="n">itemconfigure</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_animation</span><span class="o">.</span><span class="n">trace_P</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="s1">&#39;normal&#39;</span><span class="p">)</span>
 </span><span id="GUI.show_linkage-695"><a href="#GUI.show_linkage-695"><span class="linenos">695</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">model_animation</span><span class="o">.</span><span class="n">itemconfigure</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_animation</span><span class="o">.</span><span class="n">trace_D</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="s1">&#39;normal&#39;</span><span class="p">)</span>
@@ -4054,7 +4054,7 @@ gui    </h1>
 </span></pre></div>
 
 
-            <div class="docstring"><p>Show linkage</p>
+            <div class="docstring"><p>Show linkage visualization</p>
 </div>
 
 
@@ -4141,7 +4141,7 @@ gui    </h1>
     </div>
     <a class="headerlink" href="#GUI.run_animation"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="GUI.run_animation-737"><a href="#GUI.run_animation-737"><span class="linenos">737</span></a>    <span class="k">def</span> <span class="nf">run_animation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="GUI.run_animation-738"><a href="#GUI.run_animation-738"><span class="linenos">738</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Run animation be updating joints positions in a loop&quot;&quot;&quot;</span>
+</span><span id="GUI.run_animation-738"><a href="#GUI.run_animation-738"><span class="linenos">738</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Run animation updating joint positions in a loop&quot;&quot;&quot;</span>
 </span><span id="GUI.run_animation-739"><a href="#GUI.run_animation-739"><span class="linenos">739</span></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">enable_animation</span><span class="o">.</span><span class="n">get</span><span class="p">():</span>
 </span><span id="GUI.run_animation-740"><a href="#GUI.run_animation-740"><span class="linenos">740</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">linkage</span><span class="o">.</span><span class="n">animation_alpha</span><span class="p">()</span>
 </span><span id="GUI.run_animation-741"><a href="#GUI.run_animation-741"><span class="linenos">741</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
@@ -4149,7 +4149,7 @@ gui    </h1>
 </span></pre></div>
 
 
-            <div class="docstring"><p>Run animation be updating joints positions in a loop</p>
+            <div class="docstring"><p>Run animation updating joint positions in a loop</p>
 </div>
 
 
