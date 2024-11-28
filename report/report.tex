@@ -29,7 +29,7 @@
 \author{Aaron Albert Floerke, Arseniy Kholod, Xinyang Song, Yanliang Zhu \\[1cm]Supervisor: Dr. rer. nat. Markus Towara\footnote{Informatik 12: Software and Tools for Computational Engineering, RWTH Aachen University, {\tt info@stce.rwth-aachen.de}}}
 
 
-\date{{\begin{center} 18\textsuperscript{th} November 2024 \end{center}} \includegraphics[width=.6\textwidth]{rwth_i12_softw-werkz_en_rgb}}
+\date{{\begin{center} 28\textsuperscript{th} November 2024 \end{center}} \includegraphics[width=.6\textwidth]{rwth_i12_softw-werkz_en_rgb}}
 
 \begin{document}
 
@@ -88,7 +88,7 @@ To provide a comprehensive overview, this report is structured as follows. In Se
 
 User requirements are a list of customer expectations that the software must fulfill after development. These requirements are normally high-level expectations, that need to be translated by the developers into technical system requirements.
 
-To better understand the user requirements listed below, we provide a UML use case diagram in Figure \ref{fig:use_case}. The diagram illustrates the user-software interaction. After the user starts the GUI, the software generates the default visualization of the four-bar linkage. The user also has an option to enter new geometric parameters and obtain the updated visualization. Moreover, if the user enables animation mode, the four-bar linkage model gradually increases the input angle and the GUI updates the visualization every $25$ milliseconds with new geometric data to simulate the motion of the linkage.
+To better understand the user requirements listed below, we provide a UML use case diagram in Figure \ref{fig:use_case}. The diagram illustrates the user-software interaction. After the user starts the GUI, the software generates the default visualization of the four-bar linkage. The user also has an option to enter new geometric parameters and obtain the updated visualization. Moreover, if the user enables animation mode, the four-bar linkage model gradually increases the input angle and the GUI updates the visualization every $25$ milliseconds (this value is an example and not a fixed constraint) with new geometric data to simulate the motion of the linkage.
 
 The following list contains all the user requirements provided by our supervisor, supplemented with our explanation for each.
 
@@ -167,7 +167,7 @@ We begin with the functional requirements.
 		\item It provides tracing of the trajectory for the coupler.
 	\end{itemize}
 	
-	The GUI is the front-end interface for the user to generate the visualization and animation of the linkage based on the user's input. It uses data obtained from the four-bar linkage model. Therefore, the user must be able to input parameters in the GUI. To solve the optimization problem, we also need to trace the motion of the coupler.
+	The GUI is the front-end interface for the user to generate the visualization and animation of the linkage based on the user's input. It uses data obtained from the four-bar linkage model. Moreover, the user must be able to input parameters in the GUI. To solve the optimization problem, we also need to trace the motion of the coupler.
 	
 	\item \textit{Documentation}
 	\begin{itemize}
@@ -325,9 +325,9 @@ All the mentioned parameters are depicted in Figure \ref{fig:four-bar_linakge_an
  
  If both cosines $\cos(\alpha_{min}-\theta)$ and $\cos(\alpha_{max}-\theta)$ have an absolute value greater or equal one, then there is no limits to the input angle $\alpha$.
  
- If only the maximum limit exists, then the input angle $\alpha$ also has a lower boundary, that is symmetric with respect to the ground link $AB$: $\alpha \in [\alpha_{max}, 2 \theta - \alpha_{max}]$.
+ If only the maximum limit exists, then the input angle $\alpha$ also has a lower boundary, that is symmetric with respect to the ground link $AB$: $\alpha \in [2 \theta - \alpha_{max}, \alpha_{max}]$.
  
- In the opposite case, when only the minimum input angle $\alpha$ exists, then the input angle is also bounded from above symmetrically with respect to the ground link $AB$: $\alpha \in [2 \theta + 2 \pi - \alpha_{min}, \alpha_{min}]$.
+ In the opposite case, when only the minimum input angle $\alpha$ exists, then the input angle is also bounded from above symmetrically with respect to the ground link $AB$: $\alpha \in [\alpha_{min}, 2 \theta + 2 \pi - \alpha_{min}]$.
  \end{itemize}
  
  We decided that the GUI will display a slider for input angle $\alpha$, ensuring that only valid values within the boundaries can be entered by the user. A similar limitation can be derived for the output angle $\angle ABC$.
@@ -344,11 +344,11 @@ All the mentioned parameters are depicted in Figure \ref{fig:four-bar_linakge_an
  \begin{itemize}
  	\item \textit{Crank}.
  	
- 	The link can rotate fully, with neither a minimum, nor a maximum for the input angle $\alpha$ (or the output angle $\angle ABC$).
+ 	The link can rotate fully, with neither minimum, nor maximum for the input angle $\alpha$ (or the output angle $\angle ABC$).
  	
  	\item \textit{Rocker}.
  	
- 	The link can rotate partially, with both a minimum and a maximum for the input angle $\alpha$ (or the output angle $\angle ABC$).
+ 	The link can rotate partially, with both minimum and maximum for the input angle $\alpha$ (or the output angle $\angle ABC$).
  	
  	\item \textit{0-rocker}.
  	
@@ -462,7 +462,7 @@ The back-end class \texttt{FourBarLinkage} implements the geometry and animation
 
 The front-end class \texttt{GUI} is used to create the graphical user interface to visualize linkage, provide its animation and get geometrical parameters from the user. This class has also a large number of attributes, but only several of them are important for an overview. The member variables include an instance of the \texttt{FourBarLinkage} class, which is used to obtain joint coordinates for visualization and animation. The \texttt{GUI} class also contains an instance of \texttt{tkinter.Tk}, the basic class for creating GUI using tkinter. The main member functions are the constructor \texttt{\_\_init\_\_} to initiate the GUI, \texttt{display\_toolbar} to set up the toolbar of buttons, sliders, and other elements, and \texttt{initiate\_linkage\_display} to set up the visualization of the linkage.
 
-The test class \texttt{TestFourBarLinkage27Cases} inherits from \texttt{unittest.TestCase} and is used to test all motion types of the linkage. This class has only member functions that implement test cases for each motion types.
+The test class \texttt{TestFourBarLinkage27Cases} inherits from \texttt{unittest.TestCase} and is used to test all motion types of the linkage. This class has only member functions that implement test cases for each motion type.
 
 \section{Implementation} \label{ch:implementation}
 
@@ -534,6 +534,8 @@ The unit tests for the Four-Bar Linkage system verify the correct classification
 
 Descriptions of other test cases can be found in the documentation\footnote{\url{https://github.com/einsflash/Project_Pusher_Mechanism/blob/main/docs/dokumentationTest.pdf}}.
 
+The running instructions are provided in Appendix \ref{ch:user_docs}.
+
 \section{Validation}\label{ch:validation}
 
 To validate the correctness of the implementation, we tested all $27$ possible motion types described in \cite{inproceedings}. The main aspect of interest is the absence of jumps in the coordinates and velocities of the joints, ensuring smooth animation. 
@@ -558,15 +560,15 @@ Figure \ref{fig:GUI_optimization_problem} illustrates the solution of the optimi
 
 \section{Documentation}\label{ch:doc}
 
-We used the pdoc tool to generate the documentation of the software. This tool generates HTML-files with a list of all class member functions and member variables defined in \texttt{\_\_init\_\_} constructor. It also displays the description for all of them, so that the user can get an overview of the class components. Moreover, the source code is shown in the generated files for every function, so the user does not need to search for it in huge source files. 
+We believe that well-documented code is essential for ensuring software to be reusable and maintainable. For this reason, we focused on creating detailed and comprehensive documentation.
+
+We used the pdoc\footnote{\url{https://pdoc.dev/docs/pdoc.html}} tool to generate the documentation of the software. This tool generates HTML-files with a list of all class member functions and member variables defined in \texttt{\_\_init\_\_} constructor. It also displays the description for all of them, so that the user can get an overview of the class components. Moreover, the source code is shown in the generated files for every function, so the user does not need to search for it in huge source files. 
 
 All member functions and variables of the \texttt{FourBarLinkage} class are documented in this file\footnote{\url{https://htmlpreview.github.io/?https://github.com/einsflash/Project_Pusher_Mechanism/blob/main/src/doc_for_four_bar_linkage/four_bar_linkage.html}}.
 
-The \texttt{GUI} class is documented in the following file\footnote{\url{https://htmlpreview.github.io/?https://github.com/einsflash/Project_Pusher_Mechanism/blob/main/src/doc_for_gui/gui.html}}. Note that only essential member variables of the GUI are documented, because some GUI member variables are initialized outside the \texttt{\_\_init\_\_} constructor.
+The \texttt{GUI} class is documented in the following file\footnote{\url{https://htmlpreview.github.io/?https://github.com/einsflash/Project_Pusher_Mechanism/blob/main/src/doc_for_gui/gui.html}}. Note that only essential member variables of the GUI are documented.
 
 Additionally to the pdoc documentation, we created a PDF-based documentation of the \texttt{FourBarLinkage}\footnote{\url{https://github.com/einsflash/Project_Pusher_Mechanism/blob/main/docs/dokumentationProgramm.pdf}} and unit tests\footnote{\url{https://github.com/einsflash/Project_Pusher_Mechanism/blob/main/docs/dokumentationTest.pdf}}. This documentation is less detailed in documenting all of the functions and variables, but it provides a more comprehensive explanation of the motivation and functionality behind the implementation.
-
-We believe that well-documented code is essential for ensuring software to be reusable and maintainable. For this reason, we focused on creating detailed and comprehensive documentation.
 
 
 \section{Project Management} \label{ch:projectmanagement}
