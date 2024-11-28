@@ -189,7 +189,7 @@ Since we have defined the functional system requirements, we define now the non-
 	The crucial factor for usability of the software is its performance. In our case, performance is measured by the number of frames per second (fps) during the animation. This criterion also depends on the machine used to run the code, so we assess the fps using a standard laptop with an AMD Ryzen 5 4500U chip.   
 \end{itemize}
 
-\subsection{Geometry}
+\subsection{Geometry}\label{ch:geometry}
 
 After analyzing the user requirements and deriving system requirements, we focus on the geometry of the given linkage. This will be implemented as part of the four-bar linkage model and used to create visualization and animation later in the GUI.
 
@@ -366,7 +366,7 @@ All the mentioned parameters are depicted in Figure \ref{fig:four-bar_linakge_an
  Initially, we discussed to analyze the motion in each of $27$ cases separately. However, we decided to implement the general algorithms that handles all cases.
  
 
- \subsection{Animation}
+ \subsection{Animation}\label{ch:animation}
 
  At the beginning of the animation, we start with a static state of the linkage. By default we set $C_2$ as the chosen position for joint $C$.
  The animation is implemented as a discrete process by gradually incrementing the input angle using the following key variables:
@@ -467,15 +467,11 @@ The test class \texttt{TestFourBarLinkage27Cases} inherits from \texttt{unittest
 \section{Implementation} \label{ch:implementation}
 
 \subsection{Back-End}
-The back end is implemented using packages \texttt{numpy} and \texttt{math}, mainly for calculation. The implementation follows the design and analysis phases, where the details of the geometry analysis and algorithm design are explained.
+The back-end class \texttt{FourBarLinkage} contains the implementation of the four-bar linkage, specifically its geometric description, which is used by the GUI for visualization and animation. The back-end is implemented using the numpy and math packages for efficient calculations. The implementation strictly follows the design and analysis phases. Details about the four-bar linkage were thoroughly explained in Section \ref{ch:analysis}, so we will not repeat them here.
 
-First, we implement the table from the paper as a dictionary in the function \texttt{find\_Linkage\_Type()}, and then use the current actual parameters \texttt{T1}, \texttt{T2}, and \texttt{T3} to look up the \texttt{Link\_Type}.
+First, we implemented the linkage classification table from the paper \cite{inproceedings} as a dictionary in the function \texttt{find\_Linkage\_Type}, and then used the classification values $T_1$, $T_2$, and $T_3$ to determine the linkage type. Afterwards we implemented a function that allows to input the classification values instead of link lengths, that is especially useful during the testing phase. Moreover, we implemented all the geometry of the four-bar linkage and animation algorithm.
 
-After that, we define two functions to allow users to switch between modes, enabling them to modify either the characteristic values or the lengths of the bars in the four-bar linkage.
-
-We also create a function \texttt{run()} to integrate all the functions. This serves as an interface for parameter updates.
-
-Finally, we implement the functions for joint position calculations, alpha extreme value calculations, and the animation function, based on the previous analysis and design.
+As an interface for the GUI, we created a function \texttt{run}, which integrates all geometry and animation functions. This function is triggered by the GUI to recalculate the joint positions when the input parameters are updated or during animation.
 
 \subsection{Front-End}
 
