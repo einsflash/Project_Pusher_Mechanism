@@ -4,63 +4,100 @@ class FourBarLinkage:
     # this is constructor that will be used from GUI to initialize all needed parameters,
     # lengths, angles, coordinated of fixed points and so one
     def __init__(self, AB, BC, CD, DA, alpha, theta, coupler_position, coupler_offset , timeinterval , alpha_velocity):
+        """Constructor for the FourBarLinkage."""
         # initialize all parameters
         self.AB = AB
+        """Length of AB"""
         self.BC = BC
+        """Length of BC"""
         self.CD = CD
+        """Length of CD"""
         self.DA = DA
+        """Length of DA"""
         self.alpha = alpha
+        """Input angle alpha"""
         self.theta = theta
+        """Angle between AB and horizont"""
         self.alpha_rad = math.radians(alpha)
+        """Input angle alpha in radians"""
         self.theta_rad = math.radians(theta)
+        """Angle between AB and horizont in radians"""
         self.coupler_position = coupler_position
+        """P_pos length"""
         self.coupler_offset = coupler_offset
+        """P_offset length"""
         self.t = timeinterval
+        """dt timeinterval"""
         self.alpha_velocity = alpha_velocity
+        """angular velocity"""
         self.C_mode = 'C2'
+        """Default C mode"""
+        
         # initialize coordinates of connection points
-        self.init_default_values()
+        # values for animation (when to switch C2 and C1)
+        self.switch_C2_C1_180 = False
+        """Switch C2 and C1 modes at 180 degrees"""
+        self.switch_C2_C1_360 = False
+        """Switch C2 and C1 modes at 360 degrees"""
+        self.C2_C1_switched_last_time = False
+        """If switched C2 and C1 last step"""
+        self.direction = 0
+        """Direction of alpha changes"""
+        # Parameter Check
+        self.Linkage_Type = "Undefined"  # This will be either "Grashof" or "non-Grashof" after check_Parameter()
+        """Linkage type (Grashof or non-Grashof)"""
+        self.geometric_Validity = True  # Bool: True or False (possible geometry)
+        """If input parameters are valid"""
+        # Parameter to display in GUI
+        self.Input_Link_Type = "Undefined" # Type of input linkage (e.g., 'crank', 'π-rocker', '0-rocker')
+        """Type of input link"""
+        self.Output_Link_Type = "Undefined" # Type of output linkage (e.g., 'rocker', 'π-rocker', 'crank', '0-rocker')
+        """Type of output link"""
+        # limits for angle alpha
+        self.alpha_lims = [0., 0.]
+        """Limits of input angle alpha"""
+        self.alpha_rad_lims = [0., 0.]
+        """Limits of input angle alpha in radians"""
+        self.alpha_limited = True
+        """If alpha is limited"""
+        # all coordinates of conection points A,B,C,D,P
+        self.A  = np.array([0.0, 0.0]) # coordinates of A are always (0,0)
+        """Position of A"""
+        self.B  = np.array([0.0, 0.0])
+        """Position of B"""
+        self.C = np.array([0.0, 0.0])  # C is chosen point for GUI
+        """Position of C"""
+        self.C1 = np.array([0.0, 0.0])
+        """Position of C1"""
+        self.C2 = np.array([0.0, 0.0])
+        """Position of C2"""
+        self.D  = np.array([0.0, 0.0])
+        """Position of D"""
+        self.P = np.array([0.0, 0.0])
+        """Position of P"""
+        # classification values consult https://en.wikipedia.org/wiki/Four-bar_linkage
+        self.T1 = 0. # AB + CD - BC - DA
+        """Classification values T1"""
+        self.T2 = 0. # BC + AB - CD - DA
+        """Classification values T2"""
+        self.T3 = 0. # CD + BC - AB - DA
+        """Classification values T3"""
+        self.L =  0. # AB + BC + CD + DA
+        """Sum of all link lengths"""
+        
         # calculate all positions
         self.run()
         return
 
     # default values initialization
     def init_default_values(self):
-        # values for animation (when to switch C2 and C1)
-        self.switch_C2_C1_180 = False
-        self.switch_C2_C1_360 = False
-        self.C2_C1_switched_last_time = False
-        self.direction = 0
+        """Initialize all parameters by default values."""
         
-        # Parameter Check
-        self.Linkage_Type = "Undefined"  # This will be either "Grashof" or "non-Grashof" after check_Parameter()
-        self.geometric_Validity = True  # Bool: True or False (possible geometry)
-        # Parameter to display in GUI
-        self.Input_Link_Type = "Undefined" # Type of input linkage (e.g., 'crank', 'π-rocker', '0-rocker')
-        self.Output_Link_Type = "Undefined" # Type of output linkage (e.g., 'rocker', 'π-rocker', 'crank', '0-rocker')
-        
-        # limits for angle alpha
-        self.alpha_lims = [0., 0.]
-        self.alpha_rad_lims = [0., 0.]
-        self.alpha_limited = True
-        
-        # all coordinates of conection points A,B,C,D,P
-        self.A  = np.array([0.0, 0.0]) # coordinates of A are always (0,0)
-        self.B  = np.array([0.0, 0.0])
-        self.C = np.array([0.0, 0.0])  # C is chosen point for GUI
-        self.C1 = np.array([0.0, 0.0])
-        self.C2 = np.array([0.0, 0.0])
-        self.D  = np.array([0.0, 0.0])
-        self.P = np.array([0.0, 0.0])
-    
-        # classification values consult https://en.wikipedia.org/wiki/Four-bar_linkage
-        self.T1 = 0. # AB + CD - BC - DA
-        self.T2 = 0. # BC + AB - CD - DA
-        self.T3 = 0. # CD + BC - AB - DA
-        self.L =  0. # AB + BC + CD + DA
 
     # implement geometry to calculate coordinates of all points from parameters
     def run(self):
+        """Integrates all the classification and geometrical functions to respond new input parameters. 
+        It is an interface for the GUI."""
         # calculate classification values
         self.calculate_Classification_Value()
         
@@ -82,12 +119,12 @@ class FourBarLinkage:
         
         return
 
-    """ 
-    check Parameter 
-    calculate two values ---- Grashof index G and Validity index V
-    Linkage_Type and geometric_Validity is for GUI
-    """
+    
     def check_Parameter(self):
+        """ 
+        Check input parameters. Calculate two values ---- Grashof index G, Validity index V, 
+        Linkage_Type and geometric_Validity.
+        """
         # Determine the longest (l) and shortest (s) sides
         lengths = [self.AB, self.BC, self.CD, self.DA]
         l = max(lengths)
@@ -170,7 +207,7 @@ class FourBarLinkage:
         return
 
     def calculate_Classification_Value(self):
-        """ calculate classification values according to given 4 edges"""
+        """ calculate classification values according to given 4 link lengths"""
         self.T1 = self.AB + self.CD - self.BC - self.DA
         self.T2 = self.BC + self.AB - self.CD - self.DA
         self.T3 = self.CD + self.BC - self.AB - self.DA
@@ -178,7 +215,7 @@ class FourBarLinkage:
         return
 
     def calculate_Edge_Value(self):
-        """ calculate 4 edges according to given classification values """
+        """ calculate 4 link lengths according to given classification values """
         self.AB = (self.L / 4) + (self.T1 / 4) + (self.T2 / 4) - (self.T3 / 4)
         self.BC = (self.L / 4) - (self.T1 / 4) + (self.T2 / 4) + (self.T3 / 4)
         self.CD = (self.L / 4) + (self.T1 / 4) - (self.T2 / 4) + (self.T3 / 4)
@@ -243,6 +280,7 @@ class FourBarLinkage:
 
     # calculate position with given angle
     def calculate_Point_Position(self):
+        """Calculate positions of all joints."""
         # A and B are static
 
         # calculate B
@@ -265,6 +303,7 @@ class FourBarLinkage:
     
     # calculate position of point C (2 possible points)
     def calculate_C_Position(self):
+        """Calculate position of the C joint."""
         # calculate vectors BD, BA, BC
         BD_vector = self.D - self.B
         BD_length = np.linalg.norm(BD_vector)
@@ -326,6 +365,7 @@ class FourBarLinkage:
 
     # calculate position of point C (2 possible points)
     def calculate_P_Position(self):
+        """Calculate position of P joint."""
         # calculate middle point of CD
         Middle_CD = (self.C + self.D) / 2
 
@@ -441,6 +481,7 @@ class FourBarLinkage:
     
     # function to switch between C1 and C2, call only by alpha_lim
     def switch_C2_C1(self):
+        """Switch modes between C1 and C2"""
         if self.C_mode == 'C2':
             self.C_mode = 'C1'
         else:

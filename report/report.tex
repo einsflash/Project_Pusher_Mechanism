@@ -441,7 +441,7 @@ There is a list of the software and tools we used for implementation:
 	\item Package manager: Anaconda\footnote{\url{https://www.anaconda.com/}}.
 	\item Libraries: tkinter\textsuperscript{\ref{fn:tkinter}}, numpy\textsuperscript{\ref{fn:numpy}}, math\footnote{\url{https://docs.python.org/3/library/math.html}}, unittest\footnote{\url{https://docs.python.org/3/library/unittest.html}}.
 	\item Version control system: GitHub repository\footnote{\url{https://github.com/einsflash/Project_Pusher_Mechanism}}.
-	\item Documentation: Pdoc\footnote{\url{https://pdoc.dev/docs/pdoc.html}}
+	\item Documentation: Pdoc\footnote{\url{https://pdoc.dev/docs/pdoc.html}}.
 \end{itemize}
 
 \subsection{Class Models}
@@ -472,6 +472,8 @@ The back-end class \texttt{FourBarLinkage} contains the implementation of the fo
 First, we implemented the linkage classification table from the paper \cite{inproceedings} as a dictionary in the function \texttt{find\_Linkage\_Type}, and then used the classification values $T_1$, $T_2$, and $T_3$ to determine the linkage type. Afterwards we implemented a function that allows to input the classification values instead of link lengths, that is especially useful during the testing phase. Moreover, we implemented all the geometry of the four-bar linkage and animation algorithm.
 
 As an interface for the GUI, we created a function \texttt{run}, which integrates all geometry and animation functions. This function is triggered by the GUI to recalculate the joint positions when the input parameters are updated or during animation.
+
+The overview of the \texttt{FourBarLinkage} class can be found in the documentation\footnote{\url{https://htmlpreview.github.io/?https://github.com/einsflash/Project_Pusher_Mechanism/blob/main/src/doc_for_four_bar_linkage/four_bar_linkage.html}}.
 
 \subsection{Front-End}
 
@@ -522,6 +524,13 @@ The running instructions are provided in Appendix \ref{ch:user_docs}.
 
 \subsection{Software Tests}
 
+The unit tests for the Four-Bar Linkage system verify the correct classification of the $27$ linkage motion types. Each test ensures that the input and output links are accurately classified based on the parameters $T_1$, $T_2$, and $T_3$. There are $27$ test cases for each of the motion types. For example the Crank-Rocker classifications:
+
+\begin{itemize}
+	\item Test Case 1: $T_1 > 0$, $T_2 > 0$, $T_3 > 0$ $\rightarrow$ Crank (input), Rocker (output).
+	\item Test Case 4: $T_1 > 0$, $T_2 = 0$, $T_3 > 0$ $\rightarrow$ Crank (input), 0-Rocker (output).
+	\item Test Case 10: $T_1 > 0$, $T_2 > 0$, $T_3 = 0$ $\rightarrow$ Crank (input), \(\pi\)-Rocker (output).
+\end{itemize}
 
 \section{Validation}\label{ch:validation}
 
@@ -546,6 +555,8 @@ As was discussed in Section \ref{ch:user_requirements}, the four-bar linkage wit
 Figure \ref{fig:GUI_optimization_problem} illustrates the solution of the optimization problem. The trajectory of coupler $P$ is denoted in the figure. Using the chosen linkage, the coupler $P$ moves the box to the target position and then returns for the next one, avoiding all obstacles.
 
 \section{Documentation}\label{ch:doc}
+
+
 
 \section{Project Management} \label{ch:projectmanagement}
 
